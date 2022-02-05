@@ -1,4 +1,4 @@
-package com.dhbw.BR2048
+package com.dhbw.br2048
 
 import org.junit.Test
 
