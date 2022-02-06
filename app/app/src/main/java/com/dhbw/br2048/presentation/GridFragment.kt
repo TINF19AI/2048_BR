@@ -1,34 +1,23 @@
 package com.dhbw.br2048.presentation
 
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
-import android.graphics.Interpolator
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewPropertyAnimator
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.GridLayout
 import android.widget.TextView
-import androidx.core.animation.doOnEnd
 import androidx.core.view.setMargins
 import androidx.core.view.setPadding
+import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.databinding.FragmentGridBinding
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [grid.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GridFragment : Fragment() {
     private var _binding: FragmentGridBinding? = null
     private val b get() = _binding!!
@@ -81,46 +70,53 @@ class GridFragment : Fragment() {
             this.setPadding(20)
         }
 
-        for (i in 0 until 16) {
-            val empty = TextView(b.grid2048.rootView.context)
-            empty.setBackgroundResource(R.drawable.shape_tile_empty)
+        for (i in 0 until 4) {
+            for (k in 0 until 4) {
+                val empty = TextView(b.grid2048.rootView.context)
+                empty.setBackgroundResource(R.drawable.shape_tile_empty)
 
-            b.grid2048.addView(empty)
-            empty.layoutParams = GridLayout.LayoutParams(
-                GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f),
-                GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f)
-            )
-            (empty.layoutParams as GridLayout.LayoutParams).setMargins(20)
+                // weight = 1: every row/column has equal height/width
+                empty.layoutParams = GridLayout.LayoutParams(
+                    GridLayout.spec(i, GridLayout.FILL, 1f),
+                    GridLayout.spec(k, GridLayout.FILL, 1f)
+                )
+                // set height and width to 0 to prevent using background drawable height/width
+                // -> causes visual bugs
+                empty.layoutParams.height = 0
+                empty.layoutParams.width = 0
+                b.grid2048.addView(empty)
+                (empty.layoutParams as GridLayout.LayoutParams).setMargins(20)
+            }
+
         }
 
         tile = TileView(b.grid2048.rootView.context)
         tile!!.text = "2"
-        b.grid2048.addView(tile)
         tile!!.layoutParams = GridLayout.LayoutParams(
-            GridLayout.spec(1, GridLayout.FILL),
-            GridLayout.spec(1, GridLayout.FILL)
+            GridLayout.spec(1, GridLayout.FILL, 1f),
+            GridLayout.spec(1, GridLayout.FILL, 1f)
         )
+        tile!!.layoutParams.width = 0
+        tile!!.layoutParams.height = 0
+        b.grid2048.addView(tile)
         (tile!!.layoutParams as GridLayout.LayoutParams).setMargins(20)
     }
 
     fun move() {
         // TODO: remove hardcoded translationY value
-        val animator = ObjectAnimator.ofFloat(tile, "translationY", 350f).apply {
-            duration = 200
-
-            doOnEnd {
+        tile!!.animate()
+            .translationY(350f)
+            .setDuration(200)
+            .setInterpolator(DecelerateInterpolator())
+            .withEndAction {
                 tile!!.apply {
                     val params = (this.layoutParams as GridLayout.LayoutParams)
                     params.rowSpec = GridLayout.spec(2, GridLayout.FILL)
                     this.layoutParams = params
                     translationY = 0f
                 }
-
-                Log.d("GridFragment", "onEnd called")
             }
-
-        }
-        animator.start()
+            .start()
     }
 
     fun reset() {
@@ -136,7 +132,7 @@ class GridFragment : Fragment() {
             .scaleX(1.2f)
             .scaleY(1.2f)
             .setDuration(100)
-            .setInterpolator(AccelerateDecelerateInterpolator())
+            .setInterpolator(DecelerateInterpolator())
             .withEndAction {
                 tile!!.animate()
                     .scaleY(1f)
