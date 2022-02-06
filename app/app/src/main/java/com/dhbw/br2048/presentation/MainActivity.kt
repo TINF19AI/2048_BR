@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.databinding.ActivityMainBinding
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +21,13 @@ class MainActivity : AppCompatActivity() {
         setCurrentFragment(gridFragment)
 
         b.btMove.setOnClickListener {
-            gridFragment.move()
+            if(Random.nextInt(0, 2) == 0){
+                // X
+                gridFragment.animateTo(Random.nextInt(0, 4))
+            }else {
+                // Y
+                gridFragment.animateTo(targetY = Random.nextInt(0, 4))
+            }
         }
 
         b.btReset.setOnClickListener {
