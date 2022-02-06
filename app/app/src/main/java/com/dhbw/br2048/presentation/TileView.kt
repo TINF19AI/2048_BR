@@ -14,10 +14,10 @@ class TileView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : AppCompatTextView(context, attrs) {
 
+    //@todo Initialize with constructor
     var x : Int = -1
     var y : Int = -1
     var value : Int = -1
-
 
     init {
         Log.d("TileView", "TileView created")
@@ -28,7 +28,6 @@ class TileView @JvmOverloads constructor(
         this.textSize = context.dpToPx(10).toFloat()
 
     }
-
 }
 
 //https://stackoverflow.com/questions/8295986/how-to-calculate-dp-from-pixels-in-android-programmatically

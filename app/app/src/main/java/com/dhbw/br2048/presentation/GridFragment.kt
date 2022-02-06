@@ -22,7 +22,6 @@ class GridFragment : Fragment() {
     private var _binding: FragmentGridBinding? = null
     private val b get() = _binding!!
 
-
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -91,40 +90,53 @@ class GridFragment : Fragment() {
         }
 
         tile = TileView(b.grid2048.rootView.context)
+        // @todo Move to Constructor
         tile!!.text = "2"
         tile!!.layoutParams = GridLayout.LayoutParams(
-            GridLayout.spec(1, GridLayout.FILL, 1f),
-            GridLayout.spec(1, GridLayout.FILL, 1f)
+            GridLayout.spec(0, GridLayout.FILL, 1f),
+            GridLayout.spec(0, GridLayout.FILL, 1f)
         )
+        moveTo(1, 1)
         tile!!.layoutParams.width = 0
         tile!!.layoutParams.height = 0
         b.grid2048.addView(tile)
         (tile!!.layoutParams as GridLayout.LayoutParams).setMargins(20)
     }
 
-    fun move() {
-        // TODO: remove hardcoded translationY value
+    fun animateTo(targetX: Int = tile!!.x, targetY: Int = tile!!.y) {
+        val fieldDistanceX = targetX?.minus(tile!!.x)
+        val fieldDistanceY = targetY?.minus(tile!!.y)
+
+        // @todo Prevent bugs if function is run multiple times during animation duration
+
         tile!!.animate()
-            .translationY(350f)
+            .translationX(fieldDistanceX * (tile!!.width.toFloat() + b.grid2048.paddingRight))
+            .translationY(fieldDistanceY * (tile!!.height.toFloat() + b.grid2048.paddingBottom))
             .setDuration(200)
             .setInterpolator(DecelerateInterpolator())
             .withEndAction {
-                tile!!.apply {
-                    val params = (this.layoutParams as GridLayout.LayoutParams)
-                    params.rowSpec = GridLayout.spec(2, GridLayout.FILL)
-                    this.layoutParams = params
-                    translationY = 0f
-                }
+               moveTo(targetX, targetY)
             }
             .start()
     }
 
-    fun reset() {
+    fun moveTo(targetX: Int, targetY: Int) {
+
         tile!!.apply {
             val params = (this.layoutParams as GridLayout.LayoutParams)
-            params.rowSpec = GridLayout.spec(1, GridLayout.FILL)
+            params.columnSpec = GridLayout.spec(targetX, GridLayout.FILL)
+            params.rowSpec = GridLayout.spec(targetY, GridLayout.FILL)
             this.layoutParams = params
+
+            translationX = 0f
+            translationY = 0f
         }
+        tile!!.x = targetX
+        tile!!.y = targetY
+    }
+
+    fun reset() {
+        moveTo(1,1)
     }
 
     fun merge() {
