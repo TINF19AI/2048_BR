@@ -38,23 +38,23 @@ class GameActivity : AppCompatActivity() {
 
         b.flFragment.setOnTouchListener(object: OnSwipeTouchListener(this@GameActivity) {
             override fun onSwipeLeft() {
-                manager.move(Direction.LEFT);
+                manager.move(Direction.LEFT)
             }
             override fun onSwipeRight() {
-                manager.move(Direction.RIGHT);
+                manager.move(Direction.RIGHT)
             }
             override fun onSwipeTop() {
-                manager.move(Direction.UP);
+                manager.move(Direction.UP)
             }
             override fun onSwipeBottom() {
-                manager.move(Direction.DOWN);
+                manager.move(Direction.DOWN)
             }
         })
     }
 
     override fun onResume() {
         super.onResume()
-        manager = GameManager(b.root.context, gridFragment.getGrid(), Coordinates(4,4), 1)
+        manager = GameManager(b.root.context, gridFragment.getGrid(), Coordinates(4,4), 2)
 
     }
 

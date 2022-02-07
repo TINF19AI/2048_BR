@@ -23,8 +23,8 @@ class Grid(
     }
 
     fun move(tile:TileView, newPosition: Coordinates){
-        grid[tile.coordinates.x][tile.coordinates.y] = null;
-        grid[newPosition.x][newPosition.y] = tile;
+        grid[tile.coordinates.x][tile.coordinates.y] = null
+        grid[newPosition.x][newPosition.y] = tile
         tile.coordinates = newPosition
     }
 

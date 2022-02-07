@@ -16,11 +16,11 @@ class GameManager(
     var score = 0
 
     init {
-        addStartTiles ()
+        addStartTiles()
     }
 
     // Set up the initial tiles to start the game with
-    fun addStartTiles () {
+    fun addStartTiles() {
         for (i in 1..startTiles) {
             this.addRandomTile()
         }
@@ -83,8 +83,7 @@ class GameManager(
         var cell: Coordinates
         var tile: TileView?
 
-        val vector     = getVector(direction)
-        if(vector == null) return
+        val vector     = getVector(direction) ?: return
         val traversals = buildTraversals(vector)
         var moved      = false
 
@@ -100,22 +99,29 @@ class GameManager(
                     val next      = grid.cellContent(positions.second)
 
                     // Only one merger per row traversal?
-                    if (next != null && next.value == tile.value && next.mergedFrom != null) {
-                        //var merged = new Tile(positions.next, tile.value * 2);
-                        //merged.mergedFrom = [tile, next];
+                    if (next != null && next.value == tile.value && next.mergedFrom == null) {
+                        //val merged = TileView(context, pos=positions.second, startValue=tile.value * 2)
+                        //merged.mergedFrom = arrayOf(tile, next)
 
-                        //grid.move(tile)
-                        //grid.insertTile(merged);
-                        //grid.removeTile(tile);
+                        next.value = tile.value * 2
+                        next.coordinates = positions.second
+                        next.mergedFrom = arrayOf(tile, next)
+
+                        next.merge()
+
+                        // Replace old tile
+                        //grid.insertTile(merged)
+                        grid.removeTile(tile)
+                        tile.removeFromGrid()
 
                         // Converge the two tiles' positions
-                        //tile.updatePosition(positions.next);
+                        //tile.updatePosition(positions.second)
 
                         // Update the score
-                        //score += merged.value;
+                        score += next.value
 
                         // The mighty 2048 tile
-                        //if (merged.value === 2048) won = true;
+                        if (next.value == 2048) won = true
                     } else {
                         moveTile(tile, positions.first)
                     }
@@ -134,8 +140,16 @@ class GameManager(
                 over = true // Game over!
             }
 
-            //actuate();
+            grid.eachCell { _: Coordinates, tile: TileView? ->
+                if (tile != null) {
+                    tile.mergedFrom = null
+                }
+            }
+
+
         }
+
+
     }
 
     fun findFarthestPosition (cell: Coordinates, vector: Coordinates): Pair<Coordinates, Coordinates> {

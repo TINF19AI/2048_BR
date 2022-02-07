@@ -16,7 +16,7 @@ class TileView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, pos: Coordinates, startValue: Int
 ) : AppCompatTextView(context, attrs) {
 
-    var mergedFrom: TileView? = null
+    var mergedFrom: Array<TileView>? = null
 
     var coordinates: Coordinates = pos
         set(newCoordinates) {
@@ -50,6 +50,8 @@ class TileView @JvmOverloads constructor(
         this.layoutParams = setCoordLayoutParams(this.coordinates)
 
         grid!!.addView(this)
+
+        appear()
     }
 
     fun removeFromGrid() {
