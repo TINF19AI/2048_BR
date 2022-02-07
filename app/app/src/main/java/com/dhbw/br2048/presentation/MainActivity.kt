@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
+import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.databinding.ActivityMainBinding
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var b: ActivityMainBinding
+    private lateinit var tile: TileView
 
     private val gridFragment = GridFragment()
 
@@ -20,27 +22,26 @@ class MainActivity : AppCompatActivity() {
 
         setCurrentFragment(gridFragment)
 
+        tile = TileView(b.flFragment.context, null, Coordinates(1, 2), 8)
+
         b.btMove.setOnClickListener {
-            if(Random.nextInt(0, 2) == 0){
+            if (Random.nextInt(0, 2) == 0) {
                 // X
-                gridFragment.animateTo(Random.nextInt(0, 4))
-            }else {
+                tile.coordinates = Coordinates(Random.nextInt(0, 4), tile.coordinates.y)
+            } else {
                 // Y
-                gridFragment.animateTo(targetY = Random.nextInt(0, 4))
+                tile.coordinates = Coordinates(tile.coordinates.x, Random.nextInt(0, 4))
             }
         }
 
         b.btReset.setOnClickListener {
-            gridFragment.reset()
+            tile.removeFromGrid()
         }
 
         b.btAppear.setOnClickListener {
-            gridFragment.appear()
         }
 
         b.btMerge.setOnClickListener {
-            gridFragment.merge()
-
         }
 
         b.flFragment.setOnTouchListener(object: OnSwipeTouchListener(this@MainActivity) {
@@ -57,6 +58,11 @@ class MainActivity : AppCompatActivity() {
                 gridFragment.animateTo(targetY = 3)
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tile.setGridLayout(gridFragment.getGrid())
     }
 
     private fun setCurrentFragment(fragment: Fragment) {

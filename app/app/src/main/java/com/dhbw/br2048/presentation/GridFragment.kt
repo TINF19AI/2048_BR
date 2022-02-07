@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.view.setMargins
@@ -22,11 +19,6 @@ class GridFragment : Fragment() {
     private var _binding: FragmentGridBinding? = null
     private val b get() = _binding!!
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-
     private var columns: Int = 4
     private var rows: Int = 4
 
@@ -34,10 +26,6 @@ class GridFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -48,6 +36,9 @@ class GridFragment : Fragment() {
         return b.root
     }
 
+    fun getGrid(): GridLayout {
+        return b.grid2048
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -89,82 +80,5 @@ class GridFragment : Fragment() {
 
         }
 
-        tile = TileView(b.grid2048.rootView.context)
-        // @todo Move to Constructor
-        tile!!.text = "2"
-        tile!!.layoutParams = GridLayout.LayoutParams(
-            GridLayout.spec(0, GridLayout.FILL, 1f),
-            GridLayout.spec(0, GridLayout.FILL, 1f)
-        )
-        moveTo(1, 1)
-        tile!!.layoutParams.width = 0
-        tile!!.layoutParams.height = 0
-        b.grid2048.addView(tile)
-        (tile!!.layoutParams as GridLayout.LayoutParams).setMargins(20)
-    }
-
-    fun animateTo(targetX: Int = tile!!.x, targetY: Int = tile!!.y) {
-        val fieldDistanceX = targetX?.minus(tile!!.x)
-        val fieldDistanceY = targetY?.minus(tile!!.y)
-
-        // @todo Prevent bugs if function is run multiple times during animation duration
-
-        tile!!.animate()
-            .translationX(fieldDistanceX * (tile!!.width.toFloat() + b.grid2048.paddingRight))
-            .translationY(fieldDistanceY * (tile!!.height.toFloat() + b.grid2048.paddingBottom))
-            .setDuration(200)
-            .setInterpolator(DecelerateInterpolator())
-            .withEndAction {
-               moveTo(targetX, targetY)
-            }
-            .start()
-    }
-
-    fun moveTo(targetX: Int, targetY: Int) {
-
-        tile!!.apply {
-            val params = (this.layoutParams as GridLayout.LayoutParams)
-            params.columnSpec = GridLayout.spec(targetX, GridLayout.FILL)
-            params.rowSpec = GridLayout.spec(targetY, GridLayout.FILL)
-            this.layoutParams = params
-
-            translationX = 0f
-            translationY = 0f
-        }
-        tile!!.x = targetX
-        tile!!.y = targetY
-    }
-
-    fun reset() {
-        moveTo(1,1)
-    }
-
-    fun merge() {
-        tile!!.animate()
-            .scaleX(1.2f)
-            .scaleY(1.2f)
-            .setDuration(100)
-            .setInterpolator(DecelerateInterpolator())
-            .withEndAction {
-                tile!!.animate()
-                    .scaleY(1f)
-                    .scaleX(1f)
-                    .setDuration(100)
-                    .setInterpolator(AccelerateDecelerateInterpolator())
-                    .start()
-            }
-            .start()
-    }
-
-    fun appear() {
-        tile!!.scaleX = 0f
-        tile!!.scaleY = 0f
-
-        tile!!.animate()
-            .scaleX(1f)
-            .scaleY(1f)
-            .setDuration(250)
-            .setInterpolator(AccelerateInterpolator())
-            .start()
     }
 }
