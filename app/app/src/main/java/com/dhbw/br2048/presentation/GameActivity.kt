@@ -36,7 +36,7 @@ class GameActivity : AppCompatActivity() {
         b.btMerge.setOnClickListener {
         }
 
-        b.flFragment.setOnTouchListener(object: OnSwipeTouchListener(this@GameActivity) {
+        b.clGame.setOnTouchListener(object: OnSwipeTouchListener(this@GameActivity) {
             override fun onSwipeLeft() {
                 manager.move(Direction.LEFT)
             }
