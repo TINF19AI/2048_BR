@@ -46,16 +46,16 @@ class MainActivity : AppCompatActivity() {
 
         b.flFragment.setOnTouchListener(object: OnSwipeTouchListener(this@MainActivity) {
             override fun onSwipeLeft() {
-                gridFragment.animateTo(0)
+                tile.coordinates = Coordinates(0, tile.coordinates.y)
             }
             override fun onSwipeRight() {
-                gridFragment.animateTo(3)
+                tile.coordinates = Coordinates(3, tile.coordinates.y)
             }
             override fun onSwipeTop() {
-                gridFragment.animateTo(targetY = 0)
+                tile.coordinates = Coordinates(tile.coordinates.x, 0)
             }
             override fun onSwipeBottom() {
-                gridFragment.animateTo(targetY = 3)
+                tile.coordinates = Coordinates(tile.coordinates.x, 3)
             }
         })
     }
