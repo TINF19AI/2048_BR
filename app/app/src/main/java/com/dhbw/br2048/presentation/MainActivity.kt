@@ -42,6 +42,21 @@ class MainActivity : AppCompatActivity() {
             gridFragment.merge()
 
         }
+
+        b.flFragment.setOnTouchListener(object: OnSwipeTouchListener(this@MainActivity) {
+            override fun onSwipeLeft() {
+                gridFragment.animateTo(0)
+            }
+            override fun onSwipeRight() {
+                gridFragment.animateTo(3)
+            }
+            override fun onSwipeTop() {
+                gridFragment.animateTo(targetY = 0)
+            }
+            override fun onSwipeBottom() {
+                gridFragment.animateTo(targetY = 3)
+            }
+        })
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
