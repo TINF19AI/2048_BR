@@ -5,32 +5,33 @@ import android.widget.GridLayout
 import com.dhbw.br2048.presentation.TileView
 
 class GameManager(
-    val context: Context,
-    val gridLayout: GridLayout,
-    val gridSize: Coordinates,
-    val startTiles: Int
-){
-    var won = false
-    var over = false
-    val grid = Grid(gridSize)
-    var score = 0
+    private val context: Context,
+    private val gridLayout: GridLayout,
+    private val gridSize: Coordinates,
+    private val startTiles: Int
+) {
+    private var won = false
+    private var over = false
+    private val grid = Grid(gridSize)
+    private var score = 0
 
     init {
         addStartTiles()
     }
 
     // Set up the initial tiles to start the game with
-    fun addStartTiles() {
+    private fun addStartTiles() {
         for (i in 1..startTiles) {
             this.addRandomTile()
         }
     }
 
     // Adds a tile in a random position
-    fun addRandomTile() {
+    private fun addRandomTile() {
         if (grid.cellsAvailable()) {
-            val value = if(Math.random() < 0.9) 2 else 4
-            val tile = grid.randomAvailableCell()?.let { TileView(context, pos = it, startValue = value) }
+            val value = if (Math.random() < 0.9) 2 else 4
+            val tile =
+                grid.randomAvailableCell()?.let { TileView(context, pos = it, startValue = value) }
             if (tile != null) {
                 grid.insertTile(tile)
                 tile.setGridLayout(gridLayout)
@@ -39,25 +40,24 @@ class GameManager(
     }
 
     // Move a tile and its representation
-    fun moveTile(tile: TileView, cell:Coordinates) {
+    private fun moveTile(tile: TileView, cell: Coordinates) {
         grid.move(tile, cell)
     }
 
     // Get the vector representing the chosen direction
-    fun getVector (direction: Direction): Coordinates? {
+    private fun getVector(direction: Direction): Coordinates? {
         // Vectors representing tile movement
         val map = mapOf(
-            0 to Coordinates( 0, -1 ),
-            1 to Coordinates( 1, 0 ),
-            2 to Coordinates( 0, 1 ),
-            3 to Coordinates( -1, 0 )
+            0 to Coordinates(0, -1),
+            1 to Coordinates(1, 0),
+            2 to Coordinates(0, 1),
+            3 to Coordinates(-1, 0)
         )
-
-        return map.get(direction.direction)
+        return map[direction.direction]
     }
 
     // Build a list of positions to traverse in the right order
-    fun buildTraversals (vector: Coordinates): Pair<MutableList<Int>, MutableList<Int>> {
+    private fun buildTraversals(vector: Coordinates): Pair<MutableList<Int>, MutableList<Int>> {
         val traversalsX = mutableListOf<Int>()
         val traversalsY = mutableListOf<Int>()
 
@@ -83,26 +83,23 @@ class GameManager(
         var cell: Coordinates
         var tile: TileView?
 
-        val vector     = getVector(direction) ?: return
+        val vector = getVector(direction) ?: return
         val traversals = buildTraversals(vector)
-        var moved      = false
+        var moved = false
 
         // Traverse the grid in the right direction and move tiles
-        for (x in traversals.first){
-            for (y in traversals.second){
+        for (x in traversals.first) {
+            for (y in traversals.second) {
 
-                cell = Coordinates( x, y )
+                cell = Coordinates(x, y)
                 tile = grid.cellContent(cell)
 
                 tile?.let {
                     val positions = findFarthestPosition(cell, vector)
-                    val next      = grid.cellContent(positions.second)
+                    val next = grid.cellContent(positions.second)
 
                     // Only one merger per row traversal?
                     if (next != null && next.value == tile.value && next.mergedFrom == null) {
-                        //val merged = TileView(context, pos=positions.second, startValue=tile.value * 2)
-                        //merged.mergedFrom = arrayOf(tile, next)
-
                         next.value = tile.value * 2
                         next.coordinates = positions.second
                         next.mergedFrom = arrayOf(tile, next)
@@ -110,12 +107,10 @@ class GameManager(
                         next.merge()
 
                         // Replace old tile
-                        //grid.insertTile(merged)
                         grid.removeTile(tile)
                         tile.removeFromGrid()
 
-                        // Converge the two tiles' positions
-                        //tile.updatePosition(positions.second)
+                        moved = true
 
                         // Update the score
                         score += next.value
@@ -140,26 +135,25 @@ class GameManager(
                 over = true // Game over!
             }
 
-            grid.eachCell { _: Coordinates, tile: TileView? ->
-                if (tile != null) {
-                    tile.mergedFrom = null
+            grid.eachCell { _: Coordinates, tileView: TileView? ->
+                if (tileView != null) {
+                    tileView.mergedFrom = null
                 }
             }
-
-
         }
-
-
     }
 
-    fun findFarthestPosition (cell: Coordinates, vector: Coordinates): Pair<Coordinates, Coordinates> {
+    private fun findFarthestPosition(
+        cell: Coordinates,
+        vector: Coordinates
+    ): Pair<Coordinates, Coordinates> {
         var previous: Coordinates
         var newCell = cell
 
         // Progress towards the vector direction until an obstacle is found
         do {
             previous = newCell
-            newCell     = Coordinates(previous.x + vector.x, previous.y + vector.y )
+            newCell = Coordinates(previous.x + vector.x, previous.y + vector.y)
         } while (
             grid.withinBounds(newCell) &&
             grid.cellAvailable(newCell)
@@ -169,12 +163,12 @@ class GameManager(
 
     }
 
-    fun movesAvailable (): Boolean {
+    private fun movesAvailable(): Boolean {
         return grid.cellsAvailable() || tileMatchesAvailable()
     }
 
     // Check for available matches between tiles (more expensive check)
-    fun tileMatchesAvailable ():Boolean {
+    private fun tileMatchesAvailable(): Boolean {
         //var tile: TileView;
         var result = false
 
@@ -197,6 +191,6 @@ class GameManager(
         }
 
         return result
-}
+    }
 
 }

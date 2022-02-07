@@ -1,6 +1,7 @@
 package com.dhbw.br2048.data
 
 import com.dhbw.br2048.presentation.TileView
+import kotlin.math.floor
 
 class Grid(
     private val size: Coordinates,
@@ -13,10 +14,10 @@ class Grid(
     // @todo export
 
     fun randomAvailableCell(): Coordinates? {
-        var cells = availableCells()
+        val cells = availableCells()
 
         if (cells.size > 0) {
-            return cells[Math.floor(Math.random() * cells.size).toInt()]
+            return cells[floor(Math.random() * cells.size).toInt()]
         }
 
         return null
@@ -29,7 +30,7 @@ class Grid(
     }
 
     private fun availableCells(): MutableList<Coordinates> {
-        var cells: MutableList<Coordinates> = mutableListOf()
+        val cells: MutableList<Coordinates> = mutableListOf()
 
         eachCell { coordinates, tile ->
             if (tile == null) {
