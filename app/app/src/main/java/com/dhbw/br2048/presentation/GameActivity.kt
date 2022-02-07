@@ -24,17 +24,6 @@ class GameActivity : AppCompatActivity() {
         setContentView(b.root)
         setCurrentFragment(gridFragment)
 
-        b.btMove.setOnClickListener {
-        }
-
-        b.btReset.setOnClickListener {
-        }
-
-        b.btAppear.setOnClickListener {
-        }
-
-        b.btMerge.setOnClickListener {
-        }
 
         b.flFragment.setOnTouchListener(object: OnSwipeTouchListener(this@GameActivity) {
             override fun onSwipeLeft() {
@@ -54,8 +43,17 @@ class GameActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        manager = GameManager(b.root.context, gridFragment.getGrid(), Coordinates(4,4), 2)
+        manager = GameManager(
+            b.root.context,
+            gridFragment.getGrid(),
+            Coordinates(4,4),
+            2,
+        )
 
+        manager.scoreCallback = { score:Int ->
+            b.score.text = score.toString()
+            null
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

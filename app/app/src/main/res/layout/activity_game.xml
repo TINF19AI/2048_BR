@@ -16,39 +16,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <Button
-        android:id="@+id/btMove"
+    <TextView
+        android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Move Tile"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/flFragment" />
-
-
-    <Button
-        android:id="@+id/btReset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="Reset"
-        app:layout_constraintStart_toEndOf="@+id/btMove"
-        app:layout_constraintTop_toTopOf="@id/btMove" />
-
-    <Button
-        android:id="@+id/btMerge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Merge"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btAppear" />
+        app:layout_constraintTop_toBottomOf="@+id/flFragment" />
 
-    <Button
-        android:id="@+id/btAppear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Appear"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btReset" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

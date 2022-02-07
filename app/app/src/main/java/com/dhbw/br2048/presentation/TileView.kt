@@ -84,7 +84,7 @@ class TileView @JvmOverloads constructor(
 
     private fun moveTo(newCoord: Coordinates) {
         this.apply {
-            val params = (this.layoutParams as GridLayout.LayoutParams)
+            //val params = (this.layoutParams as GridLayout.LayoutParams)
             this.layoutParams = setCoordLayoutParams(newCoord)
 
             translationX = 0f

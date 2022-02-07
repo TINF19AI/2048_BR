@@ -8,12 +8,30 @@ class GameManager(
     private val context: Context,
     private val gridLayout: GridLayout,
     private val gridSize: Coordinates,
-    private val startTiles: Int
+    private val startTiles: Int,
 ) {
-    private var won = false
-    private var over = false
     private val grid = Grid(gridSize)
+
+    var wonCallback: ((Boolean) -> Any?)? = null
+    private var won = false
+        set(newValue) {
+            wonCallback?.let { it(won) }
+            field = newValue
+        }
+
+    var overCallback: ((Boolean) -> Any?)? = null
+    private var over = false
+        set(newValue) {
+            overCallback?.let { it(won) }
+            field = newValue
+        }
+
+    var scoreCallback: ((Int) -> Any?)? = null
     private var score = 0
+        set(newValue) {
+            scoreCallback?.let { it(score) }
+            field = newValue
+        }
 
     init {
         addStartTiles()
