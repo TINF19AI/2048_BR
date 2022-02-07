@@ -1,5 +1,6 @@
 package com.dhbw.br2048.presentation
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
@@ -15,6 +16,7 @@ class GameActivity : AppCompatActivity() {
     private val gridFragment = GridFragment()
     private lateinit var manager: GameManager
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,6 +35,21 @@ class GameActivity : AppCompatActivity() {
 
         b.btMerge.setOnClickListener {
         }
+
+        b.flFragment.setOnTouchListener(object: OnSwipeTouchListener(this@GameActivity) {
+            override fun onSwipeLeft() {
+                manager.move(Direction.LEFT);
+            }
+            override fun onSwipeRight() {
+                manager.move(Direction.RIGHT);
+            }
+            override fun onSwipeTop() {
+                manager.move(Direction.UP);
+            }
+            override fun onSwipeBottom() {
+                manager.move(Direction.DOWN);
+            }
+        })
     }
 
     override fun onResume() {
