@@ -16,6 +16,7 @@ class TileView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, pos: Coordinates, startValue: Int
 ) : AppCompatTextView(context, attrs) {
 
+    var mergedFrom: TileView? = null
 
     var coordinates: Coordinates = pos
         set(newCoordinates) {

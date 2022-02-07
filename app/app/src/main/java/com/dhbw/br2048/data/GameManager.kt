@@ -1,17 +1,23 @@
 package com.dhbw.br2048.data
 
 import android.content.Context
+import android.widget.GridLayout
 import com.dhbw.br2048.presentation.TileView
 
-class GameManager (
-        val context: Context,
-        val gridSize: Coordinates,
-        val startTiles: Int
-    ){
+class GameManager(
+    val context: Context,
+    val gridLayout: GridLayout,
+    val gridSize: Coordinates,
+    val startTiles: Int
+){
     var won = false
     var over = false
     val grid = Grid(gridSize)
     var score = 0
+
+    init {
+        addStartTiles ()
+    }
 
     // Set up the initial tiles to start the game with
     fun addStartTiles () {
@@ -27,6 +33,7 @@ class GameManager (
             val tile = grid.randomAvailableCell()?.let { TileView(context, pos = it, startValue = value) }
             if (tile != null) {
                 grid.insertTile(tile)
+                tile.setGridLayout(gridLayout)
             }
         }
     }
@@ -74,7 +81,7 @@ class GameManager (
         //if (this.isGameTerminated()) return; // Don't do anything if the game's over
 
         var cell: Coordinates
-        var tile: TileView
+        var tile: TileView?
 
         val vector     = getVector(direction)
         if(vector == null) return
@@ -86,14 +93,14 @@ class GameManager (
             for (y in traversals.second){
 
                 cell = Coordinates( x, y )
-                tile = grid.cellContent(cell)!!
+                tile = grid.cellContent(cell)
 
-                //if (tile != null) {
+                tile?.let {
                     val positions = findFarthestPosition(cell, vector)
                     val next      = grid.cellContent(positions.second)
 
                     // Only one merger per row traversal?
-                    if (next != null && next.value == tile.value /*&& !next.mergedFrom*/) {
+                    if (next != null && next.value == tile.value && next.mergedFrom != null) {
                         //var merged = new Tile(positions.next, tile.value * 2);
                         //merged.mergedFrom = [tile, next];
 
@@ -116,7 +123,7 @@ class GameManager (
                     if (!cell.isEqual(tile.coordinates)) {
                         moved = true // The tile moved from its original cell!
                     }
-                //}
+                }
             }
         }
 
@@ -139,10 +146,12 @@ class GameManager (
         do {
             previous = newCell
             newCell     = Coordinates(previous.x + vector.x, previous.y + vector.y )
-        } while (this.grid.withinBounds(newCell) &&
-            this.grid.cellAvailable(newCell))
+        } while (
+            grid.withinBounds(newCell) &&
+            grid.cellAvailable(newCell)
+        )
 
-        return Pair(previous, cell)// Used to check if a merge is required
+        return Pair(previous, newCell)// Used to check if a merge is required
 
     }
 
