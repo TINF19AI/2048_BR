@@ -1,13 +1,14 @@
 package com.dhbw.br2048.presentation
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.widget.GridLayout
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.animation.doOnEnd
 import androidx.core.view.setMargins
 import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Coordinates
@@ -19,15 +20,15 @@ class TileView @JvmOverloads constructor(
     var mergedFrom: Array<TileView>? = null
 
     var coordinates: Coordinates = pos
-        set(newCoordinates) {
-            updatePosition(newCoordinates)
-            field = newCoordinates
-        }
+    var deleteOnMove = false
+    var updateOnMerge = true
 
     //@todo Initialize with constructor
     var value: Int = startValue
         set(newValue) {
-            this.text = newValue.toString()
+            if (!updateOnMerge) {
+                updateText()
+            }
             field = newValue
         }
 
@@ -35,6 +36,11 @@ class TileView @JvmOverloads constructor(
 
     init {
         this.value = startValue
+        updateText()
+    }
+
+    fun updateText() {
+        this.text = value.toString()
     }
 
     fun setGridLayout(newGrid: GridLayout) {
@@ -58,40 +64,6 @@ class TileView @JvmOverloads constructor(
         grid?.removeView(this)
     }
 
-    fun updatePosition(newCoord: Coordinates) {
-        grid?.let {
-            // is executed when run != null
-            animateTo(newCoord)
-        }
-    }
-
-    private fun animateTo(newCoord: Coordinates) {
-        val fieldDistanceX = newCoord.x.minus(this.coordinates.x)
-        val fieldDistanceY = newCoord.y.minus(this.coordinates.y)
-
-        // @todo Prevent bugs if function is run multiple times during animation duration
-
-        this.animate()
-            .translationX(fieldDistanceX * (this.width.toFloat() + grid!!.paddingRight))
-            .translationY(fieldDistanceY * (this.height.toFloat() + grid!!.paddingBottom))
-            .setDuration(200)
-            .setInterpolator(DecelerateInterpolator())
-            .withEndAction {
-                moveTo(newCoord)
-            }
-            .start()
-    }
-
-    private fun moveTo(newCoord: Coordinates) {
-        this.apply {
-            //val params = (this.layoutParams as GridLayout.LayoutParams)
-            this.layoutParams = setCoordLayoutParams(newCoord)
-
-            translationX = 0f
-            translationY = 0f
-        }
-    }
-
     fun setCoordLayoutParams(
         coord: Coordinates
     ): GridLayout.LayoutParams {
@@ -108,21 +80,56 @@ class TileView @JvmOverloads constructor(
         return params
     }
 
-    fun merge() {
-        this.animate()
-            .scaleX(1.2f)
-            .scaleY(1.2f)
-            .setDuration(100)
-            .setInterpolator(DecelerateInterpolator())
-            .withEndAction {
-                this.animate()
-                    .scaleY(1f)
-                    .scaleX(1f)
-                    .setDuration(100)
-                    .setInterpolator(AccelerateDecelerateInterpolator())
-                    .start()
+    fun mergeAnimation(removedTile: TileView): Animator {
+        val scaleX = PropertyValuesHolder.ofFloat(SCALE_X, 1.2f, 1.0f)
+        val scaleY = PropertyValuesHolder.ofFloat(SCALE_Y, 1.2f, 1.0f)
+        val animator = ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY)
+        animator.setDuration(200)
+        animator.doOnEnd {
+            if (updateOnMerge) {
+                updateText()
+                grid?.removeView(removedTile)
             }
-            .start()
+        }
+
+        return animator
+    }
+
+    fun moveToAnimation(newCoord: Coordinates): Animator {
+        val fieldDistanceX = newCoord.x.minus(this.coordinates.x)
+        val fieldDistanceY = newCoord.y.minus(this.coordinates.y)
+
+        val deltaX = PropertyValuesHolder.ofFloat(
+            TRANSLATION_X,
+            fieldDistanceX * (this.width.toFloat() + grid!!.paddingRight)
+        )
+
+        val deltaY = PropertyValuesHolder.ofFloat(
+            TRANSLATION_Y,
+            fieldDistanceY * (this.height.toFloat() + grid!!.paddingBottom)
+        )
+        val animator = ObjectAnimator.ofPropertyValuesHolder(this, deltaX, deltaY)
+        animator.setDuration(150)
+        animator.doOnEnd {
+            if (deleteOnMove) {
+                removeFromGrid()
+            } else {
+                moveTo(newCoord) // update grid position
+            }
+        }
+        // @todo Prevent bugs if function is run multiple times during animation duration
+
+        return animator
+    }
+
+    private fun moveTo(newCoord: Coordinates) {
+        this.apply {
+            //val params = (this.layoutParams as GridLayout.LayoutParams)
+            this.layoutParams = setCoordLayoutParams(newCoord)
+
+            translationX = 0f
+            translationY = 0f
+        }
     }
 
     fun appear() {
@@ -132,8 +139,8 @@ class TileView @JvmOverloads constructor(
         this.animate()
             .scaleX(1f)
             .scaleY(1f)
-            .setDuration(250)
-            .setInterpolator(AccelerateInterpolator())
+            .setDuration(200)
+            .setStartDelay(250)
             .start()
     }
 }

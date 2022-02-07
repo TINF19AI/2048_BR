@@ -1,6 +1,9 @@
 package com.dhbw.br2048.data
 
+import android.animation.Animator
+import android.animation.AnimatorSet
 import android.content.Context
+import android.view.animation.AccelerateInterpolator
 import android.widget.GridLayout
 import com.dhbw.br2048.presentation.TileView
 
@@ -105,6 +108,9 @@ class GameManager(
         val traversals = buildTraversals(vector)
         var moved = false
 
+        val moveAnimations = mutableSetOf<Animator>()
+        val mergeAnimations = mutableSetOf<Animator>()
+
         // Traverse the grid in the right direction and move tiles
         for (x in traversals.first) {
             for (y in traversals.second) {
@@ -118,15 +124,16 @@ class GameManager(
 
                     // Only one merger per row traversal?
                     if (next != null && next.value == tile.value && next.mergedFrom == null) {
+                        moveAnimations.add(next.moveToAnimation(positions.second))
+                        moveAnimations.add(tile.moveToAnimation(positions.second))
+                        mergeAnimations.add(next.mergeAnimation(tile))
+
                         next.value = tile.value * 2
                         next.coordinates = positions.second
                         next.mergedFrom = arrayOf(tile, next)
 
-                        next.merge()
-
                         // Replace old tile
                         grid.removeTile(tile)
-                        tile.removeFromGrid()
 
                         moved = true
 
@@ -136,6 +143,7 @@ class GameManager(
                         // The mighty 2048 tile
                         if (next.value == 2048) won = true
                     } else {
+                        moveAnimations.add(tile.moveToAnimation(positions.first))
                         moveTile(tile, positions.first)
                     }
 
@@ -147,6 +155,17 @@ class GameManager(
         }
 
         if (moved) {
+            val moveAniSet = AnimatorSet()
+            moveAniSet.playTogether(moveAnimations)
+            moveAniSet.interpolator = AccelerateInterpolator()
+            moveAniSet.start()
+
+            val mergeAniSet = AnimatorSet()
+            mergeAniSet.playTogether(mergeAnimations)
+            mergeAniSet.interpolator = AccelerateInterpolator()
+            mergeAniSet.startDelay = 150
+            mergeAniSet.start()
+
             this.addRandomTile()
 
             if (!movesAvailable()) {

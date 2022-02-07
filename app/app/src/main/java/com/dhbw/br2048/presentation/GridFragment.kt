@@ -12,9 +12,6 @@ import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.databinding.FragmentGridBinding
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class GridFragment : Fragment() {
     private var _binding: FragmentGridBinding? = null
     private val b get() = _binding!!
@@ -23,10 +20,6 @@ class GridFragment : Fragment() {
     private var rows: Int = 4
 
     private var tile: TileView? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,10 +36,6 @@ class GridFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
