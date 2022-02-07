@@ -13,11 +13,11 @@ import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Coordinates
 
 class TileView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, coord: Coordinates, startValue: Int
+    context: Context, attrs: AttributeSet? = null, pos: Coordinates, startValue: Int
 ) : AppCompatTextView(context, attrs) {
 
 
-    var coordinates: Coordinates = coord
+    var coordinates: Coordinates = pos
         set(newCoordinates) {
             updatePosition(newCoordinates)
             field = newCoordinates

@@ -22,6 +22,12 @@ class Grid(
         return null
     }
 
+    fun move(tile:TileView, newPosition: Coordinates){
+        grid[tile.coordinates.x][tile.coordinates.y] = null;
+        grid[newPosition.x][newPosition.y] = tile;
+        tile.coordinates = newPosition
+    }
+
     private fun availableCells(): MutableList<Coordinates> {
         var cells: MutableList<Coordinates> = mutableListOf()
 
@@ -49,11 +55,11 @@ class Grid(
 
 
     fun insertTile(tile: TileView) {
-        grid[tile.x][tile.y] = tile
+        grid[tile.coordinates.x][tile.coordinates.y] = tile
     }
 
     fun removeTile(tile: TileView) {
-        grid[tile.x][tile.y] = null
+        grid[tile.coordinates.x][tile.coordinates.y] = null
     }
 
     // Check if there are any cells available

@@ -1,5 +1,6 @@
 package com.dhbw.br2048.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,7 +12,6 @@ import kotlin.random.Random
 class MainActivity : AppCompatActivity() {
 
     private lateinit var b: ActivityMainBinding
-    private lateinit var tile: TileView
 
     private val gridFragment = GridFragment()
 
@@ -20,41 +20,12 @@ class MainActivity : AppCompatActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
-        setCurrentFragment(gridFragment)
 
-        tile = TileView(b.flFragment.context, null, Coordinates(1, 2), 8)
-
-        b.btMove.setOnClickListener {
-            if (Random.nextInt(0, 2) == 0) {
-                // X
-                tile.coordinates = Coordinates(Random.nextInt(0, 4), tile.coordinates.y)
-            } else {
-                // Y
-                tile.coordinates = Coordinates(tile.coordinates.x, Random.nextInt(0, 4))
-            }
-        }
-
-        b.btReset.setOnClickListener {
-            tile.removeFromGrid()
-        }
-
-        b.btAppear.setOnClickListener {
-        }
-
-        b.btMerge.setOnClickListener {
-        }
+        startActivity(Intent(this, GameActivity::class.java))
     }
 
     override fun onResume() {
         super.onResume()
-        tile.setGridLayout(gridFragment.getGrid())
     }
 
-    private fun setCurrentFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            setReorderingAllowed(true)
-            replace(R.id.flFragment, fragment)
-            commit()
-        }
-    }
 }

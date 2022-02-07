@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.br2048">
         <activity
-            android:name="com.dhbw.br2048.presentation.MainActivity"
+            android:name=".presentation.GameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
