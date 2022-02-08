@@ -9,10 +9,6 @@ class Grid(
 
     private var grid: Array<Array<TileView?>> = Array(size.x) { Array(size.y) { null } }
 
-
-    // @todo import
-    // @todo export
-
     fun randomAvailableCell(): Coordinates? {
         val cells = availableCells()
 
@@ -53,7 +49,6 @@ class Grid(
         return position.x >= 0 && position.x < grid.size &&
                 position.y >= 0 && position.y < grid.size
     }
-
 
     fun insertTile(tile: TileView) {
         grid[tile.coordinates.x][tile.coordinates.y] = tile

@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.widget.GridLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.animation.doOnEnd
+import androidx.core.animation.doOnStart
 import androidx.core.view.setMargins
 import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Coordinates
@@ -84,12 +85,11 @@ class TileView @JvmOverloads constructor(
         val scaleX = PropertyValuesHolder.ofFloat(SCALE_X, 1.2f, 1.0f)
         val scaleY = PropertyValuesHolder.ofFloat(SCALE_Y, 1.2f, 1.0f)
         val animator = ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY)
-        animator.setDuration(200)
+        animator.doOnStart {
+            updateText()
+        }
         animator.doOnEnd {
-            if (updateOnMerge) {
-                updateText()
-                grid?.removeView(removedTile)
-            }
+            grid?.removeView(removedTile)
         }
 
         return animator
@@ -109,7 +109,6 @@ class TileView @JvmOverloads constructor(
             fieldDistanceY * (this.height.toFloat() + grid!!.paddingBottom)
         )
         val animator = ObjectAnimator.ofPropertyValuesHolder(this, deltaX, deltaY)
-        animator.setDuration(150)
         animator.doOnEnd {
             if (deleteOnMove) {
                 removeFromGrid()

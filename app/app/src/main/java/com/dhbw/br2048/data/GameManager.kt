@@ -4,7 +4,9 @@ import android.animation.Animator
 import android.animation.AnimatorSet
 import android.content.Context
 import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.GridLayout
+import androidx.core.animation.doOnEnd
 import com.dhbw.br2048.presentation.TileView
 
 class GameManager(
@@ -155,16 +157,20 @@ class GameManager(
         }
 
         if (moved) {
+            val mergeAniSet = AnimatorSet()
+            mergeAniSet.playTogether(mergeAnimations)
+            mergeAniSet.interpolator = DecelerateInterpolator()
+            mergeAniSet.duration = 200
+
             val moveAniSet = AnimatorSet()
             moveAniSet.playTogether(moveAnimations)
             moveAniSet.interpolator = AccelerateInterpolator()
-            moveAniSet.start()
+            moveAniSet.duration = 75
+            moveAniSet.doOnEnd {
+                mergeAniSet.start()
+            }
 
-            val mergeAniSet = AnimatorSet()
-            mergeAniSet.playTogether(mergeAnimations)
-            mergeAniSet.interpolator = AccelerateInterpolator()
-            mergeAniSet.startDelay = 150
-            mergeAniSet.start()
+            moveAniSet.start()
 
             this.addRandomTile()
 
