@@ -1,15 +1,22 @@
 package com.dhbw.br2048.presentation
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.style.ImageSpan
 import android.view.KeyEvent
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.Direction
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityGameBinding
+import com.google.android.material.snackbar.Snackbar
+
 
 class GameActivity : AppCompatActivity() {
     private lateinit var b: ActivityGameBinding
@@ -52,12 +59,16 @@ class GameActivity : AppCompatActivity() {
 
         manager.scoreCallback = { score:Int ->
             b.score.text = score.toString()
-            null
+        }
+        manager.overCallback = {
+            Snackbar.make(b.score, "Game Over!", Snackbar.LENGTH_LONG).show()
+        }
+        manager.wonCallback = {
+            Snackbar.make(b.score, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
         }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-
         return when(keyCode) {
             KeyEvent.KEYCODE_DPAD_UP -> {
                 manager.move(Direction.UP)
@@ -77,7 +88,6 @@ class GameActivity : AppCompatActivity() {
             }
             else -> super.onKeyDown(keyCode, event)
         }
-
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
