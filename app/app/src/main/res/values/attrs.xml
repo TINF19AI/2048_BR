@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="brBackground" format="reference|color" />
+    <attr name="brTile2" format="reference|color" />
+    <attr name="brTile4" format="reference|color" />
+    <attr name="brTile8" format="reference|color" />
+    <attr name="brTile16" format="reference|color" />
+    <attr name="brTile32" format="reference|color" />
+    <attr name="brTile64" format="reference|color" />
+    <attr name="brTile128" format="reference|color" />
+    <attr name="brTile256" format="reference|color" />
+    <attr name="brTile512" format="reference|color" />
+    <attr name="brTile1024" format="reference|color" />
+    <attr name="brTile2048" format="reference|color" />
+    <attr name="brTileText" format="reference|color" />
+    <attr name="brEmpty" format="reference|color" />
+</resources>

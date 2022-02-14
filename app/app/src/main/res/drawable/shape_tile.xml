@@ -3,15 +3,8 @@
 
     <corners android:radius="10dp" />
 
-    <gradient
-        android:angle="45"
-        android:endColor="#0FfFfa"
-        android:startColor="#F18Fff"
-        android:type="linear" />
-
     <!--If your shape requires only one solid color-->
-    <!--<solid
-        android:color="#FFFFFF" />-->
+    <solid android:color="@color/white" />
 
     <size
         android:width="82dp"

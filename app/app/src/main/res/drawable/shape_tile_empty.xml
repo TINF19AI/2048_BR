@@ -3,10 +3,9 @@
 
     <corners android:radius="10dp" />
 
-    <solid android:color="@color/md_brown_100" />
+    <solid android:color="?brEmpty" />
 
     <size
         android:width="82dp"
         android:height="82dp" />
-
 </shape>

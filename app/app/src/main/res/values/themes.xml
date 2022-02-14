@@ -13,5 +13,28 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
+        <item name="brTile2">@color/origTile2</item>
+        <item name="brTile4">@color/origTile4</item>
+        <item name="brTile8">@color/origTile8</item>
+        <item name="brTile16">@color/origTile16</item>
+        <item name="brTile32">@color/origTile32</item>
+        <item name="brTile64">@color/origTile64</item>
+        <item name="brTile128">@color/origTile128</item>
+        <item name="brTile256">@color/origTile256</item>
+        <item name="brTile512">@color/origTile512</item>
+        <item name="brTile1024">@color/origTile1024</item>
+        <item name="brTile2048">@color/origTile2048</item>
+        <item name="brTileText">@color/md_black_1000</item>
+        <item name="brEmpty">@color/origEmpty</item>
+        <item name="brBackground">@color/origBackground</item>
     </style>
+
+    <style name="Theme.Original" parent="@style/Theme.br2048">
+    </style>
+
+    <style name="Theme.Pink" parent="@style/Theme.br2048">
+        <item name="brTile2">@color/md_pink_200</item>
+        <item name="brBackground">@color/md_grey_200</item>
+    </style>
+
 </resources>

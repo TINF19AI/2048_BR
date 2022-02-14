@@ -8,6 +8,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="origEmpty">#FFCDC1B4</color>
+    <color name="origBackground">#FFBBADA0</color>
+    <color name="origTile2">#FFeee4da</color>
+    <color name="origTile4">#FFede0c8</color>
+    <color name="origTile8">#FFf2b179</color>
+    <color name="origTile16">#FFf59563</color>
+    <color name="origTile32">#FFf67c5f</color>
+    <color name="origTile64">#FFf65e3b</color>
+    <color name="origTile128">#FFedcf72</color>
+    <color name="origTile256">#FFedcc61</color>
+    <color name="origTile512">#FFedc850</color>
+    <color name="origTile1024">#FFedc53f</color>
+    <color name="origTile2048">#FFedc22e</color>
+
 
     <!-- google's material design colours from
 http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->

@@ -5,11 +5,14 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.widget.GridLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.setMargins
 import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Coordinates
@@ -44,13 +47,34 @@ class TileView @JvmOverloads constructor(
         this.text = value.toString()
     }
 
+    // sets the background color of the tile depending on the text
+    fun refreshColor() {
+        val tileColor = TypedValue()
+
+        val identifier = "brTile" + this.text
+
+        // identifier of theme
+        var colorIdentifier = resources.getIdentifier(identifier, "attr", context.packageName)
+
+        // value not found
+        if (colorIdentifier == 0) {
+            colorIdentifier = R.attr.brTile2
+            Log.d("TileView", "color identifier " + identifier + " could not be found")
+        }
+
+        this.context.theme.resolveAttribute(colorIdentifier, tileColor, true)
+        val color = tileColor.data
+        DrawableCompat.setTint(DrawableCompat.wrap(this.background), color)
+    }
+
     fun setGridLayout(newGrid: GridLayout) {
         grid = newGrid
 
         // only set these parameters if tile is visible in grid
         this.setBackgroundResource(R.drawable.shape_tile)
+        refreshColor()
+
         this.textAlignment = TEXT_ALIGNMENT_GRAVITY
-//        this.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         this.gravity = Gravity.CENTER
         this.textSize = context.dpToPx(10).toFloat()
 
@@ -87,6 +111,8 @@ class TileView @JvmOverloads constructor(
         val animator = ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY)
         animator.doOnStart {
             updateText()
+            this.invalidate()
+            refreshColor()
         }
         animator.doOnEnd {
             grid?.removeView(removedTile)

@@ -1,14 +1,10 @@
 package com.dhbw.br2048.presentation
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.text.SpannableStringBuilder
-import android.text.style.ImageSpan
+import android.util.Log
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Coordinates
@@ -25,6 +21,10 @@ class GameActivity : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Theme from shared preferences
+        val sp = getSharedPreferences("theme", MODE_PRIVATE)
+        setTheme(sp.getInt("currentTheme", R.style.Theme_Original))
+
         super.onCreate(savedInstanceState)
 
         b = ActivityGameBinding.inflate(layoutInflater)
@@ -32,20 +32,33 @@ class GameActivity : AppCompatActivity() {
         setCurrentFragment(gridFragment)
 
 
-        b.clGame.setOnTouchListener(object: OnSwipeTouchListener(this@GameActivity) {
+        b.clGame.setOnTouchListener(object : OnSwipeTouchListener(this@GameActivity) {
             override fun onSwipeLeft() {
                 manager.move(Direction.LEFT)
             }
+
             override fun onSwipeRight() {
                 manager.move(Direction.RIGHT)
             }
+
             override fun onSwipeTop() {
                 manager.move(Direction.UP)
             }
+
             override fun onSwipeBottom() {
                 manager.move(Direction.DOWN)
             }
         })
+
+        b.btChangeTheme.setOnClickListener {
+            // https://stackoverflow.com/questions/13832459/android-how-to-refresh-activity-set-theme-dynamically
+            val sp = getSharedPreferences("theme", MODE_PRIVATE)
+            val spe = sp.edit()
+            spe.putInt("currentTheme", R.style.Theme_Pink)
+            spe.apply()
+            Log.d("GameActivity", "Theme was changed")
+            this.recreate()
+        }
     }
 
     override fun onResume() {
@@ -53,11 +66,11 @@ class GameActivity : AppCompatActivity() {
         manager = GameManager(
             b.root.context,
             gridFragment.getGrid(),
-            Coordinates(4,4),
+            Coordinates(4, 4),
             2,
         )
 
-        manager.scoreCallback = { score:Int ->
+        manager.scoreCallback = { score: Int ->
             b.score.text = score.toString()
         }
         manager.overCallback = {
@@ -68,8 +81,13 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.d("GameActivity", "onStop")
+    }
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return when(keyCode) {
+        return when (keyCode) {
             KeyEvent.KEYCODE_DPAD_UP -> {
                 manager.move(Direction.UP)
                 true

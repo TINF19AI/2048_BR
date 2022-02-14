@@ -1,13 +1,13 @@
 package com.dhbw.br2048.presentation
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.view.setMargins
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.databinding.FragmentGridBinding
@@ -45,7 +45,9 @@ class GridFragment : Fragment() {
         b.grid2048.apply {
             this.rowCount = 4
             this.columnCount = 4
-            this.setBackgroundColor(resources.getColor(R.color.md_brown_300, null))
+            val backgroundColor = TypedValue()
+            context.theme.resolveAttribute(R.attr.brBackground, backgroundColor, true)
+            this.setBackgroundColor(backgroundColor.data)
             this.setPadding(20)
         }
 
