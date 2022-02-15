@@ -22,8 +22,7 @@ class MainActivity : AppCompatActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
-
-
         startActivity(Intent(this, GameActivity::class.java))
+//        startActivity(Intent(this, GameSelection::class.java))
     }
 }
