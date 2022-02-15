@@ -59,7 +59,7 @@ class TileView @JvmOverloads constructor(
         // value not found
         if (colorIdentifier == 0) {
             colorIdentifier = R.attr.brTile2
-            Log.d("TileView", "color identifier " + identifier + " could not be found")
+            Log.d("TileView", "color identifier $identifier could not be found")
         }
 
         this.context.theme.resolveAttribute(colorIdentifier, tileColor, true)
@@ -74,6 +74,9 @@ class TileView @JvmOverloads constructor(
             textIdentifier = R.attr.brTileText
         }
         this.context.theme.resolveAttribute(textIdentifier, textColor, true)
+        if (textColor.data == 0) { // no color was found
+            this.context.theme.resolveAttribute(R.attr.brTileText, textColor, true) // default text color
+        }
         this.setTextColor(textColor.data)
     }
 
