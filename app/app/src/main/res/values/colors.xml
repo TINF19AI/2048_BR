@@ -23,6 +23,31 @@
     <color name="origTile2048">#FFedc22e</color>
 
 
+    <color name="oceanTile2">#FFcaf0f8</color>
+    <color name="oceanTile4">#FFade8f4</color>
+    <color name="oceanTile8">#FF90e0ef</color>
+    <color name="oceanTile16">#FF48cae4</color>
+    <color name="oceanTile32">#FF00b4d8</color>
+    <color name="oceanTile64">#FF0096c7</color>
+    <color name="oceanTile128">#FF0077b6</color>
+    <color name="oceanTile256">#FF1c558e</color>
+    <color name="oceanTile512">#FF1d4e89</color>
+    <color name="oceanTile1024">#FF023e8a</color>
+    <color name="oceanTile2048">#FF03045e</color>
+
+    <color name="fireTile2">#FFFFBA08</color>
+    <color name="fireTile4">#FFFAA307</color>
+    <color name="fireTile8">#FFF48C06</color>
+    <color name="fireTile16">#FFec7505</color>
+    <color name="fireTile32">#FFE85D04</color>
+    <color name="fireTile64">#FFDC2F02</color>
+    <color name="fireTile128">#FFD00000</color>
+    <color name="fireTile256">#FF9D0208</color>
+    <color name="fireTile512">#FF6A040F</color>
+    <color name="fireTile1024">#FF370617</color>
+    <color name="fireTile2048">#FF03071E</color>
+
+
     <!-- google's material design colours from
 http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
 
