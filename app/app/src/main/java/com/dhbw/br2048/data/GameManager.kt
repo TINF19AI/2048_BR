@@ -17,25 +17,25 @@ class GameManager(
 ) {
     private val grid = Grid(gridSize)
 
-    var wonCallback: ((Boolean) -> Unit)? = null
+    var wonCallback: ((Int) -> Unit)? = null
     private var won = false
         set(newValue) {
-            wonCallback?.let { it(won) }
             field = newValue
+            wonCallback?.let { it(score) }
         }
 
-    var overCallback: ((Boolean) -> Unit)? = null
+    var overCallback: ((Int) -> Unit)? = null
     private var over = false
         set(newValue) {
-            overCallback?.let { it(won) }
             field = newValue
+            overCallback?.let { it(score) }
         }
 
     var scoreCallback: ((Int) -> Unit)? = null
     private var score = 0
         set(newValue) {
-            scoreCallback?.let { it(score) }
             field = newValue
+            scoreCallback?.let { it(score) }
         }
 
     init {

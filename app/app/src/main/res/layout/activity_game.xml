@@ -29,6 +29,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flFragment" />
 
+    <TextView
+        android:id="@+id/scoreboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="152dp"
+
+        android:background="@color/md_yellow_300"
+        android:text="Scoreboard:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flFragment" />
+
     <Button
         android:id="@+id/btChangeTheme"
         android:layout_width="wrap_content"

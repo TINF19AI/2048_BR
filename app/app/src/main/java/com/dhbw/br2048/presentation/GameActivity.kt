@@ -7,17 +7,22 @@ import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
+import com.dhbw.br2048.api.GameSocket
 import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.Direction
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityGameBinding
 import com.google.android.material.snackbar.Snackbar
+import io.socket.emitter.Emitter
+import org.json.JSONException
+import org.json.JSONObject
 
 
 class GameActivity : AppCompatActivity() {
     private lateinit var b: ActivityGameBinding
     private val gridFragment = GridFragment()
     private lateinit var manager: GameManager
+    private lateinit var gameSocket: GameSocket
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +66,27 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    private val onNewMessage = Emitter.Listener { args ->
+
+        runOnUiThread(Runnable {
+            Log.d("onNewMessage", "onNewMessage")
+
+        })
+    }
+
     override fun onResume() {
         super.onResume()
+        gameSocket = GameSocket("my-game-id") {
+            runOnUiThread {
+               b.scoreboard.text = it
+            }
+        }
+
+
+
+        //gameSocket.socket.on("score", onNewMessage)
+
+
         manager = GameManager(
             b.root.context,
             gridFragment.getGrid(),
@@ -72,17 +96,21 @@ class GameActivity : AppCompatActivity() {
 
         manager.scoreCallback = { score: Int ->
             b.score.text = score.toString()
+            gameSocket.score(score)
         }
-        manager.overCallback = {
+        manager.overCallback = { score: Int ->
             Snackbar.make(b.score, "Game Over!", Snackbar.LENGTH_LONG).show()
+            gameSocket.over(score)
         }
-        manager.wonCallback = {
+        manager.wonCallback = { score: Int ->
             Snackbar.make(b.score, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
+            gameSocket.won(score)
         }
     }
 
     override fun onStop() {
         super.onStop()
+        gameSocket.close()
         Log.d("GameActivity", "onStop")
     }
 

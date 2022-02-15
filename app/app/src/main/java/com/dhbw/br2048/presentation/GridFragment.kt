@@ -48,7 +48,7 @@ class GridFragment : Fragment() {
             val backgroundColor = TypedValue()
             context.theme.resolveAttribute(R.attr.brBackground, backgroundColor, true)
             this.setBackgroundColor(backgroundColor.data)
-            this.setPadding(20)
+            this.setPadding(20, 20, 20, 20)
         }
 
         for (i in 0 until 4) {
