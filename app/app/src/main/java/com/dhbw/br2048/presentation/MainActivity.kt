@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var b: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         val sp = getSharedPreferences("theme", MODE_PRIVATE)
         val spe = sp.edit()
         spe.putInt("currentTheme", R.style.Theme_Original)

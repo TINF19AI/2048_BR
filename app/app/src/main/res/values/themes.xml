@@ -34,6 +34,7 @@
 
     <style name="Theme.Pink" parent="@style/Theme.br2048">
         <item name="brTile2">@color/md_pink_200</item>
+        <item name="brTile4">@color/md_pink_300</item>
         <item name="brBackground">@color/md_grey_200</item>
     </style>
 

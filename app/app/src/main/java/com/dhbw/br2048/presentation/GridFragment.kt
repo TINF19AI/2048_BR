@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.view.setMargins
+import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.databinding.FragmentGridBinding
