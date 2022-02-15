@@ -65,6 +65,16 @@ class TileView @JvmOverloads constructor(
         this.context.theme.resolveAttribute(colorIdentifier, tileColor, true)
         val color = tileColor.data
         DrawableCompat.setTint(DrawableCompat.wrap(this.background), color)
+
+        // Text color
+        val textColor = TypedValue()
+        val textIdent = "brTileText" + this.text
+        var textIdentifier = resources.getIdentifier(textIdent, "attr", context.packageName)
+        if (textIdentifier == 0) {
+            textIdentifier = R.attr.brTileText
+        }
+        this.context.theme.resolveAttribute(textIdentifier, textColor, true)
+        this.setTextColor(textColor.data)
     }
 
     fun setGridLayout(newGrid: GridLayout) {

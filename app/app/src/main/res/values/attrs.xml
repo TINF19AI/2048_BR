@@ -13,5 +13,16 @@
     <attr name="brTile1024" format="reference|color" />
     <attr name="brTile2048" format="reference|color" />
     <attr name="brTileText" format="reference|color" />
+    <attr name="brTileText2" format="reference|color" />
+    <attr name="brTileText4" format="reference|color" />
+    <attr name="brTileText8" format="reference|color" />
+    <attr name="brTileText16" format="reference|color" />
+    <attr name="brTileText32" format="reference|color" />
+    <attr name="brTileText64" format="reference|color" />
+    <attr name="brTileText128" format="reference|color" />
+    <attr name="brTileText256" format="reference|color" />
+    <attr name="brTileText512" format="reference|color" />
+    <attr name="brTileText1024" format="reference|color" />
+    <attr name="brTileText2048" format="reference|color" />
     <attr name="brEmpty" format="reference|color" />
 </resources>
