@@ -25,6 +25,17 @@
         <item name="brTile1024">@color/origTile1024</item>
         <item name="brTile2048">@color/origTile2048</item>
         <item name="brTileText">@color/md_black_1000</item>
+        <item name="brTileText2">@color/md_black_1000</item>
+        <item name="brTileText4">@color/md_black_1000</item>
+        <item name="brTileText8">@color/md_black_1000</item>
+        <item name="brTileText16">@color/md_black_1000</item>
+        <item name="brTileText32">@color/md_black_1000</item>
+        <item name="brTileText64">@color/md_black_1000</item>
+        <item name="brTileText128">@color/md_black_1000</item>
+        <item name="brTileText256">@color/md_black_1000</item>
+        <item name="brTileText512">@color/md_black_1000</item>
+        <item name="brTileText1024">@color/md_black_1000</item>
+        <item name="brTileText2048">@color/md_black_1000</item>
         <item name="brEmpty">@color/origEmpty</item>
         <item name="brBackground">@color/origBackground</item>
         <item name="android:colorBackground">@color/md_grey_900</item>
