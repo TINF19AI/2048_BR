@@ -80,7 +80,7 @@ class TileView @JvmOverloads constructor(
         this.setTextColor(textColor.data)
     }
 
-    fun setGridLayout(newGrid: GridLayout) {
+    fun setGridLayout(newGrid: GridLayout, doAppearAnim: Boolean = true) {
         grid = newGrid
 
         // only set these parameters if tile is visible in grid
@@ -95,7 +95,10 @@ class TileView @JvmOverloads constructor(
 
         grid!!.addView(this)
 
-        appear()
+        if (doAppearAnim)
+        {
+            appearAnimation()
+        }
     }
 
     fun removeFromGrid() {
@@ -170,7 +173,7 @@ class TileView @JvmOverloads constructor(
         }
     }
 
-    fun appear() {
+    fun appearAnimation() {
         this.scaleX = 0f
         this.scaleY = 0f
 

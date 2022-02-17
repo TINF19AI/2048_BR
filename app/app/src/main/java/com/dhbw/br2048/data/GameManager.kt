@@ -68,8 +68,7 @@ class GameManager(
         } ?: run { // if null
             val newTile = TileView(context, pos = pos, startValue = value)
             grid.insertTile(newTile)
-            newTile.setGridLayout(gridLayout)
-
+            newTile.setGridLayout(gridLayout, doAppearAnim = false)
         }
     }
 
