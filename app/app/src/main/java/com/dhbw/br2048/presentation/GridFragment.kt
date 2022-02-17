@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.TextView
+import androidx.core.view.iterator
 import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
@@ -36,6 +37,15 @@ class GridFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    // Author: Maxi
+    fun clearGrid() {
+        for (e in b.grid2048.iterator()){
+            if (e is TileView){
+                b.grid2048.removeView(e)
+            }
+        }
     }
 
     // Author: Kai

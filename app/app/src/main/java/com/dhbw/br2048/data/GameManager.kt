@@ -8,6 +8,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.GridLayout
 import androidx.core.animation.doOnEnd
 import com.dhbw.br2048.presentation.TileView
+import kotlin.random.Random
 
 class GameManager(
     private val context: Context,
@@ -112,7 +113,7 @@ class GameManager(
 
     // Move tiles on the grid in the specified direction
     // From open source 2048, ported by Maxi
-    fun move(direction: Direction) {
+    fun move(direction: Direction): Boolean {
         // 0: up, 1: right, 2: down, 3: left
 
         //if (this.isGameTerminated()) return; // Don't do anything if the game's over
@@ -120,7 +121,7 @@ class GameManager(
         var cell: Coordinates
         var tile: TileView?
 
-        val vector = getVector(direction) ?: return
+        val vector = getVector(direction) ?: return false
         val traversals = buildTraversals(vector)
         var moved = false
 
@@ -199,6 +200,21 @@ class GameManager(
                 if (tileView != null) {
                     tileView.mergedFrom = null
                 }
+            }
+        }
+
+        return moved
+    }
+
+    fun moveRandom(){
+        var moved = false
+        var iterations = 0
+        while(!moved){
+            moved = move(Direction.values()[Random.nextInt(0,4)])
+            iterations++
+
+            if(iterations > 20){
+                return
             }
         }
     }

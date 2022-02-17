@@ -9,12 +9,14 @@ import com.dhbw.br2048.api.SocketHandler
 import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityMainBinding
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var b: ActivityMainBinding
-    private val gridFragment = GridFragment()
+    private var gridFragment = GridFragment()
     private lateinit var manager: GameManager
+    private val timer = Timer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val sp = getSharedPreferences("theme", MODE_PRIVATE)
@@ -44,8 +46,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun newBackgroundGame(){
+
+        gridFragment.clearGrid()
+
         manager = GameManager(
             b.root.context,
             gridFragment.getGrid(),
@@ -53,6 +57,25 @@ class MainActivity : AppCompatActivity() {
             2,
         )
         manager.addStartTiles()
+        // @todo reset after time or score
+        /* manager.scoreCallback = {
+            if (it > 100){
+                newBackgroundGame()
+            }
+        }*/
+
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                runOnUiThread {
+                    manager.moveRandom()
+                }
+            }
+        }, 1000, 2500)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        newBackgroundGame()
 
     }
 
