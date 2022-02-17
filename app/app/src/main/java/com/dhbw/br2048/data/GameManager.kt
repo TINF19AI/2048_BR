@@ -38,12 +38,8 @@ class GameManager(
             scoreCallback?.let { it(score) }
         }
 
-    init {
-        addStartTiles()
-    }
-
     // Set up the initial tiles to start the game with
-    private fun addStartTiles() {
+    fun addStartTiles() {
         for (i in 1..startTiles) {
             this.addRandomTile()
         }
@@ -59,6 +55,19 @@ class GameManager(
                 grid.insertTile(tile)
                 tile.setGridLayout(gridLayout)
             }
+        }
+    }
+
+    // Author: Kai
+    fun setTile(value: Int, pos: Coordinates) {
+        val tile = grid.cellContent(pos)
+        tile?.let {
+            it.value = value
+        } ?: run { // if null
+            val newTile = TileView(context, pos = pos, startValue = value)
+            grid.insertTile(newTile)
+            newTile.setGridLayout(gridLayout)
+
         }
     }
 

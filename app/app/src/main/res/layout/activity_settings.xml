@@ -4,25 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
-
-    <Button
-        android:id="@+id/btStartGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_start_game"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+    tools:context=".presentation.SettingsActivity">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btSettings"
+        android:id="@+id/btChangeTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_options"
-        app:layout_constraintTop_toBottomOf="@id/btStartGame"
+        android:text="@string/change_theme"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btShowLicenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/licenses"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btChangeTheme"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,5 +2,7 @@
 <resources>
     <string name="btn_start_game">Spiel starten</string>
     <string name="btn_options">Spieloptionen</string>
-    <string name="create_lobby">Create Lobby</string>
+    <string name="create_lobby">Lobby Erstellen</string>
+    <string name="change_theme">Theme verändern</string>
+    <string name="licenses">Lizenzen</string>
 </resources>

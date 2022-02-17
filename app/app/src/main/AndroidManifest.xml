@@ -10,8 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.br2048">
+        android:theme="@style/Theme.br2048"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".presentation.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.GameSelection"
             android:exported="false" />

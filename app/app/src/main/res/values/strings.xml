@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">br2048</string>
     <string name="btn_start_game">Start game</string>
-    <string name="btn_options">Game Options</string>
+    <string name="btn_options">Settings</string>
     <string name="create_lobby">Create Lobby</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="licenses">Licenses</string>
 </resources>
