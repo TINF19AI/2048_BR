@@ -25,7 +25,9 @@ class MainActivity : AppCompatActivity() {
 
         SocketHandler.setSocket(b.root.context)
 
-        startActivity(Intent(this, GameActivity::class.java))
+        b.btStartGame.setOnClickListener {
+            startActivity(Intent(this, GameSelection::class.java))
+        }
     }
 
     override fun onStop() {

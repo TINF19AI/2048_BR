@@ -67,10 +67,8 @@ class GameActivity : AppCompatActivity() {
     }
 
     private val onNewMessage = Emitter.Listener { args ->
-
         runOnUiThread(Runnable {
             Log.d("onNewMessage", "onNewMessage")
-
         })
     }
 

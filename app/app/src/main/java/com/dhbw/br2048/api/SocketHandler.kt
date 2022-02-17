@@ -22,7 +22,7 @@ object SocketHandler {
             opts.reconnection = true
             opts.query = "CustomId=" + Settings.Global.getString(context.contentResolver, "device_name")
 
-            manager = Manager(URI.create("http://f322-2003-c2-2f23-300-215-5dff-fe62-e100.ngrok.io"), opts)
+            manager = Manager(URI.create("http://9582-79-206-50-94.ngrok.io"), opts)
             mSocket = manager.socket("/")
         } catch (e: URISyntaxException) {
             // @todo
@@ -41,6 +41,15 @@ object SocketHandler {
             Log.d("mEVENT_SCORE", it.toString())
         }
 
+    }
+
+    @Synchronized
+    fun request(topic: String, data: Any?, callback: (Array<Any>) -> Unit?){
+        mSocket.emit(topic, data)
+
+        mSocket.once(topic){
+            callback(it)
+        }
     }
 
     @Synchronized
