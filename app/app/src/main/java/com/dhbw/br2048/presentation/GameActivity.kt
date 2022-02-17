@@ -2,6 +2,7 @@ package com.dhbw.br2048.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
@@ -78,15 +79,19 @@ class GameActivity : AppCompatActivity() {
             b.scoreboard3Score
         )
 
+        gameSocket = GameSocket(
+            "my-game-id",
+            Settings.Global.getString(baseContext.contentResolver, "device_name" )
+        ) { list, position ->
 
-        gameSocket = GameSocket("my-game-id") {
             runOnUiThread {
+                b.position.text = "$position / ${list.size}"
 
-                for ((i, score) in it.withIndex()){
+                for ((i, entry) in list.withIndex()) {
                     val pos = i + 1
-                    if(pos in 1..3){
-                        //scoreboardScores[i].text = score.get("score").toString()
-                        //scoreboardUsernames[i].text = score.get("username").toString()
+                    if (pos in 1..3) {
+                        scoreboardScores[i].text = entry.score.toString()
+                        scoreboardUsernames[i].text = entry.username
 
                     }
                 }

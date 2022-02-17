@@ -37,6 +37,7 @@ function newGame(gameId: string) {
       `[${gameId} - ${username}] User connected from ${socket.request.socket.remoteAddress}`
     );
     addScore(gameId, username, 0);
+    nsp.emit("score", getScore(gameId));
 
     socket.on("score", function (score) {
       addScore(gameId, username, score);
@@ -80,7 +81,7 @@ function getScore(gameId: string) {
     };
   });
 
-  score.sort((a, b) => a.score - b.score);
+  score.sort((a, b) => b.score - a.score);
 
   return score;
 }
