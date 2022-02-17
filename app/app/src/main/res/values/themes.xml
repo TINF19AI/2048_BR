@@ -27,6 +27,7 @@
         <item name="brTileText">@color/md_black_1000</item>
         <item name="brEmpty">@color/origEmpty</item>
         <item name="brBackground">@color/origBackground</item>
+        <item name="android:colorBackground">@color/md_grey_900</item>
     </style>
 
     <style name="Theme.Original" parent="@style/Theme.br2048">
