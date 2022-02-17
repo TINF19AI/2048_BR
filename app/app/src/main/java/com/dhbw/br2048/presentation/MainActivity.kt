@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         b.btStartGame.setOnClickListener {
             startActivity(Intent(this, GameSelection::class.java))
         }
+
+        b.btSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
     }
 
     override fun onStop() {

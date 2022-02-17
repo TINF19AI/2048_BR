@@ -14,8 +14,6 @@ import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityGameBinding
 import com.google.android.material.snackbar.Snackbar
 import io.socket.emitter.Emitter
-import org.json.JSONException
-import org.json.JSONObject
 
 
 class GameActivity : AppCompatActivity() {
@@ -54,16 +52,6 @@ class GameActivity : AppCompatActivity() {
                 manager.move(Direction.DOWN)
             }
         })
-
-        b.btChangeTheme.setOnClickListener {
-            // https://stackoverflow.com/questions/13832459/android-how-to-refresh-activity-set-theme-dynamically
-            val sp = getSharedPreferences("theme", MODE_PRIVATE)
-            val spe = sp.edit()
-            spe.putInt("currentTheme", R.style.Theme_Pink)
-            spe.apply()
-            Log.d("GameActivity", "Theme was changed")
-            this.recreate()
-        }
     }
 
     private val onNewMessage = Emitter.Listener { args ->
@@ -91,6 +79,7 @@ class GameActivity : AppCompatActivity() {
             Coordinates(4, 4),
             2,
         )
+        manager.addStartTiles()
 
         manager.scoreCallback = { score: Int ->
             b.score.text = score.toString()

@@ -41,15 +41,4 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flFragment" />
-
-    <Button
-        android:id="@+id/btChangeTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Theme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

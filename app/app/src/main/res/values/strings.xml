@@ -6,4 +6,7 @@
     <string name="btn_singleplayer">Singleplayer</string>
     <string name="btn_join_lobby">Join Multiplayer-Lobby</string>
     <string name="btn_create_lobby">Create Multiplayer-Lobby</string>
+    <string name="btn_options">Settings</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="licenses">Licenses</string>
 </resources>
