@@ -40,17 +40,17 @@ function newGame(gameId: string) {
 
     socket.on("score", function (score) {
       addScore(gameId, username, score);
-      nsp.emit("score", games[gameId]);
+      nsp.emit("score", getScore(gameId));
     });
 
     socket.on("won", function (score) {
       addScore(gameId, username, score, false);
-      nsp.emit("score", games[gameId]);
+      nsp.emit("score", getScore(gameId));
     });
 
     socket.on("over", function (score) {
       addScore(gameId, username, score, false);
-      nsp.emit("score", games[gameId]);
+      nsp.emit("score", getScore(gameId));
     });
   });
 }
@@ -70,4 +70,17 @@ function addScore(gameId, username, score, alive = true) {
 
   games[gameId][username].score = score;
   games[gameId][username].alive = alive;
+}
+
+function getScore(gameId: string) {
+  var score = Object.keys(games[gameId]).map((key) => {
+    return {
+      ...games[gameId][key],
+      username: key,
+    };
+  });
+
+  score.sort((a, b) => a.score - b.score);
+
+  return score;
 }

@@ -1,11 +1,13 @@
 package com.dhbw.br2048.api
 
 import android.util.Log
-import io.socket.client.Socket
+import android.widget.TextView
 import org.json.JSONObject
+import io.socket.client.Socket
+import org.json.JSONArray
 
 
-class GameSocket(sessionName: String, scoreboard: ((String) -> Unit)? = null){
+class GameSocket(sessionName: String, scoreboard: ((Array<Any>) -> Unit)? = null){
     var socket: Socket
 
     fun score(score: Int) {
@@ -32,16 +34,14 @@ class GameSocket(sessionName: String, scoreboard: ((String) -> Unit)? = null){
         }
 
         socket.on("score") {
-            val gameScore = it[0] as JSONObject
-            var content = "Scoreboard: \n"
-            for (key in gameScore.keys()) {
-                val score = (gameScore[key as String] as JSONObject)
-                Log.d("EVENT_SCORE$key", score.get("score").toString())
-                content += key + " " + score.get("score").toString() + "\t Alive: " + score.get("alive").toString() + "\n"
-            }
+            val gameScore = it[0] as JSONArray // @todo use Score type
+
+            val list = arrayOf(gameScore) as Array<Any>
+
+
 
             if (scoreboard != null) {
-                scoreboard(content)
+                scoreboard(list)
             }
         }
 

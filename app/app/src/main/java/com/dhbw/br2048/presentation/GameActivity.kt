@@ -66,13 +66,32 @@ class GameActivity : AppCompatActivity() {
     // Author: Maxi
     override fun onResume() {
         super.onResume()
+
+        val scoreboardUsernames = arrayOf(
+            b.scoreboard1Username,
+            b.scoreboard2Username,
+            b.scoreboard3Username
+        )
+        val scoreboardScores = arrayOf(
+            b.scoreboard1Score,
+            b.scoreboard2Score,
+            b.scoreboard3Score
+        )
+
+
         gameSocket = GameSocket("my-game-id") {
             runOnUiThread {
-                b.scoreboard.text = it
+
+                for ((i, score) in it.withIndex()){
+                    val pos = i + 1
+                    if(pos in 1..3){
+                        //scoreboardScores[i].text = score.get("score").toString()
+                        //scoreboardUsernames[i].text = score.get("username").toString()
+
+                    }
+                }
             }
         }
-
-        //gameSocket.socket.on("score", onNewMessage)
 
         manager = GameManager(
             b.root.context,
