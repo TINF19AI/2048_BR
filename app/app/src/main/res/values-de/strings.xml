@@ -2,5 +2,8 @@
 <resources>
     <string name="btn_start_game">Spiel starten</string>
     <string name="btn_options">Spieloptionen</string>
-    <string name="create_lobby">Create Lobby</string>
+    <string name="tv_game_selection">Wähle deinen Spielmodus!</string>
+    <string name="btn_singleplayer">Einzelspieler</string>
+    <string name="btn_join_lobby">Multiplayer-Lobby beitreten</string>
+    <string name="btn_create_lobby">Multiplayer-Lobby erstellen</string>
 </resources>
