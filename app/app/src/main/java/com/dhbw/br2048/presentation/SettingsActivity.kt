@@ -33,7 +33,11 @@ class SettingsActivity : AppCompatActivity() {
             spe.putInt("currentTheme", R.style.Theme_Pink) // TODO: theme selection
             spe.apply()
             Log.d("SettingsActivity", "Theme was changed")
-            this.recreate()
+
+            val intent = this.intent
+            this.finish()
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            this.startActivity(intent)
         }
 
         b.btShowLicenses.setOnClickListener {
