@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.view.setMargins
-import androidx.core.view.setPadding
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.databinding.FragmentGridBinding
@@ -39,6 +38,7 @@ class GridFragment : Fragment() {
         _binding = null
     }
 
+    // Author: Kai
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,8 +69,6 @@ class GridFragment : Fragment() {
                 b.grid2048.addView(empty)
                 (empty.layoutParams as GridLayout.LayoutParams).setMargins(20)
             }
-
         }
-
     }
 }

@@ -25,8 +25,10 @@ class GameActivity : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         // Theme from shared preferences
+        // Author: Kai
         val sp = getSharedPreferences("theme", MODE_PRIVATE)
         setTheme(sp.getInt("currentTheme", R.style.Theme_Original))
+        // End Kai
 
         super.onCreate(savedInstanceState)
 
@@ -34,7 +36,7 @@ class GameActivity : AppCompatActivity() {
         setContentView(b.root)
         setCurrentFragment(gridFragment)
 
-
+        // Author: Caspar
         b.clGame.setOnTouchListener(object : OnSwipeTouchListener(this@GameActivity) {
             override fun onSwipeLeft() {
                 manager.move(Direction.LEFT)
@@ -52,6 +54,7 @@ class GameActivity : AppCompatActivity() {
                 manager.move(Direction.DOWN)
             }
         })
+        // End Caspar
     }
 
     private val onNewMessage = Emitter.Listener { args ->
@@ -60,18 +63,16 @@ class GameActivity : AppCompatActivity() {
         })
     }
 
+    // Author: Maxi
     override fun onResume() {
         super.onResume()
         gameSocket = GameSocket("my-game-id") {
             runOnUiThread {
-               b.scoreboard.text = it
+                b.scoreboard.text = it
             }
         }
 
-
-
         //gameSocket.socket.on("score", onNewMessage)
-
 
         manager = GameManager(
             b.root.context,

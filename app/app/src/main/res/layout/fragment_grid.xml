@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".presentation.GridFragment">
 
+    <!--    Author: Kai-->
     <GridLayout
         android:id="@+id/grid2048"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nestedScrollingEnabled="false"
         android:alignmentMode="alignBounds"
+        android:nestedScrollingEnabled="false"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

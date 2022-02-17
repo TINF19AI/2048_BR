@@ -3,7 +3,9 @@ package com.dhbw.br2048.presentation
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
+import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivitySettingsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,6 +24,7 @@ class SettingsActivity : AppCompatActivity() {
 
         b = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(b.root)
+        setCurrentFragment(gridFragment)
 
         b.btChangeTheme.setOnClickListener {
             // https://stackoverflow.com/questions/13832459/android-how-to-refresh-activity-set-theme-dynamically
@@ -40,6 +43,23 @@ class SettingsActivity : AppCompatActivity() {
             ).setMessage("test")
                 .show()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        manager = GameManager(
+            b.root.context,
+            gridFragment.getGrid(),
+            Coordinates(4, 4),
+            2,
+        )
+    }
+
+    private fun setCurrentFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            setReorderingAllowed(true)
+            replace(R.id.flFragment, fragment)
+            commit()
+        }
     }
 }

@@ -1,9 +1,8 @@
 package com.dhbw.br2048.api
 
 import android.util.Log
-import android.widget.TextView
-import org.json.JSONObject
 import io.socket.client.Socket
+import org.json.JSONObject
 
 
 class GameSocket(sessionName: String, scoreboard: ((String) -> Unit)? = null){

@@ -39,6 +39,7 @@ class GameManager(
         }
 
     // Set up the initial tiles to start the game with
+    // From open source 2048, ported by Maxi
     fun addStartTiles() {
         for (i in 1..startTiles) {
             this.addRandomTile()
@@ -46,6 +47,7 @@ class GameManager(
     }
 
     // Adds a tile in a random position
+    // From open source 2048, ported by Maxi
     private fun addRandomTile() {
         if (grid.cellsAvailable()) {
             val value = if (Math.random() < 0.9) 2 else 4
@@ -72,11 +74,13 @@ class GameManager(
     }
 
     // Move a tile and its representation
+    // From open source 2048, ported by Maxi
     private fun moveTile(tile: TileView, cell: Coordinates) {
         grid.move(tile, cell)
     }
 
     // Get the vector representing the chosen direction
+    // From open source 2048, ported by Maxi
     private fun getVector(direction: Direction): Coordinates? {
         // Vectors representing tile movement
         val map = mapOf(
@@ -89,6 +93,7 @@ class GameManager(
     }
 
     // Build a list of positions to traverse in the right order
+    // From open source 2048, ported by Maxi
     private fun buildTraversals(vector: Coordinates): Pair<MutableList<Int>, MutableList<Int>> {
         val traversalsX = mutableListOf<Int>()
         val traversalsY = mutableListOf<Int>()
@@ -107,6 +112,7 @@ class GameManager(
     }
 
     // Move tiles on the grid in the specified direction
+    // From open source 2048, ported by Maxi
     fun move(direction: Direction) {
         // 0: up, 1: right, 2: down, 3: left
 
@@ -119,6 +125,7 @@ class GameManager(
         val traversals = buildTraversals(vector)
         var moved = false
 
+        // Author move/mergeAnimations: Kai
         val moveAnimations = mutableSetOf<Animator>()
         val mergeAnimations = mutableSetOf<Animator>()
 
@@ -166,6 +173,7 @@ class GameManager(
         }
 
         if (moved) {
+            // Author: Kai
             val mergeAniSet = AnimatorSet()
             mergeAniSet.playTogether(mergeAnimations)
             mergeAniSet.interpolator = DecelerateInterpolator()
@@ -180,6 +188,7 @@ class GameManager(
             }
 
             moveAniSet.start()
+            // End Kai
 
             this.addRandomTile()
 
@@ -195,6 +204,7 @@ class GameManager(
         }
     }
 
+    // From open source 2048, ported by Maxi
     private fun findFarthestPosition(
         cell: Coordinates,
         vector: Coordinates
@@ -215,11 +225,13 @@ class GameManager(
 
     }
 
+    // From open source 2048, ported by Maxi
     private fun movesAvailable(): Boolean {
         return grid.cellsAvailable() || tileMatchesAvailable()
     }
 
     // Check for available matches between tiles (more expensive check)
+    // From open source 2048, ported by Maxi
     private fun tileMatchesAvailable(): Boolean {
         //var tile: TileView;
         var result = false
