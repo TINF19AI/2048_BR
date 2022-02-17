@@ -8,15 +8,23 @@ io.on("connection", function (socket) {
     `[${socket.handshake.query.CustomId}] User connected from ${socket.request.socket.remoteAddress}`
   );
 
-  io.on("newGame", function (name) {
-    console.log(
-      `[${socket.handshake.query.CustomId}] Created a new Game ${name}`
-    );
-    newGame(name);
+  socket.on("newGame", function (name) {
+    if (games[name]) {
+      console.log(`[${socket.handshake.query.CustomId}] Join Game ${name}`);
+      socket.emit("newGame", {});
+    } else {
+      console.log(
+        `[${socket.handshake.query.CustomId}] Created a new Game ${name}`
+      );
+      newGame(name);
+      socket.emit("newGame", {});
+    }
+  });
+
+  socket.on("getGames", function () {
+    socket.emit("getGames", Object.keys(games));
   });
 });
-
-newGame("my-game-id");
 
 function newGame(gameId: string) {
   games[gameId] = {};

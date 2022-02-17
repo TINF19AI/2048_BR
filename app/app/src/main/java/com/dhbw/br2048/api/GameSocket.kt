@@ -36,8 +36,9 @@ class GameSocket(sessionName: String, scoreboard: ((String) -> Unit)? = null){
             val gameScore = it[0] as JSONObject
             var content = "Scoreboard: \n"
             for (key in gameScore.keys()) {
-                Log.d("EVENT_SCORE$key", (gameScore[key as String] as JSONObject).get("score").toString())
-                content += key + " " + (gameScore[key as String] as JSONObject).get("score").toString() + "\n"
+                val score = (gameScore[key as String] as JSONObject)
+                Log.d("EVENT_SCORE$key", score.get("score").toString())
+                content += key + " " + score.get("score").toString() + "\t Alive: " + score.get("alive").toString() + "\n"
             }
 
             if (scoreboard != null) {
