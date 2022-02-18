@@ -214,17 +214,20 @@ class GameManager(
         return moved
     }
 
-    fun moveRandom() {
-        var moved = false
-        var iterations = 0
-        while (!moved) {
-            moved = move(Direction.values()[Random.nextInt(0, 4)])
-            iterations++
+    fun moveRandom(): Boolean {
+        //var moved = false
+        val directions = mutableListOf(0, 1, 2, 3)
+        for (i in 0..3) {
+            var random = Random.nextInt(0, 4)
 
-            if (iterations > 20) {
-                return
+            // move tiles and exit when success
+            if (move(Direction.values()[directions[random]])) {
+                return true
             }
+            // remove custom direction
+            directions.removeAt(random)
         }
+        return false
     }
 
     // From open source 2048, ported by Maxi
