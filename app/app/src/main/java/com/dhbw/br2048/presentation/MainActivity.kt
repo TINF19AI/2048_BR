@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var b: ActivityMainBinding
     private var gridFragment = GridFragment()
-    private lateinit var manager: GameManager
-    private val timer = Timer()
+    private var manager: GameManager? = null
+    private var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val sp = getSharedPreferences("theme", MODE_PRIVATE)
@@ -47,16 +47,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun newBackgroundGame(){
-
-        gridFragment.clearGrid()
+        manager?.clearGrid()
 
         manager = GameManager(
             b.root.context,
             gridFragment.getGrid(),
             Coordinates(4, 4),
-            2,
+            4,
         )
-        manager.addStartTiles()
+        manager?.addStartTiles()
         // @todo reset after time or score
         /* manager.scoreCallback = {
             if (it > 100){
@@ -64,10 +63,11 @@ class MainActivity : AppCompatActivity() {
             }
         }*/
 
-        timer.scheduleAtFixedRate(object : TimerTask() {
+        timer = Timer()
+        timer?.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 runOnUiThread {
-                    manager.moveRandom()
+                    manager?.moveRandom()
                 }
             }
         }, 1000, 2500)
@@ -76,11 +76,17 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         newBackgroundGame()
-
     }
 
     override fun onStop() {
         super.onStop()
         Log.d("MainActivity", "onStop")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer?.cancel()
+        timer?.purge()
+        timer = null
     }
 }

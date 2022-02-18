@@ -39,6 +39,14 @@ class GameManager(
             scoreCallback?.let { it(score) }
         }
 
+    fun clearGrid() {
+        grid.eachCell { _, tile ->
+            @Suppress("IfThenToSafeAccess")
+            if (tile != null)
+                tile.removeFromGrid()
+        }
+    }
+
     // Set up the initial tiles to start the game with
     // From open source 2048, ported by Maxi
     fun addStartTiles() {
@@ -206,14 +214,14 @@ class GameManager(
         return moved
     }
 
-    fun moveRandom(){
+    fun moveRandom() {
         var moved = false
         var iterations = 0
-        while(!moved){
-            moved = move(Direction.values()[Random.nextInt(0,4)])
+        while (!moved) {
+            moved = move(Direction.values()[Random.nextInt(0, 4)])
             iterations++
 
-            if(iterations > 20){
+            if (iterations > 20) {
                 return
             }
         }
