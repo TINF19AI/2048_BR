@@ -1,6 +1,7 @@
 package com.dhbw.br2048.presentation
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -12,7 +13,8 @@ class LobbyActivity : AppCompatActivity() {
     private lateinit var b: ActivityLobbyBinding
     private var gameSocket: GameSocket? = null
 
-    var gameId : String = ""
+    var gameId: String = ""
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +23,7 @@ class LobbyActivity : AppCompatActivity() {
         setContentView(b.root)
 
         b.btStartGame.setOnClickListener {
-            // TODO: Start Game Activity
-            val gameID = "my-game-id"
+            gameSocket?.startGame()
         }
 
         intent.extras?.getString("gameID")?.let {
@@ -35,6 +36,14 @@ class LobbyActivity : AppCompatActivity() {
             }
         }
 
+        gameSocket?.socket?.on("start") {
+            Log.d("Lobby", "Received start signal for game: " + gameId)
+            runOnUiThread(Runnable {
+                val lobbyIntent = Intent(this, GameActivity::class.java)
+                lobbyIntent.putExtra("gameID", gameId)
+                startActivity(lobbyIntent)
+            })
+        }
 
         Log.d("Lobby", "Joined Lobby: " + gameId)
         b.lobbyID.text = "ID: $gameId"

@@ -1,10 +1,7 @@
 package com.dhbw.br2048.api
 
 import android.util.Log
-import android.widget.TextView
 import com.dhbw.br2048.data.Score
-import com.google.gson.JsonArray
-import org.json.JSONObject
 import io.socket.client.Socket
 import org.json.JSONArray
 
@@ -23,6 +20,10 @@ class GameSocket(sessionName: String, username: String, scoreboard: (ArrayList<S
 
     fun won(score: Int) {
         socket.emit("won", score)
+    }
+
+    fun startGame() {
+        socket.emit("start", null)
     }
 
     init {
