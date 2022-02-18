@@ -216,8 +216,8 @@ class GameManager(
 
     fun moveRandom(): Boolean {
         val directions = mutableListOf(0, 1, 2, 3)
-        for (i in 0..3) {
-            var random = Random.nextInt(0, 4)
+        for (i in 3 downTo 0) {
+            var random = Random.nextInt(0, i+1)
 
             // move tiles and exit when success
             if (move(Direction.values()[directions[random]])) {
