@@ -22,7 +22,7 @@ object SocketHandler {
             opts.reconnection = true
             opts.query = "CustomId=" + Settings.Global.getString(context.contentResolver, "device_name")
 
-            manager = Manager(URI.create("http://62c2-79-206-50-94.ngrok.io"), opts)
+            manager = Manager(URI.create("https://br2048.welt.sh"), opts)
             mSocket = manager.socket("/")
         } catch (e: URISyntaxException) {
             // @todo
