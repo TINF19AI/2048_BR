@@ -9,5 +9,9 @@
     <string name="change_theme">Change Theme</string>
     <string name="licenses">Licenses</string>
     <string name="create_lobby">Create Lobby</string>
-    <string name="title_2048">2048</string>
+    <string name="title_2048" translatable="false">2048</string>
+    <string name="game_exit_confirmation">Do you want to exit the current game?</string>
+    <string name="exit">Exit</string>
+    <string name="cancel">Cancel</string>
+    <string name="continue_playing">Continue playing</string>
 </resources>

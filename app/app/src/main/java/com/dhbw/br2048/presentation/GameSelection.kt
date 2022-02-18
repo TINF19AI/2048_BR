@@ -19,13 +19,21 @@ class GameSelection : AppCompatActivity() {
 
         b.btCreateLobby.setOnClickListener {
             Log.d("GameSelection", "Create Lobby was clicked")
-
-            SocketHandler.request("newGame", "my-game-id"){
+            val gameID = "my-game-id"
+            SocketHandler.request("newGame", gameID){
                 Log.d("newGame", it.toString())
                 runOnUiThread(Runnable {
-                    startActivity(Intent(this, GameActivity::class.java))
+                    val gameIntent = Intent(this, GameActivity::class.java)
+                    gameIntent.putExtra("gameID", gameID)
+                    startActivity(gameIntent)
                 })
             }
+        }
+
+        b.btSinglePlayer.setOnClickListener {
+            val gameIntent = Intent(this, GameActivity::class.java)
+            gameIntent.putExtra("gameID", "")
+            startActivity(gameIntent)
         }
 
         SocketHandler.request("getGames", null){

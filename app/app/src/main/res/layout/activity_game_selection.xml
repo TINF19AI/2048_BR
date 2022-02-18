@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_singleplayer"
+        style="@style/ButtonPrimary"
         app:layout_constraintTop_toBottomOf="@id/tvGameSelectionHeader"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
@@ -30,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_join_lobby"
+        style="@style/ButtonPrimary"
         app:layout_constraintTop_toBottomOf="@id/btSinglePlayer"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
@@ -39,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_create_lobby"
+        style="@style/ButtonPrimary"
         app:layout_constraintTop_toBottomOf="@id/btJoinLobby"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

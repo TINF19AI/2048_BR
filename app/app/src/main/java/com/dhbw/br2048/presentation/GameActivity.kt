@@ -13,6 +13,7 @@ import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.Direction
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityGameBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import io.socket.emitter.Emitter
 
@@ -58,6 +59,19 @@ class GameActivity : AppCompatActivity() {
         // End Caspar
     }
 
+    override fun onBackPressed() {
+        MaterialAlertDialogBuilder(
+            b.root.context,
+            com.google.android.material.R.style.MaterialAlertDialog_Material3
+        ).setMessage(resources.getString(R.string.game_exit_confirmation))
+            .setNegativeButton(resources.getString(R.string.continue_playing)) { dialog, which ->
+                // do nothing when canceled
+            }.setPositiveButton(resources.getString(R.string.exit)) { dialog, which ->
+                super.onBackPressed()
+            }
+            .show()
+    }
+
     private val onNewMessage = Emitter.Listener { args ->
         runOnUiThread(Runnable {
             Log.d("onNewMessage", "onNewMessage")
@@ -79,20 +93,26 @@ class GameActivity : AppCompatActivity() {
             b.scoreboard3Score
         )
 
-        gameSocket = GameSocket(
-            "my-game-id",
-            Settings.Global.getString(baseContext.contentResolver, "device_name")
-        ) { list, position ->
+        val extras = intent.extras
+        var gameId = extras?.getString("gameID")
+        gameId?.let {
+            if (it != "") {
+                gameSocket = GameSocket(
+                    gameId,
+                    Settings.Global.getString(baseContext.contentResolver, "device_name")
+                ) { list, position ->
 
-            runOnUiThread {
-                b.position.text = "$position / ${list.size}"
+                    runOnUiThread {
+                        b.position.text = "$position / ${list.size}"
 
-                for ((i, entry) in list.withIndex()) {
-                    val pos = i + 1
-                    if (pos in 1..3) {
-                        scoreboardScores[i].text = entry.score.toString()
-                        scoreboardUsernames[i].text = entry.username
+                        for ((i, entry) in list.withIndex()) {
+                            val pos = i + 1
+                            if (pos in 1..3) {
+                                scoreboardScores[i].text = entry.score.toString()
+                                scoreboardUsernames[i].text = entry.username
 
+                            }
+                        }
                     }
                 }
             }
