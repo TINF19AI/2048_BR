@@ -1,5 +1,6 @@
 package com.dhbw.br2048.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +33,9 @@ class LobbyListActivity : AppCompatActivity() {
 
         Log.d("LobbyList", "onResume")
         b.rvLobbys.layoutManager = LinearLayoutManager(b.root.context, RecyclerView.VERTICAL, false)
-        lobbyAdapter = LobbyAdapter(lobbyList)
+        lobbyAdapter = LobbyAdapter(lobbyList) {
+            joinGame(it) // callback function for listview click
+        }
         b.rvLobbys.adapter = lobbyAdapter
         Log.d("LobbyList", "Created lobby recycler view")
 
@@ -54,5 +57,12 @@ class LobbyListActivity : AppCompatActivity() {
         }
 
         emit("getLobbys", null)
+    }
+
+    private fun joinGame(gameID: String) {
+        Log.d("LobbyList", "Lobby clicked: " + gameID)
+        val lobbyIntent = Intent(this, LobbyActivity::class.java)
+        lobbyIntent.putExtra("gameID", gameID)
+        startActivity(lobbyIntent)
     }
 }

@@ -14,4 +14,6 @@
     <string name="exit">Exit</string>
     <string name="cancel">Cancel</string>
     <string name="continue_playing">Continue playing</string>
+    <string name="lobby_list">Lobby List</string>
+    <string name="waiting_room">Waiting Room</string>
 </resources>

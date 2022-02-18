@@ -13,4 +13,6 @@
     <string name="exit">Verlassen</string>
     <string name="cancel">Abbrechen</string>
     <string name="continue_playing">Weiterspielen</string>
+    <string name="lobby_list">Lobby List</string>
+    <string name="waiting_room">Waiting Room</string>
 </resources>

@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.dhbw.br2048.api.SocketHandler
+import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityGameSelectionBinding
+import org.json.JSONObject
 
 class GameSelection : AppCompatActivity() {
 
@@ -19,13 +21,12 @@ class GameSelection : AppCompatActivity() {
 
         b.btCreateLobby.setOnClickListener {
             Log.d("GameSelection", "Create Lobby was clicked")
-            val gameID = "my-game-id"
-            SocketHandler.request("newGame", gameID) {
-                Log.d("newGame", it.toString())
+            SocketHandler.request("newGame", null) {
+                val lobby = (it[0] as JSONObject).toLobby()
                 runOnUiThread(Runnable {
-                    val gameIntent = Intent(this, GameActivity::class.java)
-                    gameIntent.putExtra("gameID", gameID)
-                    startActivity(gameIntent)
+                    val lobbyIntent = Intent(this, LobbyActivity::class.java)
+                    lobbyIntent.putExtra("gameID", lobby.id)
+                    startActivity(lobbyIntent)
                 })
             }
         }
