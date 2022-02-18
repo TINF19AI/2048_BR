@@ -215,7 +215,6 @@ class GameManager(
     }
 
     fun moveRandom(): Boolean {
-        //var moved = false
         val directions = mutableListOf(0, 1, 2, 3)
         for (i in 0..3) {
             var random = Random.nextInt(0, 4)
