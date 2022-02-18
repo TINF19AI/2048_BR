@@ -1,29 +1,33 @@
 import { Server } from "socket.io";
+import shortUUID from "short-uuid";
 
 const io = new Server().listen(3000);
 const games: Game = {};
 const lobbys: Lobby = {};
+
+const uuid = shortUUID(shortUUID.constants.flickrBase58, {
+  consistentLength: true,
+});
 
 io.on("connection", function (socket) {
   console.log(
     `[${socket.handshake.query.CustomId}] User connected from ${socket.request.socket.remoteAddress}`
   );
 
-  socket.on("newGame", function (name) {
-    if (games[name]) {
-      console.log(`[${socket.handshake.query.CustomId}] Join Game ${name}`);
-      socket.emit("newGame", {});
-    } else {
-      console.log(
-        `[${socket.handshake.query.CustomId}] Created a new Game ${name}`
-      );
-      const username = socket.handshake.query.CustomId as string;
-      newGame(name, username);
-      socket.emit("newGame", {});
-    }
+  socket.on("newGame", function () {
+    var gameId = generateLobbyName();
+
+    console.log(
+      `[${socket.handshake.query.CustomId}] Created a new Game ${gameId}`
+    );
+    const username = socket.handshake.query.CustomId as string;
+    newGame(gameId, username);
+    socket.emit("newGame", getLobbyDetails(gameId));
+    socket.broadcast.emit("getLobbys", getLobbys());
   });
 
   socket.on("getLobbys", function () {
+    console.log(`[${socket.handshake.query.CustomId}] requested Lobbylist`);
     socket.emit("getLobbys", getLobbys());
   });
 });
@@ -33,6 +37,7 @@ function newGame(gameId: string, username: string) {
     owner: username,
     currentUsers: 0,
     maxUsers: 48,
+    running: false,
   };
 
   games[gameId] = {};
@@ -58,6 +63,10 @@ function newGame(gameId: string, username: string) {
     socket.on("over", function (score) {
       addScore(gameId, username, score, false);
       nsp.emit("score", getScore(gameId));
+    });
+
+    socket.on("start", function (score) {
+      nsp.emit("start", {});
     });
   });
 }
@@ -94,14 +103,38 @@ function getScore(gameId: string) {
 
 function getLobbys() {
   var lobbyList = Object.keys(lobbys).map((gameId) => {
-    return {
-      ...lobbys[gameId],
-      currentUsers: Object.keys(lobbys[gameId]).length,
-      id: gameId,
-    };
+    return getLobbyDetails(gameId);
   });
+
+  lobbyList = lobbyList.filter((lobby) => !lobby.running);
 
   lobbyList.sort((a, b) => b.currentUsers - a.currentUsers);
 
   return lobbyList;
+}
+
+function getLobbyDetails(gameId) {
+  return {
+    ...lobbys[gameId],
+    currentUsers: Object.keys(games[gameId]).length,
+    id: gameId,
+  };
+}
+
+function generateLobbyName(): string {
+  var gameId = uuid.generate().toString();
+
+  gameId = gameId.substring(0, 12);
+
+  gameId = [
+    gameId.substring(0, 4),
+    gameId.substring(4, 8),
+    gameId.substring(8, 12),
+  ].join("-");
+
+  if (lobbys[gameId]) {
+    gameId = generateLobbyName();
+  }
+
+  return gameId;
 }

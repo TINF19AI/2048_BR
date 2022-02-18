@@ -12,5 +12,6 @@ type Lobby = {
     owner: string;
     currentUsers: number;
     maxUsers: number;
+    running: boolean;
   };
 };
