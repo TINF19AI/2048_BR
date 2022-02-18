@@ -63,7 +63,7 @@ object SocketHandler {
     }
 
     @Synchronized
-    fun emit(topic: String, data: Any ) {
+    fun emit(topic: String, data: Any? ) {
         mSocket.emit(topic, data)
     }
 }

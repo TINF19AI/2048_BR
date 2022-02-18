@@ -20,7 +20,7 @@ class GameSelection : AppCompatActivity() {
         b.btCreateLobby.setOnClickListener {
             Log.d("GameSelection", "Create Lobby was clicked")
             val gameID = "my-game-id"
-            SocketHandler.request("newGame", gameID){
+            SocketHandler.request("newGame", gameID) {
                 Log.d("newGame", it.toString())
                 runOnUiThread(Runnable {
                     val gameIntent = Intent(this, GameActivity::class.java)
@@ -30,13 +30,18 @@ class GameSelection : AppCompatActivity() {
             }
         }
 
+        b.btJoinLobby.setOnClickListener {
+            val gameIntent = Intent(this, LobbyListActivity::class.java)
+            startActivity(gameIntent)
+        }
+
         b.btSinglePlayer.setOnClickListener {
             val gameIntent = Intent(this, GameActivity::class.java)
             gameIntent.putExtra("gameID", "")
             startActivity(gameIntent)
         }
 
-        SocketHandler.request("getGames", null){
+        SocketHandler.request("getGames", null) {
             Log.d("getGames", it.toString())
             runOnUiThread(Runnable {
                 //@todo show lobby list
