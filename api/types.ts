@@ -6,3 +6,11 @@ type Game = {
     };
   };
 };
+
+type Lobby = {
+  [gameId: string]: {
+    owner: string;
+    currentUsers: number;
+    maxUsers: number;
+  };
+};

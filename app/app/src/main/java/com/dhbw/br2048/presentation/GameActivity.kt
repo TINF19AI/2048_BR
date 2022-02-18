@@ -72,11 +72,6 @@ class GameActivity : AppCompatActivity() {
             .show()
     }
 
-    private val onNewMessage = Emitter.Listener { args ->
-        runOnUiThread(Runnable {
-            Log.d("onNewMessage", "onNewMessage")
-        })
-    }
 
     // Author: Maxi
     override fun onResume() {
