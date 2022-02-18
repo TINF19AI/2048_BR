@@ -21,7 +21,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var b: ActivityGameBinding
     private val gridFragment = GridFragment()
     private lateinit var manager: GameManager
-    private lateinit var gameSocket: GameSocket
+    private var gameSocket: GameSocket? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +81,7 @@ class GameActivity : AppCompatActivity() {
 
         gameSocket = GameSocket(
             "my-game-id",
-            Settings.Global.getString(baseContext.contentResolver, "device_name" )
+            Settings.Global.getString(baseContext.contentResolver, "device_name")
         ) { list, position ->
 
             runOnUiThread {
@@ -108,21 +108,23 @@ class GameActivity : AppCompatActivity() {
 
         manager.scoreCallback = { score: Int ->
             b.score.text = score.toString()
-            gameSocket.score(score)
+            gameSocket?.score(score)
         }
         manager.overCallback = { score: Int ->
             Snackbar.make(b.score, "Game Over!", Snackbar.LENGTH_LONG).show()
-            gameSocket.over(score)
+            gameSocket?.over(score)
+
         }
         manager.wonCallback = { score: Int ->
             Snackbar.make(b.score, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
-            gameSocket.won(score)
+            gameSocket?.won(score)
+
         }
     }
 
     override fun onStop() {
         super.onStop()
-        gameSocket.close()
+        gameSocket?.close()
         Log.d("GameActivity", "onStop")
     }
 
