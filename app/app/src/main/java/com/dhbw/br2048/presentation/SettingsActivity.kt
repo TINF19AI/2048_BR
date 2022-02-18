@@ -14,11 +14,25 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var b: ActivitySettingsBinding
     private val gridFragment = GridFragment()
     private lateinit var manager: GameManager
+    private var currentThemeId = 0
+
+    val themeText = arrayOf(
+        "Default",
+        "Ocean",
+        "Fire"
+    )
+
+    val themeId = arrayOf(
+        R.style.Theme_Original,
+        R.style.Theme_Ocean,
+        R.style.Theme_Fire
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Theme from shared preferences
         val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        setTheme(sp.getInt("currentTheme", R.style.Theme_Original))
+        currentThemeId = sp.getInt("currentTheme", R.style.Theme_Original)
+        setTheme(currentThemeId)
 
         super.onCreate(savedInstanceState)
 
@@ -27,17 +41,31 @@ class SettingsActivity : AppCompatActivity() {
         setCurrentFragment(gridFragment)
 
         b.btChangeTheme.setOnClickListener {
-            // https://stackoverflow.com/questions/13832459/android-how-to-refresh-activity-set-theme-dynamically
-            val sp = getSharedPreferences("theme", MODE_PRIVATE)
-            val spe = sp.edit()
-            spe.putInt("currentTheme", R.style.Theme_Pink) // TODO: theme selection
-            spe.apply()
-            Log.d("SettingsActivity", "Theme was changed")
+            MaterialAlertDialogBuilder(
+                b.root.context,
+                com.google.android.material.R.style.MaterialAlertDialog_Material3
+            )
+                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
 
-            val intent = this.intent
-            this.finish()
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            this.startActivity(intent)
+                }
+                .setSingleChoiceItems(themeText, themeId.indexOf(currentThemeId)) { dialog, which ->
+                    // https://stackoverflow.com/questions/13832459/android-how-to-refresh-activity-set-theme-dynamically
+                    val sp = getSharedPreferences("theme", MODE_PRIVATE)
+                    val spe = sp.edit()
+                    val newTheme = themeId[which]
+                    spe.putInt("currentTheme", newTheme) // TODO: theme selection
+                    spe.apply()
+                    currentThemeId = newTheme
+                    Log.d("SettingsActivity", "Theme was changed")
+                    dialog.dismiss()
+                    runOnUiThread {
+                        val intent = this.intent
+                        this.finish()
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        this.startActivity(intent)
+                    }
+                }
+                .show()
         }
 
         b.btShowLicenses.setOnClickListener {

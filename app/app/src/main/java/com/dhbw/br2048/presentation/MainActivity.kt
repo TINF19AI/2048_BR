@@ -19,11 +19,10 @@ class MainActivity : AppCompatActivity() {
     private var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Theme from shared preferences
         val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        val spe = sp.edit()
-        spe.putInt("currentTheme", R.style.Theme_Original)
-        spe.apply()
-        Log.d("GameActivity", "reset to default theme")
+        setTheme(sp.getInt("currentTheme", R.style.Theme_Original))
+
 
         super.onCreate(savedInstanceState)
         b = ActivityMainBinding.inflate(layoutInflater)
