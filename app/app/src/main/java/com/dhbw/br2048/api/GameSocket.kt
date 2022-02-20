@@ -69,4 +69,8 @@ class GameSocket(sessionName: String, username: String, scoreboard: (ArrayList<S
     fun close() {
         socket.close()
     }
+
+    fun lobbyDetails() {
+        socket.emit("lobbyDetails", null)
+    }
 }
