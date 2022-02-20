@@ -9,7 +9,9 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
+import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityLobbyBinding
+import org.json.JSONObject
 
 class LobbyActivity : AppCompatActivity() {
     private lateinit var b: ActivityLobbyBinding
@@ -29,10 +31,6 @@ class LobbyActivity : AppCompatActivity() {
 
         b.btStartGame.setOnClickListener {
             gameSocket?.startGame()
-        }
-
-        if(intent.extras?.getString("isHost") != true.toString()){
-            b.btStartGame.isEnabled = false
         }
 
         intent.extras?.getString("gameID")?.let {
@@ -61,6 +59,15 @@ class LobbyActivity : AppCompatActivity() {
                 startActivity(lobbyIntent)
             })
         }
+
+        gameSocket?.socket?.on("lobbyDetails") {
+            Log.d("Lobby", "Received lobbyDetails for game: " + gameId)
+            val lobby = (it[0] as JSONObject).toLobby()
+            runOnUiThread(Runnable {
+                b.btStartGame.isEnabled = (lobby.owner == Settings.Global.getString(baseContext.contentResolver, "device_name"))
+            })
+        }
+        gameSocket?.lobbyDetails()
 
         Log.d("Lobby", "Joined Lobby: " + gameId)
         b.lobbyID.text = "ID: $gameId"

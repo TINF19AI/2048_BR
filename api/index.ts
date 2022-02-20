@@ -71,7 +71,11 @@ function newGame(gameId: string, username: string) {
       nsp.emit("score", getScore(gameId));
     });
 
-    socket.on("start", function (score) {
+    socket.on("lobbyDetails", function (_) {
+      nsp.emit("lobbyDetails", getLobbyDetails(gameId));
+    });
+
+    socket.on("start", function (_) {
       nsp.emit("start", {});
     });
 
