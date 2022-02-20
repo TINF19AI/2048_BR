@@ -14,6 +14,7 @@ class LobbyActivity : AppCompatActivity() {
     private var gameSocket: GameSocket? = null
 
     var gameId: String = ""
+    var keepSocket: Boolean = false
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +34,20 @@ class LobbyActivity : AppCompatActivity() {
                 Settings.Global.getString(baseContext.contentResolver, "device_name")
             ) { list, position ->
                 // TODO: Show players in lobby
+                runOnUiThread {
+                    var userList = "Users: \n"
+                    for (user in list){
+                        userList += user.username + "\n"
+                    }
+                    b.lobbyUsers.text = userList
+                }
             }
         }
 
         gameSocket?.socket?.on("start") {
             Log.d("Lobby", "Received start signal for game: " + gameId)
             runOnUiThread(Runnable {
+                keepSocket = true
                 val lobbyIntent = Intent(this, GameActivity::class.java)
                 lobbyIntent.putExtra("gameID", gameId)
                 startActivity(lobbyIntent)
@@ -47,5 +56,13 @@ class LobbyActivity : AppCompatActivity() {
 
         Log.d("Lobby", "Joined Lobby: " + gameId)
         b.lobbyID.text = "ID: $gameId"
+    }
+
+    override fun onStop() {
+        if(!keepSocket){
+            gameSocket?.close()
+        }
+        Log.d("LobbyActivity", "onStop")
+        super.onStop()
     }
 }

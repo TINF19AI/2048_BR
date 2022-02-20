@@ -26,6 +26,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btStartGame" />
 
+    <TextView
+        android:id="@+id/lobbyUsers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:background="?attr/brTile2"
+        android:textColor="?attr/brTileText2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lobbyID"
+        tools:text="Users:" />
+
     <Button
         android:id="@+id/btStartGame"
         android:layout_width="wrap_content"

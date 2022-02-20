@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import shortUUID from "short-uuid";
+import { Game, Lobby, SocketNamespace } from "./types";
 
 const io = new Server().listen(3000);
 const games: Game = {};
@@ -29,6 +30,11 @@ io.on("connection", function (socket) {
   socket.on("getLobbys", function () {
     console.log(`[${socket.handshake.query.CustomId}] requested Lobbylist`);
     socket.emit("getLobbys", getLobbys());
+  });
+
+  socket.on("disconnect", (reason) => {
+    const username = socket.handshake.query.CustomId as string;
+    console.log(`[${username}] User disconnected because of ${reason}`);
   });
 });
 
@@ -68,10 +74,25 @@ function newGame(gameId: string, username: string) {
     socket.on("start", function (score) {
       nsp.emit("start", {});
     });
+
+    socket.on("disconnect", (reason) => {
+      const username = socket.handshake.query.CustomId as string;
+      leaveLobby(gameId, username, nsp);
+      console.log(
+        `[${gameId} - ${username}] User disconnected because of ${reason}`
+      );
+
+      nsp.emit("score", getScore(gameId));
+    });
   });
 }
 
-function addScore(gameId, username, score, alive = true) {
+function addScore(
+  gameId: string,
+  username: string,
+  score: number,
+  alive = true
+) {
   console.log(`[${gameId} - ${username}] ${alive ? "Alive" : "Dead"} ${score}`);
 
   if (!games[gameId]) {
@@ -89,6 +110,11 @@ function addScore(gameId, username, score, alive = true) {
 }
 
 function getScore(gameId: string) {
+  if (!(gameId in games)) {
+    console.warn(`[WARN] Requested empty score for ${gameId}`);
+    return [];
+  }
+
   var score = Object.keys(games[gameId]).map((key) => {
     return {
       ...games[gameId][key],
@@ -113,7 +139,7 @@ function getLobbys() {
   return lobbyList;
 }
 
-function getLobbyDetails(gameId) {
+function getLobbyDetails(gameId: string) {
   return {
     ...lobbys[gameId],
     currentUsers: Object.keys(games[gameId]).length,
@@ -137,4 +163,36 @@ function generateLobbyName(): string {
   }
 
   return gameId;
+}
+
+function leaveLobby(
+  gameId: string,
+  username: string,
+  namespace: SocketNamespace
+) {
+  console.log(`[${gameId} - ${username}] Left the lobby`);
+
+  delete games[gameId][username];
+
+  console.log("games[gameId]");
+  console.log(games[gameId]);
+
+  if (Object.keys(games[gameId]).length == 0) {
+    closeLobby(gameId, namespace);
+    return;
+  }
+
+  if (lobbys[gameId].owner == username) {
+    lobbys[gameId].owner = Object.keys(games[gameId])[0];
+  }
+}
+
+function closeLobby(gameId: string, namespace: SocketNamespace) {
+  console.log(`[${gameId} - SYSTEM] Lobby is empty, closing...`);
+
+  delete lobbys[gameId];
+  delete games[gameId];
+
+  namespace.removeAllListeners();
+  delete io._nsps["/game/" + gameId];
 }

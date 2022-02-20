@@ -138,9 +138,9 @@ class GameActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        super.onStop()
         gameSocket?.close()
         Log.d("GameActivity", "onStop")
+        super.onStop()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

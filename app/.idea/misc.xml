@@ -26,7 +26,11 @@
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1995" />
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/drawable/shape_tile.xml" value="0.1995" />
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/activity_game.xml" value="0.25" />
+        <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/activity_lobby.xml" value="0.24739583333333334" />
+        <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/activity_lobby_list.xml" value="0.19166666666666668" />
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/activity_main.xml" value="0.19166666666666668" />
+        <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/item_lobby.xml" value="0.19166666666666668" />
+        <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/item_waitingroom.xml" value="0.25" />
       </map>
     </option>
   </component>
