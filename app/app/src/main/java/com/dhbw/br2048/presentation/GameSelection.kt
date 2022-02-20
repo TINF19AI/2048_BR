@@ -26,6 +26,7 @@ class GameSelection : AppCompatActivity() {
                 runOnUiThread(Runnable {
                     val lobbyIntent = Intent(this, LobbyActivity::class.java)
                     lobbyIntent.putExtra("gameID", lobby.id)
+                    lobbyIntent.putExtra("isHost", true.toString())
                     startActivity(lobbyIntent)
                 })
             }

@@ -3,6 +3,7 @@ package com.dhbw.br2048.presentation
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
 import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,10 @@ class LobbyActivity : AppCompatActivity() {
 
         b.btStartGame.setOnClickListener {
             gameSocket?.startGame()
+        }
+
+        if(intent.extras?.getString("isHost") != true.toString()){
+            b.btStartGame.isEnabled = false
         }
 
         intent.extras?.getString("gameID")?.let {
