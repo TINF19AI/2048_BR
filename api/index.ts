@@ -85,8 +85,10 @@ function newGame(gameId: string, username: string) {
       console.log(
         `[${gameId} - ${username}] User disconnected because of ${reason}`
       );
-
-      nsp.emit("score", getScore(gameId));
+      if (lobbys[gameId]) {
+        nsp.emit("lobbyDetails", getLobbyDetails(gameId));
+        nsp.emit("score", getScore(gameId));
+      }
     });
   });
 }
@@ -177,9 +179,6 @@ function leaveLobby(
   console.log(`[${gameId} - ${username}] Left the lobby`);
 
   delete games[gameId][username];
-
-  console.log("games[gameId]");
-  console.log(games[gameId]);
 
   if (Object.keys(games[gameId]).length == 0) {
     closeLobby(gameId, namespace);
