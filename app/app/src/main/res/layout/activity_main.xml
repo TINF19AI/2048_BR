@@ -67,7 +67,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btStartGame"
         style="@style/ButtonPrimary"
-        android:text="@string/btn_start_game"
+        android:text="@string/start_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
         style="@style/ButtonSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_options"
+        android:text="@string/game_settings"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btStartGame" />

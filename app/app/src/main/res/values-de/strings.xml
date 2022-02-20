@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="btn_start_game">Spiel starten</string>
-    <string name="btn_options">Spieloptionen</string>
-    <string name="tv_game_selection">Wähle deinen Spielmodus!</string>
-    <string name="btn_singleplayer">Einzelspieler</string>
-    <string name="btn_join_lobby">Lobby beitreten</string>
-    <string name="btn_create_lobby">Lobby erstellen</string>
+    <string name="start_game">Spiel starten</string>
+    <string name="game_settings">Spieloptionen</string>
+    <string name="select_gamemode">Wähle deinen Spielmodus!</string>
+    <string name="singleplayer">Einzelspieler</string>
+    <string name="join_lobby">Lobby beitreten</string>
+    <string name="create_lobby">Lobby erstellen</string>
     <string name="change_theme">Theme verändern</string>
     <string name="licenses">Lizenzen</string>
     <string name="game_exit_confirmation">Möchtest du das laufende Spiel verlassen?</string>
@@ -14,4 +14,5 @@
     <string name="continue_playing">Weiterspielen</string>
     <string name="waiting_room">Warteraum</string>
     <string name="lobby_list">Lobbyliste</string>
+    <string name="multiplayer">Mehrspieler</string>
 </resources>
