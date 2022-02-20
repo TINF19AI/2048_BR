@@ -22,7 +22,7 @@
             android:name=".presentation.LobbyListActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.GameSelection"
+            android:name=".presentation.GameSelectionActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.GameActivity"

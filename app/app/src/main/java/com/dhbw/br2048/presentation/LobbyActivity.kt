@@ -3,7 +3,6 @@ package com.dhbw.br2048.presentation
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Debug
 import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -57,6 +56,7 @@ class LobbyActivity : AppCompatActivity() {
                 val lobbyIntent = Intent(this, GameActivity::class.java)
                 lobbyIntent.putExtra("gameID", gameId)
                 startActivity(lobbyIntent)
+                finish() // stop activity to prevent adding it to backstack
             })
         }
 

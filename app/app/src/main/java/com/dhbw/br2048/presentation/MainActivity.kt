@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         SocketHandler.setSocket(b.root.context)
 
         b.btStartGame.setOnClickListener {
-            startActivity(Intent(this, GameSelection::class.java))
+            startActivity(Intent(this, GameSelectionActivity::class.java))
         }
 
         b.btSettings.setOnClickListener {

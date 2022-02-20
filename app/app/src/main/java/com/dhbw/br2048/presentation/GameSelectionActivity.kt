@@ -10,7 +10,7 @@ import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityGameSelectionBinding
 import org.json.JSONObject
 
-class GameSelection : AppCompatActivity() {
+class GameSelectionActivity : AppCompatActivity() {
 
     private lateinit var b: ActivityGameSelectionBinding
 
@@ -44,13 +44,5 @@ class GameSelection : AppCompatActivity() {
             gameIntent.putExtra("gameID", "")
             startActivity(gameIntent)
         }
-
-        SocketHandler.request("getGames", null) {
-            Log.d("getGames", it.toString())
-            runOnUiThread(Runnable {
-                //@todo show lobby list
-            })
-        }
-
     }
 }
