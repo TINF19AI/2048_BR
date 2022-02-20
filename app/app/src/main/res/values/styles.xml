@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="NormalText" parent="TextAppearance.Material3.BodyMedium">
+    <style name="TextRegular" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="android:fontFamily">@font/nunito</item>
     </style>
 
     <style name="TextHeadline" parent="TextAppearance.Material3.HeadlineMedium">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">@font/nunito_bold</item>
-        <item name="fontFamily">@font/nunito_bold</item>
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="fontFamily">@font/nunito</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">40sp</item>
         <item name="android:colorBackground">?attr/brTile2</item>
         <item name="android:textColor">?attr/brTileText2</item>
@@ -18,7 +19,8 @@
 
     <style name="ButtonBase">
         <item name="android:letterSpacing">0.04</item>
-        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">25sp</item>
@@ -42,6 +44,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/md_grey_900</item>
         <item name="titleTextColor">@color/white</item>
-        <item name="fontFamily">@font/nunito_regular</item>
+        <item name="android:fontFamily">@font/nunito</item>
+        <item name="fontFamily">@font/nunito</item>
     </style>
 </resources>
