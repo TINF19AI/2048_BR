@@ -17,4 +17,5 @@
     <string name="lobby_list">Lobbys</string>
     <string name="battle_royale" translatable="false">Battle Royale</string>
     <string name="multiplayer">Multiplayer</string>
+    <string name="classic">Classic</string>
 </resources>

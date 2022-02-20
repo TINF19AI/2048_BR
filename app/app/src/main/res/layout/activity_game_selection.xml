@@ -14,35 +14,90 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/select_gamemode" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btSinglePlayer"
-        style="@style/ButtonPrimary"
-        android:layout_width="wrap_content"
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSingleplayer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/singleplayer"
+        android:layout_margin="20dp"
+        android:backgroundTint="?attr/brEmpty"
+        app:cardCornerRadius="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/abTop" />
+        app:layout_constraintTop_toBottomOf="@id/abTop"
+        app:layout_constraintWidth_percent="0.9">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btJoinLobby"
-        style="@style/ButtonPrimary"
-        android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvSingleplayer"
+                style="@style/TextHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/singleplayer" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btSinglePlayer"
+                style="@style/ButtonPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSingleplayer"
+                android:layout_centerHorizontal="true"
+                android:text="@string/classic"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMultiplayer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/join_lobby"
+        android:layout_margin="20dp"
+        android:backgroundTint="?attr/brEmpty"
+        app:cardCornerRadius="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btSinglePlayer" />
+        app:layout_constraintTop_toBottomOf="@id/cardSingleplayer"
+        app:layout_constraintWidth_percent="0.9">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btCreateLobby"
-        style="@style/ButtonPrimary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create_lobby"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btJoinLobby" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
+            <TextView
+                android:id="@+id/tvMultiplayer"
+                style="@style/TextHeadline"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/multiplayer" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btJoinLobby"
+                style="@style/ButtonPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvMultiplayer"
+                android:layout_centerHorizontal="true"
+                android:text="@string/join_lobby" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btCreateLobby"
+                style="@style/ButtonPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btJoinLobby"
+                android:layout_centerHorizontal="true"
+                android:text="@string/create_lobby" />
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

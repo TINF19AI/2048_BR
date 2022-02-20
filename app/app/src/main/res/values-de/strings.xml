@@ -15,4 +15,5 @@
     <string name="waiting_room">Warteraum</string>
     <string name="lobby_list">Lobbyliste</string>
     <string name="multiplayer">Mehrspieler</string>
+    <string name="classic">Classic</string>
 </resources>
