@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">br2048</string>
     <string name="start_game">Start Game</string>
-    <string name="select_gamemode">Choose your gamemode!</string>
+    <string name="select_gamemode">Select Gamemode</string>
     <string name="singleplayer">Singleplayer</string>
     <string name="join_lobby">Join Lobby</string>
     <string name="create_lobby">Create Lobby</string>

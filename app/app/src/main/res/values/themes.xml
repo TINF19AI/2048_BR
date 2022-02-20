@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.br2048" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.br2048" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="actionBarStyle">@style/topAppBar</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -10,7 +11,8 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/md_grey_900</item>
+        <item name="android:colorBackground">@color/md_grey_900</item>
         <!-- Customize your theme here. -->
 
         <item name="brTile2">@color/origTile2</item>
@@ -38,7 +40,6 @@
         <item name="brTileText2048">@color/md_black_1000</item>
         <item name="brEmpty">@color/origEmpty</item>
         <item name="brBackground">@color/origBackground</item>
-        <item name="android:colorBackground">@color/md_grey_900</item>
     </style>
 
     <style name="Theme.Original" parent="@style/Theme.br2048"></style>

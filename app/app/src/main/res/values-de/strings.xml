@@ -2,7 +2,7 @@
 <resources>
     <string name="start_game">Spiel starten</string>
     <string name="game_settings">Spieloptionen</string>
-    <string name="select_gamemode">Wähle deinen Spielmodus!</string>
+    <string name="select_gamemode">Spielmodus auswählen</string>
     <string name="singleplayer">Einzelspieler</string>
     <string name="join_lobby">Lobby beitreten</string>
     <string name="create_lobby">Lobby erstellen</string>

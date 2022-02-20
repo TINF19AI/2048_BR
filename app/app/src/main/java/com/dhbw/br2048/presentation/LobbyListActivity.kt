@@ -34,6 +34,7 @@ class LobbyListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+
         Log.d("LobbyList", "onResume")
         b.rvLobbys.layoutManager = LinearLayoutManager(b.root.context, RecyclerView.VERTICAL, false)
         lobbyAdapter = LobbyAdapter(lobbyList) {

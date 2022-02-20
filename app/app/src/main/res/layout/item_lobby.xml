@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="100dp"
+    android:layout_marginVertical="4dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -33,7 +34,7 @@
         android:textSize="10sp"
         app:layout_constraintLeft_toLeftOf="@id/lobbyOwner"
         app:layout_constraintTop_toBottomOf="@id/lobbyOwner"
-        tools:text="ID: 36211a1a-c49d-40cc-b6c4-efa93e6eeccc"/>
+        tools:text="ID: 36211a1a-c49d-40cc-b6c4-efa93e6eeccc" />
 
     <TextView
         android:id="@+id/lobbyPlayerCount"
