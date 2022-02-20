@@ -30,6 +30,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btChangeTheme"
+        style="@style/ButtonSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/change_theme"
@@ -39,6 +40,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btShowLicenses"
+        style="@style/ButtonSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/licenses"

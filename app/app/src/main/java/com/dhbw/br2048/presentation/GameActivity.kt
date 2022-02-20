@@ -15,7 +15,6 @@ import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityGameBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import io.socket.emitter.Emitter
 
 
 class GameActivity : AppCompatActivity() {
@@ -98,7 +97,7 @@ class GameActivity : AppCompatActivity() {
                 ) { list, position ->
 
                     runOnUiThread {
-                        b.position.text = "$position / ${list.size}"
+                        b.tvPosition.text = "$position / ${list.size}"
 
                         for ((i, entry) in list.withIndex()) {
                             val pos = i + 1
@@ -122,16 +121,16 @@ class GameActivity : AppCompatActivity() {
         manager.addStartTiles()
 
         manager.scoreCallback = { score: Int ->
-            b.score.text = score.toString()
+            b.tvScore.text = score.toString()
             gameSocket?.score(score)
         }
         manager.overCallback = { score: Int ->
-            Snackbar.make(b.score, "Game Over!", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(b.tvScore, "Game Over!", Snackbar.LENGTH_LONG).show()
             gameSocket?.over(score)
 
         }
         manager.wonCallback = { score: Int ->
-            Snackbar.make(b.score, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(b.tvScore, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
             gameSocket?.won(score)
 
         }

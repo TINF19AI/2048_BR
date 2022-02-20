@@ -3,17 +3,16 @@
     <string name="btn_start_game">Start Game</string>
     <string name="tv_game_selection">Choose your gamemode!</string>
     <string name="btn_singleplayer">Singleplayer</string>
-    <string name="btn_join_lobby">Join Multiplayer-Lobby</string>
-    <string name="btn_create_lobby">Create Multiplayer-Lobby</string>
+    <string name="btn_join_lobby">Join Lobby</string>
+    <string name="btn_create_lobby">Create Lobby</string>
     <string name="btn_options">Settings</string>
     <string name="change_theme">Change Theme</string>
     <string name="licenses">Licenses</string>
-    <string name="create_lobby">Create Lobby</string>
     <string name="title_2048" translatable="false">2048</string>
     <string name="game_exit_confirmation">Do you want to exit the current game?</string>
     <string name="exit">Exit</string>
     <string name="cancel">Cancel</string>
     <string name="continue_playing">Continue playing</string>
-    <string name="lobby_list">Lobby List</string>
     <string name="waiting_room">Waiting Room</string>
+    <string name="lobby_list">Lobbys</string>
 </resources>

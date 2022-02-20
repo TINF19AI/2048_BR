@@ -37,6 +37,7 @@
     <style name="ButtonPrimary" parent="ButtonBase">
         <item name="android:textColor">?attr/brTileText2048</item>
         <item name="android:backgroundTint">?attr/brTile2048</item>
+        <item name="android:textSize">35sp</item>
     </style>
 
     <style name="ButtonSecondary" parent="ButtonBase">
