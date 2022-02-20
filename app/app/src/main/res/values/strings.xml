@@ -15,4 +15,5 @@
     <string name="continue_playing">Continue playing</string>
     <string name="waiting_room">Waiting Room</string>
     <string name="lobby_list">Lobbys</string>
+    <string name="battle_royale" translatable="false">Battle Royale</string>
 </resources>

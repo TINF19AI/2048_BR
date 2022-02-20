@@ -32,19 +32,37 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:elevation="5dp"
+        android:shadowColor="#000000"
+        android:shadowDx="5.5"
+        android:shadowDy="5.5"
+        android:shadowRadius="10"
+        android:text="@string/title_2048"
+        android:textColor="?attr/brTile2048"
+        android:textSize="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardGrid"
+        app:layout_constraintEnd_toEndOf="@id/cardGrid"
+        app:layout_constraintStart_toStartOf="@id/cardGrid"
+        app:layout_constraintTop_toTopOf="@id/cardGrid"
+        app:layout_constraintVertical_bias="0.35"
+        tools:ignore="SpUsage" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="5dp"
         android:shadowColor="#000000"
         android:shadowDx="5.5"
         android:shadowDy="5.5"
         android:shadowRadius="5.0"
-        android:text="@string/title_2048"
+        android:text="@string/battle_royale"
         android:textColor="?attr/brTile2048"
-        android:textSize="100dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cardGrid"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="35dp"
+        app:layout_constraintLeft_toLeftOf="@id/cardGrid"
+        app:layout_constraintRight_toRightOf="@id/cardGrid"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:ignore="SpUsage" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btStartGame"
