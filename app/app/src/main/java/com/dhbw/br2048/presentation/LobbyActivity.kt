@@ -5,14 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
 import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityLobbyBinding
 import org.json.JSONObject
 
-class LobbyActivity : AppCompatActivity() {
+class LobbyActivity : BaseActivity() {
     private lateinit var b: ActivityLobbyBinding
     private var gameSocket: GameSocket? = null
 
@@ -21,8 +19,6 @@ class LobbyActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
-        val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        setTheme(sp.getInt("currentTheme", R.style.Theme_Original))
         super.onCreate(savedInstanceState)
 
         b = ActivityLobbyBinding.inflate(layoutInflater)

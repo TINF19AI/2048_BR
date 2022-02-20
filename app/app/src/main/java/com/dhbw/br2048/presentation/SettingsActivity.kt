@@ -2,19 +2,20 @@ package com.dhbw.br2048.presentation
 
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivitySettingsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.jakewharton.processphoenix.ProcessPhoenix
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity() {
     private lateinit var b: ActivitySettingsBinding
     private val gridFragment = GridFragment()
     private lateinit var manager: GameManager
-    private var currentThemeId = 0
+
+    private var restartRequired: Boolean = false
 
     val themeText = arrayOf(
         "Default",
@@ -29,12 +30,9 @@ class SettingsActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Theme from shared preferences
-        val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        currentThemeId = sp.getInt("currentTheme", R.style.Theme_Original)
-        setTheme(currentThemeId)
-
         super.onCreate(savedInstanceState)
+
+        restartRequired = intent.getBooleanExtra("restartRequired", false)
 
         b = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(b.root)
@@ -48,18 +46,22 @@ class SettingsActivity : AppCompatActivity() {
                 .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
 
                 }
-                .setSingleChoiceItems(themeText, themeId.indexOf(currentThemeId)) { dialog, which ->
+                .setSingleChoiceItems(
+                    themeText,
+                    themeId.indexOf(this.currentThemeId)
+                ) { dialog, which ->
                     // https://stackoverflow.com/questions/13832459/android-how-to-refresh-activity-set-theme-dynamically
                     val sp = getSharedPreferences("theme", MODE_PRIVATE)
                     val spe = sp.edit()
                     val newTheme = themeId[which]
                     spe.putInt("currentTheme", newTheme) // TODO: theme selection
                     spe.apply()
-                    currentThemeId = newTheme
+                    this.currentThemeId = newTheme
                     Log.d("SettingsActivity", "Theme was changed")
                     dialog.dismiss()
                     runOnUiThread {
                         val intent = this.intent
+                        intent.putExtra("restartRequired", true)
                         this.finish()
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                         this.startActivity(intent)
@@ -103,6 +105,23 @@ class SettingsActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             replace(R.id.flFragment, fragment)
             commit()
+        }
+    }
+
+    override fun onBackPressed() {
+        if (restartRequired) {
+            MaterialAlertDialogBuilder(
+                b.root.context,
+                com.google.android.material.R.style.MaterialAlertDialog_Material3
+            )
+                .setMessage(resources.getString(R.string.restart_message))
+                .setCancelable(false)
+                .setPositiveButton(resources.getString(R.string.ok)) { dialog, which ->
+                    ProcessPhoenix.triggerRebirth(b.root.context)
+                }
+                .show()
+        } else {
+            super.onBackPressed()
         }
     }
 }

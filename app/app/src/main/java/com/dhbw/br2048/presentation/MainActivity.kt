@@ -3,7 +3,6 @@ package com.dhbw.br2048.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.SocketHandler
 import com.dhbw.br2048.data.Coordinates
@@ -11,7 +10,7 @@ import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityMainBinding
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var b: ActivityMainBinding
     private var gridFragment = GridFragment()
@@ -19,12 +18,8 @@ class MainActivity : AppCompatActivity() {
     private var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Theme from shared preferences
-        val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        setTheme(sp.getInt("currentTheme", R.style.Theme_Original))
-
-
         super.onCreate(savedInstanceState)
+        Log.d("MainActivity", "game started")
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 

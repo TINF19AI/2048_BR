@@ -3,10 +3,8 @@ package com.dhbw.br2048.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dhbw.br2048.R
 import com.dhbw.br2048.api.SocketHandler.emit
 import com.dhbw.br2048.api.SocketHandler.getSocket
 import com.dhbw.br2048.data.Lobby
@@ -14,7 +12,7 @@ import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityLobbyListBinding
 import org.json.JSONArray
 
-class LobbyListActivity : AppCompatActivity() {
+class LobbyListActivity : BaseActivity() {
 
     private lateinit var b: ActivityLobbyListBinding
 
@@ -23,8 +21,6 @@ class LobbyListActivity : AppCompatActivity() {
     private lateinit var lobbyAdapter: LobbyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        setTheme(sp.getInt("currentTheme", R.style.Theme_Original))
         super.onCreate(savedInstanceState)
 
         b = ActivityLobbyListBinding.inflate(layoutInflater)

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
@@ -17,7 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
 
-class GameActivity : AppCompatActivity() {
+class GameActivity : BaseActivity() {
     private lateinit var b: ActivityGameBinding
     private val gridFragment = GridFragment()
     private lateinit var manager: GameManager
@@ -25,12 +24,6 @@ class GameActivity : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Theme from shared preferences
-        // Author: Kai
-        val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        setTheme(sp.getInt("currentTheme", R.style.Theme_Original))
-        // End Kai
-
         super.onCreate(savedInstanceState)
 
         b = ActivityGameBinding.inflate(layoutInflater)

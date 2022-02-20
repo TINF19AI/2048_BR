@@ -18,4 +18,6 @@
     <string name="battle_royale" translatable="false">Battle Royale</string>
     <string name="multiplayer">Multiplayer</string>
     <string name="classic">Classic</string>
+    <string name="restart_message">The app will now restart.</string>
+    <string name="ok" translatable="false">OK</string>
 </resources>
