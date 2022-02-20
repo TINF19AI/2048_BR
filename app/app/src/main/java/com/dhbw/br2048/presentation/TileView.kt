@@ -12,6 +12,7 @@ import android.widget.GridLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.animation.doOnEnd
 import androidx.core.animation.doOnStart
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.setMargins
 import com.dhbw.br2048.R
@@ -41,6 +42,8 @@ class TileView @JvmOverloads constructor(
     init {
         this.value = startValue
         updateText()
+        val font = ResourcesCompat.getFont(context, R.font.nunito)
+        this.typeface = font
     }
 
     fun updateText() {
@@ -75,7 +78,11 @@ class TileView @JvmOverloads constructor(
         }
         this.context.theme.resolveAttribute(textIdentifier, textColor, true)
         if (textColor.data == 0) { // no color was found
-            this.context.theme.resolveAttribute(R.attr.brTileText, textColor, true) // default text color
+            this.context.theme.resolveAttribute(
+                R.attr.brTileText,
+                textColor,
+                true
+            ) // default text color
         }
         this.setTextColor(textColor.data)
     }
@@ -95,8 +102,7 @@ class TileView @JvmOverloads constructor(
 
         grid!!.addView(this)
 
-        if (doAppearAnim)
-        {
+        if (doAppearAnim) {
             appearAnimation()
         }
     }
