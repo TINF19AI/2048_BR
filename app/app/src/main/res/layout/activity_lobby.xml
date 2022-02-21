@@ -14,34 +14,102 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/waiting_room" />
 
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardLobbyID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="?attr/brEmpty"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/abTop"
+        app:layout_constraintWidth_percent="0.9">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvLobbyID"
+                style="@style/TextHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="Lobby ID" />
+
+            <TextView
+                android:id="@+id/lobbyID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/brTileText2"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/tvLobbyID"
+                tools:text="6fb37d36-1548-4556-8690-d1769b61dda8"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="?attr/brEmpty"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardLobbyID"
+        app:layout_constraintWidth_percent="0.9">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tvUsers"
+                style="@style/TextHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/users" />
+
+            <TextView
+                android:id="@+id/lobbyUsers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
+                android:textColor="?attr/brTileText2"
+
+                android:layout_centerHorizontal="true"
+                tools:text="User 1"/>
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <Button
         android:id="@+id/btStartGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_game"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/abTop" />
-
-    <TextView
-        android:id="@+id/lobbyID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/brTile2"
-        android:textColor="?attr/brTileText2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btStartGame"
-        tools:text="6fb37d36-1548-4556-8690-d1769b61dda8" />
-
-    <TextView
-        android:id="@+id/lobbyUsers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:background="?attr/brTile2"
-        android:textColor="?attr/brTileText2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lobbyID"
-        tools:text="Users:" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLefttOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="40dp"
+        style="@style/ButtonPrimary"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
