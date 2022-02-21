@@ -71,6 +71,18 @@
     <color name="unicornTile1024">#FFc8e7ff</color>
     <color name="unicornTile2048">#FFc0fdff</color>
 
+    <color name="paleRainbowTile2">#FFFBF8CC</color>
+    <color name="paleRainbowTile4">#FFFDE4CF</color>
+    <color name="paleRainbowTile8">#FFFFCFD2</color>
+    <color name="paleRainbowTile16">#FFffcbf2</color>
+    <color name="paleRainbowTile32">#FFe2afff</color>
+    <color name="paleRainbowTile64">#FFCFBAF0</color>
+    <color name="paleRainbowTile128">#FFA3C4F3</color>
+    <color name="paleRainbowTile256">#FF90DBF4</color>
+    <color name="paleRainbowTile512">#FF8EECF5</color>
+    <color name="paleRainbowTile1024">#FF98F5E1</color>
+    <color name="paleRainbowTile2048">#FFB9FBC0</color>
+
 
     <!-- google's material design colours from
 http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
