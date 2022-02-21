@@ -59,6 +59,18 @@
     <color name="retroTile1024">#FFAE2012</color>
     <color name="retroTile2048">#FFbc6c25</color>
 
+    <color name="unicornTile2">#FFa5adffv</color>
+    <color name="unicornTile4">#FFcebeff</color>
+    <color name="unicornTile8">#FFf3c4fb</color>
+    <color name="unicornTile16">#FFecbcfd</color>
+    <color name="unicornTile32">#FFe5b3fe</color>
+    <color name="unicornTile64">#FFe2afff</color>
+    <color name="unicornTile128">#FFdeaaff</color>
+    <color name="unicornTile256">#FFd8bbff</color>
+    <color name="unicornTile512">#FFd0d1ff</color>
+    <color name="unicornTile1024">#FFc8e7ff</color>
+    <color name="unicornTile2048">#FFc0fdff</color>
+
 
     <!-- google's material design colours from
 http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->

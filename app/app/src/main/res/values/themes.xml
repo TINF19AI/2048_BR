@@ -123,5 +123,18 @@
         <item name="brTileText2048">@color/white</item>
     </style>
 
+    <style name="Theme.Unicorn" parent="@style/Theme.br2048">
+        <item name="brTile2">@color/unicornTile2</item>
+        <item name="brTile4">@color/unicornTile4</item>
+        <item name="brTile8">@color/unicornTile8</item>
+        <item name="brTile16">@color/unicornTile16</item>
+        <item name="brTile32">@color/unicornTile32</item>
+        <item name="brTile64">@color/unicornTile64</item>
+        <item name="brTile128">@color/unicornTile128</item>
+        <item name="brTile256">@color/unicornTile256</item>
+        <item name="brTile512">@color/unicornTile512</item>
+        <item name="brTile1024">@color/unicornTile1024</item>
+        <item name="brTile2048">@color/unicornTile2048</item>
+    </style>
 
 </resources>

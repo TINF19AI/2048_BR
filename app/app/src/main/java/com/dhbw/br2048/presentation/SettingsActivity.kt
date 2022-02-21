@@ -21,14 +21,16 @@ class SettingsActivity : BaseActivity() {
         "Default",
         "Ocean",
         "Fire",
-        "Retro"
+        "Retro",
+        "Unicorn"
     )
 
     val themeId = arrayOf(
         R.style.Theme_Original,
         R.style.Theme_Ocean,
         R.style.Theme_Fire,
-        R.style.Theme_Retro
+        R.style.Theme_Retro,
+        R.style.Theme_Unicorn
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
