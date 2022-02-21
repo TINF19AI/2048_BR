@@ -53,6 +53,7 @@ class GameManager(
         for (i in 1..startTiles) {
             this.addRandomTile()
         }
+        score = 0
     }
 
     // Adds a tile in a random position

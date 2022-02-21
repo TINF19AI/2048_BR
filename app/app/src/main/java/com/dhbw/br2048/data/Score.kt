@@ -1,5 +1,19 @@
 package com.dhbw.br2048.data
 
-class Score (var username: String, var score: Int, var alive: Boolean) {
+import org.json.JSONObject
 
+data class Score(
+    val username: String,
+    val score: Int,
+    val alive: Boolean,
+    val position: Int,
+)
+
+fun JSONObject.toScore(): Score {
+    return Score(
+        this.getString("username"),
+        this.getInt("score"),
+        this.getBoolean("alive"),
+        this.getInt("position"),
+    )
 }

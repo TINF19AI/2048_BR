@@ -2,13 +2,14 @@ package com.dhbw.br2048.api
 
 import android.util.Log
 import com.dhbw.br2048.data.Score
+import com.dhbw.br2048.data.toScore
 import io.socket.client.Socket
 import org.json.JSONArray
 
 
-class GameSocket(sessionName: String, username: String, scoreboard: (ArrayList<Score>, Int) -> Unit){
+class GameSocket(sessionName: String, username: String, scoreboard: (ArrayList<Score>, Score) -> Unit){
     var socket: Socket
-    var position: Int = 0
+    lateinit var currentScore: Score
 
     fun score(score: Int) {
         socket.emit("score", score)
@@ -42,23 +43,17 @@ class GameSocket(sessionName: String, username: String, scoreboard: (ArrayList<S
             val list = arrayListOf<Score>()
 
             for (i in 0 until scores.length()) {
-                val score = scores.getJSONObject(i)
+                val score = scores.getJSONObject(i).toScore()
 
-                list.add(
-                    Score(
-                        score.getString("username"),
-                        score.getInt("score"),
-                        score.getBoolean("alive")
-                    )
-                )
+                list.add(score)
 
-                if(score.getString("username") == username){
-                    position = i + 1
+                if(score.username == username){
+                    currentScore = score
                 }
             }
 
             if (scoreboard != null) {
-                scoreboard(list, position)
+                scoreboard(list, currentScore)
             }
         }
 
