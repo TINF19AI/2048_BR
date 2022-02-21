@@ -17,16 +17,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardSingleplayer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:backgroundTint="?attr/brEmpty"
-        app:cardCornerRadius="25dp"
+        style="@style/CardRegular"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/abTop"
-        app:layout_constraintWidth_percent="0.9">
-
+        app:layout_constraintTop_toBottomOf="@id/abTop">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -57,15 +51,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardMultiplayer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:backgroundTint="?attr/brEmpty"
-        app:cardCornerRadius="25dp"
+        style="@style/CardRegular"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardSingleplayer"
-        app:layout_constraintWidth_percent="0.9">
+        app:layout_constraintTop_toBottomOf="@id/cardSingleplayer">
 
         <RelativeLayout
             android:layout_width="match_parent"
