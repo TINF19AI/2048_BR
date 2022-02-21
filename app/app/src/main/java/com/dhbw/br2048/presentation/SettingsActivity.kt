@@ -24,7 +24,8 @@ class SettingsActivity : BaseActivity() {
         "Retro",
         "Unicorn",
         "Pale Rainbow",
-        "All Black"
+        "All Black",
+        "Metallic"
     )
 
     val themeId = arrayOf(
@@ -34,7 +35,8 @@ class SettingsActivity : BaseActivity() {
         R.style.Theme_Retro,
         R.style.Theme_Unicorn,
         R.style.Theme_PaleRainbow,
-        R.style.Theme_AllBlack
+        R.style.Theme_AllBlack,
+        R.style.Theme_Metallic
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
