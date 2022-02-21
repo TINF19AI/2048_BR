@@ -6,6 +6,7 @@ import android.util.Log
 import io.socket.client.IO
 import io.socket.client.Manager
 import io.socket.client.Socket
+import java.net.SocketTimeoutException
 import java.net.URI
 import java.net.URISyntaxException
 
@@ -20,14 +21,21 @@ object SocketHandler {
             val opts = IO.Options()
             opts.forceNew = true
             opts.reconnection = true
-            opts.query = "CustomId=" + Settings.Global.getString(context.contentResolver, "device_name")
+            opts.query =
+                "CustomId=" + Settings.Global.getString(context.contentResolver, "device_name")
 
             manager = Manager(URI.create("https://br2048.welt.sh"), opts)
             mSocket = manager.socket("/")
+            mSocket.io().timeout(5 * 1000) // 5 seconds
         } catch (e: URISyntaxException) {
             // @todo
         }
-        mSocket.connect()
+
+        try {
+            mSocket.connect()
+        } catch (e: SocketTimeoutException) {
+            Log.d("SocketHandler", "socket timeout, could not connect to game server")
+        }
 
         mSocket.on(Socket.EVENT_CONNECT) {
             Log.d("mEVENT_CONNECT", it.toString())
@@ -40,14 +48,13 @@ object SocketHandler {
         mSocket.on("score") {
             Log.d("mEVENT_SCORE", it.toString())
         }
-
     }
 
     @Synchronized
-    fun request(topic: String, data: Any?, callback: (Array<Any>) -> Unit?){
+    fun request(topic: String, data: Any?, callback: (Array<Any>) -> Unit?) {
         mSocket.emit(topic, data)
 
-        mSocket.once(topic){
+        mSocket.once(topic) {
             callback(it)
         }
     }
@@ -63,7 +70,7 @@ object SocketHandler {
     }
 
     @Synchronized
-    fun emit(topic: String, data: Any? ) {
+    fun emit(topic: String, data: Any?) {
         mSocket.emit(topic, data)
     }
 }

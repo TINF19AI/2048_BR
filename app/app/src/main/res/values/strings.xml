@@ -20,4 +20,7 @@
     <string name="classic">Classic</string>
     <string name="restart_message">The app will now restart.</string>
     <string name="ok" translatable="false">OK</string>
+    <string name="no_lobbys_found">No Lobbys found</string>
+    <string name="create_new_lobby">Create New Lobby</string>
+    <string name="no_connection">Could not connect to game server. Please check your internet connection and try again.</string>
 </resources>
