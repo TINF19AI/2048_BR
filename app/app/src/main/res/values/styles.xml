@@ -47,5 +47,7 @@
         <item name="titleCentered">true</item>
         <item name="android:background">@color/md_grey_900</item>
         <item name="titleTextColor">@color/white</item>
+        <item name="android:elevation">200dp</item>
+        <item name="android:outlineProvider">bounds</item>
     </style>
 </resources>
