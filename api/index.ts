@@ -46,7 +46,7 @@ function newGame(gameId: string, username: string) {
     running: false,
     round: -1,
     duration: -1,
-    roundDurations: [5000, 5000, 5000],
+    roundDurations: [15000, 25000, 35000],
   };
 
   games[gameId] = {};
@@ -80,7 +80,9 @@ function newGame(gameId: string, username: string) {
 
     socket.on("start", function (_) {
       nsp.emit("start", {});
-      startRound(gameId, 0, nsp);
+      setTimeout(() => {
+        startRound(gameId, 0, nsp);
+      }, 1000);
     });
 
     socket.on("disconnect", (reason) => {
@@ -242,6 +244,10 @@ function startRound(gameId: string, round: number, namespace: SocketNamespace) {
 }
 
 function endRound(gameId: string, round: number, namespace: SocketNamespace) {
+  if (!lobbys[gameId]) {
+    return;
+  }
+
   if (lobbys[gameId].roundDurations.length == round - 1) {
     console.log(`[${gameId} - SYSTEM] Game end`);
 

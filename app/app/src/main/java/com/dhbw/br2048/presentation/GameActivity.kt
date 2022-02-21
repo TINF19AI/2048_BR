@@ -2,6 +2,7 @@ package com.dhbw.br2048.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
@@ -17,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import org.json.JSONObject
+import java.util.*
 
 
 class GameActivity : BaseActivity() {
@@ -98,6 +100,7 @@ class GameActivity : BaseActivity() {
 
                     runOnUiThread {
                         if(!score.alive){
+                            manager.alive = false
                             // @todo show endscreen
                         }
 
@@ -120,12 +123,26 @@ class GameActivity : BaseActivity() {
 
                     if(lobby.duration != -1){
                         runOnUiThread {
-                            b.tvTime.text = lobby.duration.toString();
+                            object : CountDownTimer((lobby.duration).toLong(), 1000) {
+
+                                override fun onTick(millisUntilFinished: Long) {
+                                    b.tvTime.text = ((millisUntilFinished + 999) / 1000).toString()
+                                }
+
+                                override fun onFinish() {
+                                    b.tvTime.text = "0"
+                                }
+                            }.start()
+
                         }
                     }
                 }
+
+                gameSocket!!.socket.emit("lobbyDetails", null)
+                gameSocket!!.socket.emit("score", 0)
             }
         }
+        b.tvScore.text = "Points: 0"
 
         manager = GameManager(
             b.root.context,

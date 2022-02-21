@@ -16,6 +16,7 @@ class GameManager(
     private val gridSize: Coordinates,
     private val startTiles: Int,
 ) {
+    var alive = true
     private val grid = Grid(gridSize)
 
     var wonCallback: ((Int) -> Unit)? = null
@@ -53,7 +54,7 @@ class GameManager(
         for (i in 1..startTiles) {
             this.addRandomTile()
         }
-        score = 0
+        scoreCallback?.let { it(0) }
     }
 
     // Adds a tile in a random position
@@ -123,6 +124,8 @@ class GameManager(
     // Move tiles on the grid in the specified direction
     // From open source 2048, ported by Maxi
     fun move(direction: Direction): Boolean {
+        if(!alive) return false
+
         // 0: up, 1: right, 2: down, 3: left
 
         //if (this.isGameTerminated()) return; // Don't do anything if the game's over
