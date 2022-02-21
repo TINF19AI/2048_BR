@@ -47,6 +47,18 @@
     <color name="fireTile1024">#FF370617</color>
     <color name="fireTile2048">#FF03071E</color>
 
+    <color name="retroTile2">#FF606c38</color>
+    <color name="retroTile4">#FF283618</color>
+    <color name="retroTile8">#FF005F73</color>
+    <color name="retroTile16">#FF0A9396</color>
+    <color name="retroTile32">#FF94D2BD</color>
+    <color name="retroTile64">#FFE9D8A6</color>
+    <color name="retroTile128">#FFEE9B00</color>
+    <color name="retroTile256">#FFCA6702</color>
+    <color name="retroTile512">#FFBB3E03</color>
+    <color name="retroTile1024">#FFAE2012</color>
+    <color name="retroTile2048">#FFbc6c25</color>
+
 
     <!-- google's material design colours from
 http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
