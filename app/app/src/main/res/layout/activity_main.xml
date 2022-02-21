@@ -39,7 +39,9 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
+        android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:elevation="5dp"
         android:shadowColor="?attr/brTileText2048"
         android:shadowDx="5.5"
@@ -59,6 +61,9 @@
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="-25dp"
         android:elevation="5dp"
         android:shadowColor="?attr/brTileText2048"
         android:shadowDx="5.5"

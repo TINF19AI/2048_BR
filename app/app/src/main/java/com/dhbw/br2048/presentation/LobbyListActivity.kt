@@ -40,6 +40,10 @@ class LobbyListActivity : BaseActivity() {
                 })
             }
         }
+
+        b.swipeLobbys.setOnRefreshListener {
+            emit("getLobbys", null)
+        }
     }
 
     override fun onResume() {
@@ -66,6 +70,8 @@ class LobbyListActivity : BaseActivity() {
             }
 
             runOnUiThread(Runnable {
+                b.swipeLobbys.isRefreshing = false
+
                 if (lobbys.length() == 0) {
                     // no lobbys found -> show info
                     b.cardNoLobbyFound.visibility = View.VISIBLE
