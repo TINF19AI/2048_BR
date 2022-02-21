@@ -45,6 +45,7 @@ function newGame(gameId: string, username: string) {
     maxUsers: 48,
     running: false,
     round: -1,
+    duration: -1,
     roundDurations: [5000, 5000, 5000],
   };
 
@@ -217,7 +218,7 @@ function closeLobby(gameId: string, namespace: SocketNamespace) {
   delete lobbys[gameId];
   delete games[gameId];
 
-  namespace.disconnectSockets(true);
+  namespace.disconnectSockets(false);
   namespace.removeAllListeners();
   delete io._nsps["/game/" + gameId];
 }
@@ -231,8 +232,9 @@ function startRound(gameId: string, round: number, namespace: SocketNamespace) {
     ...lobbys[gameId],
     currentUsers: Object.keys(games[gameId]).length,
     id: gameId,
-    duration,
+    duration: duration ? duration : -1,
   });
+  namespace.emit("score", getScore(gameId));
 
   setTimeout(() => {
     endRound(gameId, round, namespace);
@@ -242,7 +244,19 @@ function startRound(gameId: string, round: number, namespace: SocketNamespace) {
 function endRound(gameId: string, round: number, namespace: SocketNamespace) {
   if (lobbys[gameId].roundDurations.length == round - 1) {
     console.log(`[${gameId} - SYSTEM] Game end`);
-    closeLobby(gameId, namespace);
+
+    namespace.emit(
+      "score",
+      getScore(gameId).map((score) => {
+        score.alive = false;
+        return score;
+      })
+    );
+
+    setTimeout(() => {
+      closeLobby(gameId, namespace);
+    }, 500);
+
     return;
   }
 

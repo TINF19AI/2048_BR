@@ -79,6 +79,7 @@
             android:padding="10dp" />
 
         <RelativeLayout
+            android:id="@+id/layEndscreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"

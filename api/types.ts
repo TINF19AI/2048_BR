@@ -19,6 +19,7 @@ export type Lobby = {
     running: boolean;
     round: number;
     roundDurations: Array<number>;
+    duration: number;
   };
 };
 
