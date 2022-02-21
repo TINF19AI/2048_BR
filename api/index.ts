@@ -1,4 +1,4 @@
-import { Server } from "socket.io";
+import { Namespace, Server } from "socket.io";
 import shortUUID from "short-uuid";
 import { Game, Lobby, SocketNamespace } from "./types";
 
@@ -44,6 +44,8 @@ function newGame(gameId: string, username: string) {
     currentUsers: 0,
     maxUsers: 48,
     running: false,
+    round: -1,
+    roundDurations: [5000, 5000, 5000],
   };
 
   games[gameId] = {};
@@ -77,6 +79,7 @@ function newGame(gameId: string, username: string) {
 
     socket.on("start", function (_) {
       nsp.emit("start", {});
+      startRound(gameId, 0, nsp);
     });
 
     socket.on("disconnect", (reason) => {
@@ -130,7 +133,20 @@ function getScore(gameId: string) {
 
   score.sort((a, b) => b.score - a.score);
 
+  for (const [i, key] of enumerate(Object.keys(score))) {
+    score[key].position = i + 1;
+  }
+
   return score;
+}
+
+function* enumerate(iterable) {
+  let i = 0;
+
+  for (const x of iterable) {
+    yield [i, x];
+    i++;
+  }
 }
 
 function getLobbys() {
@@ -150,6 +166,7 @@ function getLobbyDetails(gameId: string) {
     ...lobbys[gameId],
     currentUsers: Object.keys(games[gameId]).length,
     id: gameId,
+    duration: -1,
   };
 }
 
@@ -178,6 +195,10 @@ function leaveLobby(
 ) {
   console.log(`[${gameId} - ${username}] Left the lobby`);
 
+  if (!games[gameId] || !games[gameId][username]) {
+    return;
+  }
+
   delete games[gameId][username];
 
   if (Object.keys(games[gameId]).length == 0) {
@@ -196,6 +217,37 @@ function closeLobby(gameId: string, namespace: SocketNamespace) {
   delete lobbys[gameId];
   delete games[gameId];
 
+  namespace.disconnectSockets(true);
   namespace.removeAllListeners();
   delete io._nsps["/game/" + gameId];
+}
+
+function startRound(gameId: string, round: number, namespace: SocketNamespace) {
+  lobbys[gameId].round = round;
+  const duration = lobbys[gameId].roundDurations[round];
+  console.log(`[${gameId} - SYSTEM] round ${round} started`);
+
+  namespace.emit("lobbyDetails", {
+    ...lobbys[gameId],
+    currentUsers: Object.keys(games[gameId]).length,
+    id: gameId,
+    duration,
+  });
+
+  setTimeout(() => {
+    endRound(gameId, round, namespace);
+  }, duration);
+}
+
+function endRound(gameId: string, round: number, namespace: SocketNamespace) {
+  if (lobbys[gameId].roundDurations.length == round - 1) {
+    console.log(`[${gameId} - SYSTEM] Game end`);
+    closeLobby(gameId, namespace);
+    return;
+  }
+
+  console.log(
+    `[${gameId} - SYSTEM] round ${round} over, starting ${round + 1}`
+  );
+  startRound(gameId, round + 1, namespace);
 }

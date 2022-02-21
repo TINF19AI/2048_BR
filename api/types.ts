@@ -6,6 +6,7 @@ export type Game = {
     [username: string]: {
       score: number;
       alive: boolean;
+      position?: number;
     };
   };
 };
@@ -16,6 +17,8 @@ export type Lobby = {
     currentUsers: number;
     maxUsers: number;
     running: boolean;
+    round: number;
+    roundDurations: Array<number>;
   };
 };
 
