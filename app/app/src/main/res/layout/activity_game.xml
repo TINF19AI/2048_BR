@@ -36,8 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                tools:ignore="RtlHardcoded"
-                tools:text="Points: 2048" />
+                android:text="@string/points_0"
+                tools:ignore="RtlHardcoded" />
 
             <TextView
                 android:id="@+id/tvPosition"
@@ -78,23 +78,51 @@
             android:background="?attr/brBackground"
             android:padding="10dp" />
 
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardEndScreen"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0.1"
+        android:backgroundTint="?attr/brEmpty"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/cardGrid"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="@id/cardGrid"
+        app:layout_constraintRight_toRightOf="@id/cardGrid"
+        android:padding="12dp"
+        app:layout_constraintTop_toTopOf="@id/cardGrid"
+        app:layout_constraintWidth_percent="0.9">
+
         <RelativeLayout
             android:id="@+id/layEndscreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0"
-            android:padding="50dp">
+            android:padding="16dp">
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
+                android:id="@+id/tvEndHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                style="@style/TextHeadline"
+                tools:ignore="RtlHardcoded"
+                tools:text="Game Over!" />
+
+            <TextView
                 android:id="@+id/tvEndMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:textSize="20sp"
-                tools:text="You lost" />
+                android:layout_below="@id/tvEndHeader"
+                tools:ignore="RtlHardcoded"
+                android:text="Points: 2048" />
         </RelativeLayout>
-
     </com.google.android.material.card.MaterialCardView>
+
 
     <ImageView
         android:id="@+id/imageView1"

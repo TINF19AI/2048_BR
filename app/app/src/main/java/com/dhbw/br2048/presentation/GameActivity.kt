@@ -15,10 +15,7 @@ import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityGameBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import org.json.JSONObject
-import java.util.*
 
 
 class GameActivity : BaseActivity() {
@@ -38,6 +35,7 @@ class GameActivity : BaseActivity() {
             replace(R.id.flFragment, gridFragment)
             commit()
         }
+        b.cardEndScreen.alpha = 0f
 
         // Author: Caspar
         b.clGame.setOnTouchListener(object : OnSwipeTouchListener(this@GameActivity) {
@@ -158,6 +156,7 @@ class GameActivity : BaseActivity() {
         }
         manager.overCallback = { score: Int ->
             Snackbar.make(b.tvScore, "Game Over!", Snackbar.LENGTH_LONG).show()
+            showEndScreen()
             gameSocket?.over(score)
 
         }
@@ -194,5 +193,20 @@ class GameActivity : BaseActivity() {
             }
             else -> super.onKeyDown(keyCode, event)
         }
+    }
+
+    private fun showEndScreen() {
+        Log.d("GameActivity", "showEndScreen")
+        b.cardEndScreen.animate()
+            .alpha(0.8f)
+            .setDuration(1000)
+            .start()
+    }
+
+    private fun hideEndScreen() {
+        b.cardEndScreen.animate()
+            .alpha(0f)
+            .setDuration(1000)
+            .start()
     }
 }
