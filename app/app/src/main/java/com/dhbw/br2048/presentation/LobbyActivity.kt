@@ -5,7 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dhbw.br2048.api.GameSocket
+import com.dhbw.br2048.data.User
 import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityLobbyBinding
 import org.json.JSONObject
@@ -17,6 +20,10 @@ class LobbyActivity : BaseActivity() {
     var gameId: String = ""
     var keepSocket: Boolean = false
 
+    // For Lobby RecyclerView
+    private val userList: MutableList<User> = mutableListOf()
+    private lateinit var userAdapter: UserAdapter
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +34,15 @@ class LobbyActivity : BaseActivity() {
         b.btStartGame.setOnClickListener {
             gameSocket?.startGame()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        b.rvUsers.layoutManager = LinearLayoutManager(b.root.context, RecyclerView.VERTICAL, false)
+        userAdapter = UserAdapter(userList)
+        b.rvUsers.adapter = userAdapter
+
 
         intent.extras?.getString("gameID")?.let {
             gameId = it // set lobby id
@@ -34,14 +50,16 @@ class LobbyActivity : BaseActivity() {
                 it,
                 Settings.Global.getString(baseContext.contentResolver, "device_name")
             ) { list, position ->
-                // TODO: Show players in lobby
-                runOnUiThread {
-                    var userList = "Users: \n"
-                    for (user in list){
-                        userList += user.username + "\n"
-                    }
-                    b.lobbyUsers.text = userList
+                Log.d("Lobby", "received user names")
+                userList.clear()
+                for (user in list) {
+                    Log.d("Lobby", "adding username: $user")
+                    userList.add(User(user.username)) // add usernames to recyclerview
                 }
+                runOnUiThread(Runnable {
+                    userAdapter.notifyDataSetChanged()
+                    Log.d("Lobby", "user count " + userList.size.toString())
+                })
             }
         }
 
@@ -60,7 +78,10 @@ class LobbyActivity : BaseActivity() {
             Log.d("Lobby", "Received lobbyDetails for game: " + gameId)
             val lobby = (it[0] as JSONObject).toLobby()
             runOnUiThread(Runnable {
-                b.btStartGame.isEnabled = (lobby.owner == Settings.Global.getString(baseContext.contentResolver, "device_name"))
+                b.btStartGame.isEnabled = (lobby.owner == Settings.Global.getString(
+                    baseContext.contentResolver,
+                    "device_name"
+                ))
             })
         }
         gameSocket?.lobbyDetails()
@@ -70,7 +91,7 @@ class LobbyActivity : BaseActivity() {
     }
 
     override fun onStop() {
-        if(!keepSocket){
+        if (!keepSocket) {
             gameSocket?.close()
         }
         Log.d("LobbyActivity", "onStop")
