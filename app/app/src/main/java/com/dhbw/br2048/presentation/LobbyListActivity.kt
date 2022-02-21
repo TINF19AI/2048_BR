@@ -97,5 +97,6 @@ class LobbyListActivity : BaseActivity() {
         val lobbyIntent = Intent(this, LobbyActivity::class.java)
         lobbyIntent.putExtra("gameID", gameID)
         startActivity(lobbyIntent)
+        finish() // go back to game selection
     }
 }

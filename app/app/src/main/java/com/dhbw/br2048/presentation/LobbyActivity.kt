@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dhbw.br2048.R
@@ -81,10 +82,14 @@ class LobbyActivity : BaseActivity() {
             Log.d("Lobby", "Received lobbyDetails for game: " + gameId)
             val lobby = (it[0] as JSONObject).toLobby()
             runOnUiThread(Runnable {
-                b.btStartGame.isEnabled = (lobby.owner == Settings.Global.getString(
-                    baseContext.contentResolver,
-                    "device_name"
-                ))
+                // hide button if not owner
+                if (!(lobby.owner == Settings.Global.getString(
+                        baseContext.contentResolver,
+                        "device_name"
+                    ))
+                ) {
+                    b.btStartGame.visibility = View.GONE
+                }
 
                 b.tvUsers.text =
                     "${resources.getString(R.string.players)} (${lobby.currentUsers} / ${lobby.maxUsers})"
