@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.br2048" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="actionBarStyle">@style/topAppBar</item>
+        <item name= "android:textViewStyle" > @style/TextRegular</item>
+        <item name= "android:buttonStyle" > @style/ButtonPrimary</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>

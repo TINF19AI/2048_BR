@@ -4,6 +4,8 @@
     <style name="TextRegular" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/nunito</item>
+        <item name="fontFamily">@font/nunito</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextHeadline" parent="TextAppearance.Material3.HeadlineMedium">
@@ -45,7 +47,5 @@
         <item name="titleCentered">true</item>
         <item name="android:background">@color/md_grey_900</item>
         <item name="titleTextColor">@color/white</item>
-        <item name="android:fontFamily">@font/nunito</item>
-        <item name="fontFamily">@font/nunito</item>
     </style>
 </resources>
