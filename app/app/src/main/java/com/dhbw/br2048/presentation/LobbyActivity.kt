@@ -7,6 +7,7 @@ import android.provider.Settings
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
 import com.dhbw.br2048.data.User
 import com.dhbw.br2048.data.toLobby
@@ -53,9 +54,11 @@ class LobbyActivity : BaseActivity() {
                 Log.d("Lobby", "received user names")
                 userList.clear()
                 for (user in list) {
-                    Log.d("Lobby", "adding username: $user")
                     userList.add(User(user.username)) // add usernames to recyclerview
                 }
+                for (i in 0..100)
+                    userList.add(User("test")) // add usernames to recyclerview
+
                 runOnUiThread(Runnable {
                     userAdapter.notifyDataSetChanged()
                     Log.d("Lobby", "user count " + userList.size.toString())
@@ -82,12 +85,15 @@ class LobbyActivity : BaseActivity() {
                     baseContext.contentResolver,
                     "device_name"
                 ))
+
+                b.tvUsers.text =
+                    "${resources.getString(R.string.players)} (${lobby.currentUsers} / ${lobby.maxUsers})"
             })
         }
         gameSocket?.lobbyDetails()
 
         Log.d("Lobby", "Joined Lobby: " + gameId)
-        b.lobbyID.text = "ID: $gameId"
+        b.lobbyID.text = gameId
     }
 
     override fun onStop() {

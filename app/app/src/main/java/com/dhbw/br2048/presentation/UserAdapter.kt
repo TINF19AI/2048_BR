@@ -19,7 +19,6 @@ class UserAdapter(var users: MutableList<User>) :
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val u = users[position]
-        Log.d("Lobby", "BindHolder " + u.username)
         holder.b.tvUsername.text = u.username
     }
 

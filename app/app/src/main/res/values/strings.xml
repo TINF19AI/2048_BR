@@ -23,7 +23,7 @@
     <string name="no_lobbys_found">No Lobbys found</string>
     <string name="create_new_lobby">Create New Lobby</string>
     <string name="no_connection">Could not connect to game server. Please check your internet connection and try again.</string>
-    <string name="users">Users</string>
     <string name="points_0">Points: 0</string>
     <string name="points">Points</string>
+    <string name="players">Players</string>
 </resources>
