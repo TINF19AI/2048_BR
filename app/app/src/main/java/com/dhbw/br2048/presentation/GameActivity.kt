@@ -99,7 +99,10 @@ class GameActivity : BaseActivity() {
                     runOnUiThread {
                         if(!score.alive){
                             manager.alive = false
-                            // @todo show endscreen
+                            showEndScreen()
+                            b.tvEndPosition.text = "${score.position}."
+                            b.tvEndMessage.text = "Points: ${score.score}"
+                            b.tvEndHeader.text = if (score.position == 1) "Winner winner chicken dinner " else "Game Over!"
                         }
 
                         b.tvPosition.text = "${score.position} / ${list.size}"

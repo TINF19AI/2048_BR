@@ -46,7 +46,7 @@ function newGame(gameId: string, username: string) {
     running: false,
     round: -1,
     duration: -1,
-    roundDurations: [15000, 25000, 35000],
+    roundDurations: [35000, 25000, 15000],
   };
 
   games[gameId] = {};
@@ -249,25 +249,59 @@ function endRound(gameId: string, round: number, namespace: SocketNamespace) {
   }
 
   if (lobbys[gameId].roundDurations.length == round - 1) {
-    console.log(`[${gameId} - SYSTEM] Game end`);
+    endGame(gameId, namespace);
+    return;
+  }
 
-    namespace.emit(
-      "score",
-      getScore(gameId).map((score) => {
-        score.alive = false;
-        return score;
-      })
-    );
-
-    setTimeout(() => {
-      closeLobby(gameId, namespace);
-    }, 500);
-
+  if (removePlayerByScore(gameId, namespace)) {
+    endGame(gameId, namespace);
     return;
   }
 
   console.log(
     `[${gameId} - SYSTEM] round ${round} over, starting ${round + 1}`
   );
+
   startRound(gameId, round + 1, namespace);
+}
+
+function removePlayerByScore(gameId: string, namespace: SocketNamespace) {
+  const remainingPlayers = getScore(gameId).filter((score) => score.alive);
+  const removePlayer = remainingPlayers[remainingPlayers.length - 1];
+
+  if (!removePlayer) {
+    // No player to remove
+    return true;
+  }
+
+  games[gameId][removePlayer.username].alive = false;
+
+  console.log(
+    `[${gameId} - SYSTEM] removed ${removePlayer.username} ${
+      remainingPlayers.length - 1
+    } players remaining`
+  );
+
+  if (remainingPlayers.length - 1 == 1) {
+    // Only 1 player remaining
+    return true;
+  }
+}
+
+function endGame(gameId: string, namespace: SocketNamespace) {
+  console.log(`[${gameId} - SYSTEM] Game end`);
+
+  namespace.emit(
+    "score",
+    getScore(gameId).map((score) => {
+      score.alive = false;
+      return score;
+    })
+  );
+
+  setTimeout(() => {
+    closeLobby(gameId, namespace);
+  }, 500);
+
+  return;
 }

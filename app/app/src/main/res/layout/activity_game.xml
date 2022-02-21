@@ -104,11 +104,11 @@
 
             <TextView
                 android:id="@+id/tvEndHeader"
+                style="@style/TextHeadline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                style="@style/TextHeadline"
+                android:layout_centerHorizontal="true"
                 tools:ignore="RtlHardcoded"
                 tools:text="Game Over!" />
 
@@ -116,10 +116,20 @@
                 android:id="@+id/tvEndMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/tvEndHeader"
+                android:layout_centerHorizontal="true"
+                android:text="Points: 2048"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/tvEndPosition"
+                style="@style/TextHeadline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvEndMessage"
+                android:layout_centerHorizontal="true"
                 tools:ignore="RtlHardcoded"
-                android:text="Points: 2048" />
+                tools:text="0." />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 

@@ -45,7 +45,6 @@ class LobbyActivity : BaseActivity() {
         userAdapter = UserAdapter(userList)
         b.rvUsers.adapter = userAdapter
 
-
         intent.extras?.getString("gameID")?.let {
             gameId = it // set lobby id
             gameSocket = GameSocket(
@@ -57,8 +56,6 @@ class LobbyActivity : BaseActivity() {
                 for (user in list) {
                     userList.add(User(user.username)) // add usernames to recyclerview
                 }
-                for (i in 0..100)
-                    userList.add(User("test")) // add usernames to recyclerview
 
                 runOnUiThread(Runnable {
                     userAdapter.notifyDataSetChanged()
