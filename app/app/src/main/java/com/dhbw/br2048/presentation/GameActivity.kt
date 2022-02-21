@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
 import com.dhbw.br2048.data.Coordinates
@@ -28,7 +27,11 @@ class GameActivity : BaseActivity() {
 
         b = ActivityGameBinding.inflate(layoutInflater)
         setContentView(b.root)
-        setCurrentFragment(gridFragment)
+        supportFragmentManager.beginTransaction().apply {
+            setReorderingAllowed(true)
+            replace(R.id.flFragment, gridFragment)
+            commit()
+        }
 
         // Author: Caspar
         b.clGame.setOnTouchListener(object : OnSwipeTouchListener(this@GameActivity) {
@@ -154,14 +157,6 @@ class GameActivity : BaseActivity() {
                 true
             }
             else -> super.onKeyDown(keyCode, event)
-        }
-    }
-
-    private fun setCurrentFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            setReorderingAllowed(true)
-            replace(R.id.flFragment, fragment)
-            commit()
         }
     }
 }
