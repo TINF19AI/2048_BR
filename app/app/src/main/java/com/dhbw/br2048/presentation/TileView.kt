@@ -15,6 +15,7 @@ import androidx.core.animation.doOnStart
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.setMargins
+import androidx.core.widget.TextViewCompat
 import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Coordinates
 
@@ -48,11 +49,6 @@ class TileView @JvmOverloads constructor(
 
     fun updateText() {
         this.text = value.toString()
-        if (text.length >= 4) {
-            this.textSize = context.pxToDp(80).toFloat()
-        } else {
-            this.textSize = context.pxToDp(100).toFloat()
-        }
     }
 
     // sets the background color of the tile depending on the text
@@ -107,6 +103,19 @@ class TileView @JvmOverloads constructor(
         this.layoutParams = setCoordLayoutParams(this.coordinates)
 
         grid!!.addView(this)
+
+        TextViewCompat.setAutoSizeTextTypeWithDefaults(
+            this,
+            TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM
+        )
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+            this,
+            16,
+            35,
+            1,
+            TypedValue.COMPLEX_UNIT_SP
+        )
+        this.setPadding(10, 10, 10, 10)
 
         updateText()
 
