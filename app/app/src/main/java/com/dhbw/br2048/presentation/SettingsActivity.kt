@@ -1,7 +1,8 @@
 package com.dhbw.br2048.presentation
 
-import android.os.Bundle
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -134,7 +135,7 @@ class SettingsActivity : BaseActivity() {
         b.textInputUsername.setText(getUsername())
     }
 
-    private fun saveUsername(){
+    private fun saveUsername() {
         val sp = getSharedPreferences("general", MODE_PRIVATE)
         val spe = sp.edit()
         val username = b.textInputUsername.text.toString()
@@ -143,7 +144,8 @@ class SettingsActivity : BaseActivity() {
 
         SocketHandler.setSocket(username, getUserId())
 
-        Snackbar.make(b.btChangeUsername, "Username changed to $username", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(b.btChangeUsername, "Username changed to $username", Snackbar.LENGTH_LONG)
+            .show()
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
@@ -152,6 +154,14 @@ class SettingsActivity : BaseActivity() {
             replace(R.id.flFragment, fragment)
             commit()
         }
+    }
+
+    override fun onBackPressed() {
+        val mainIntent = Intent(this, MainActivity::class.java)
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(mainIntent)
+        finish()
+//        super.onBackPressed()
     }
 
 }

@@ -32,7 +32,8 @@ class MainActivity : BaseActivity() {
         }
 
         b.btSettings.setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
+            val settingsIntent = Intent(this, SettingsActivity::class.java)
+            startActivity(settingsIntent)
         }
 
         supportFragmentManager.beginTransaction().apply {
