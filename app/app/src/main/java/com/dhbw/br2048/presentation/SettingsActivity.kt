@@ -116,7 +116,7 @@ class SettingsActivity : BaseActivity() {
         manager.setTile(1024, Coordinates(1, 2))
         manager.setTile(2048, Coordinates(2, 2))
 
-        b.textInputUsername.text = getUsername()
+        b.textInputUsername.setText(getUsername())
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
