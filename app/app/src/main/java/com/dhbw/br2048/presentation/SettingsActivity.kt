@@ -16,7 +16,7 @@ class SettingsActivity : BaseActivity() {
 
     private var restartRequired: Boolean = false
 
-    val themeText = arrayOf(
+    private val themeText = arrayOf(
         "Default",
         "Ocean",
         "Fire",
@@ -27,7 +27,7 @@ class SettingsActivity : BaseActivity() {
         "Metallic"
     )
 
-    val themeId = arrayOf(
+    private val themeId = arrayOf(
         R.style.Theme_Original,
         R.style.Theme_Ocean,
         R.style.Theme_Fire,
@@ -52,7 +52,7 @@ class SettingsActivity : BaseActivity() {
                 b.root.context,
                 com.google.android.material.R.style.MaterialAlertDialog_Material3
             )
-                .setNeutralButton(resources.getString(R.string.cancel)) { dialog, which ->
+                .setNeutralButton(resources.getString(R.string.cancel)) { _, _ ->
 
                 }
                 .setSingleChoiceItems(
@@ -117,20 +117,4 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
-    override fun onBackPressed() {
-//        if (restartRequired) {
-//            MaterialAlertDialogBuilder(
-//                b.root.context,
-//                com.google.android.material.R.style.MaterialAlertDialog_Material3
-//            )
-//                .setMessage(resources.getString(R.string.restart_message))
-//                .setCancelable(false)
-//                .setPositiveButton(resources.getString(R.string.ok)) { dialog, which ->
-//                    ProcessPhoenix.triggerRebirth(b.root.context)
-//                }
-//                .show()
-//        } else {
-            super.onBackPressed()
-//        }
-    }
 }

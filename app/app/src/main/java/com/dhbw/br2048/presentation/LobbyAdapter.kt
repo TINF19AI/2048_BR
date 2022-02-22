@@ -7,17 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dhbw.br2048.data.Lobby
 import com.dhbw.br2048.databinding.ItemLobbyBinding
 
-class LobbyAdapter(var lobbys: MutableList<Lobby>, private val onClick: (String) -> Unit) : RecyclerView.Adapter<LobbyAdapter.LobbyViewHolder>(){
+class LobbyAdapter(private var lobbys: MutableList<Lobby>, private val onClick: (String) -> Unit) : RecyclerView.Adapter<LobbyAdapter.LobbyViewHolder>(){
     inner class LobbyViewHolder(val b: ItemLobbyBinding) : RecyclerView.ViewHolder(b.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LobbyViewHolder {
-        val b : ItemLobbyBinding = ItemLobbyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val holder : LobbyViewHolder = LobbyViewHolder(b)
-        return holder
+        val b: ItemLobbyBinding =
+            ItemLobbyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return LobbyViewHolder(b)
     }
 
     override fun onBindViewHolder(holder: LobbyViewHolder, position: Int) {
-        val context = holder.itemView.context
         val l = lobbys[position]
         holder.b.lobbyID.text = l.id
         holder.b.lobbyOwner.text = l.owner

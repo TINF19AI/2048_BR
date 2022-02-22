@@ -35,11 +35,11 @@ class GameSelectionActivity : BaseActivity() {
 
             SocketHandler.request("newGame", null) {
                 val lobby = (it[0] as JSONObject).toLobby()
-                runOnUiThread(Runnable {
+                runOnUiThread {
                     val lobbyIntent = Intent(this, LobbyActivity::class.java)
                     lobbyIntent.putExtra("gameID", lobby.id)
                     startActivity(lobbyIntent)
-                })
+                }
             }
         }
 

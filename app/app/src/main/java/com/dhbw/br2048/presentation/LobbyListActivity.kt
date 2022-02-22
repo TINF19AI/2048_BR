@@ -32,12 +32,12 @@ class LobbyListActivity : BaseActivity() {
         b.btCreateLobby.setOnClickListener {
             SocketHandler.request("newGame", null) {
                 val lobby = (it[0] as JSONObject).toLobby()
-                runOnUiThread(Runnable {
+                runOnUiThread {
                     val lobbyIntent = Intent(this, LobbyActivity::class.java)
                     lobbyIntent.putExtra("gameID", lobby.id)
                     startActivity(lobbyIntent)
                     finish() // keep this from backstack
-                })
+                }
             }
         }
 
@@ -69,7 +69,7 @@ class LobbyListActivity : BaseActivity() {
                 lobbyList.add(jsonLobby.toLobby())
             }
 
-            runOnUiThread(Runnable {
+            runOnUiThread {
                 b.swipeLobbys.isRefreshing = false
 
                 if (lobbys.length() == 0) {
@@ -81,7 +81,7 @@ class LobbyListActivity : BaseActivity() {
                     b.rvLobbys.visibility = View.VISIBLE
                     lobbyAdapter.notifyDataSetChanged()
                 }
-            })
+            }
             Log.d("LobbyList", "End of lobby refresh")
         }
 
@@ -93,7 +93,7 @@ class LobbyListActivity : BaseActivity() {
     }
 
     private fun joinGame(gameID: String) {
-        Log.d("LobbyList", "Lobby clicked: " + gameID)
+        Log.d("LobbyList", "Lobby clicked: $gameID")
         val lobbyIntent = Intent(this, LobbyActivity::class.java)
         lobbyIntent.putExtra("gameID", gameID)
         startActivity(lobbyIntent)

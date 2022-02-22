@@ -52,9 +52,8 @@ class GameSocket(sessionName: String, userId: String, scoreboard: (ArrayList<Sco
                 }
             }
 
-            if (scoreboard != null) {
-                scoreboard(list, currentScore)
-            }
+            scoreboard(list, currentScore)
+
         }
 
         socket.open()

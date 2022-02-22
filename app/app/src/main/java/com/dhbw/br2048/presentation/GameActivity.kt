@@ -3,7 +3,6 @@ package com.dhbw.br2048.presentation
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import com.dhbw.br2048.R
@@ -63,9 +62,9 @@ class GameActivity : BaseActivity() {
             b.root.context,
             com.google.android.material.R.style.MaterialAlertDialog_Material3
         ).setMessage(resources.getString(R.string.game_exit_confirmation))
-            .setNegativeButton(resources.getString(R.string.continue_playing)) { dialog, which ->
+            .setNegativeButton(resources.getString(R.string.continue_playing)) { _, _ ->
                 // do nothing when canceled
-            }.setPositiveButton(resources.getString(R.string.exit)) { dialog, which ->
+            }.setPositiveButton(resources.getString(R.string.exit)) { _, _ ->
                 super.onBackPressed()
             }
             .show()
@@ -88,9 +87,8 @@ class GameActivity : BaseActivity() {
         )
 
         val extras = intent.extras
-        var gameId = extras?.getString("gameID")
-        gameId?.let {
-            if (it != "") {
+        val gameId = extras?.getString("gameID")
+            if (gameId != null && gameId != "") {
                 gameSocket = GameSocket(
                     gameId,
                     getUserId()
@@ -100,12 +98,12 @@ class GameActivity : BaseActivity() {
                         if(!score.alive){
                             manager.alive = false
                             showEndScreen()
-                            b.tvEndPosition.text = "${score.position}."
-                            b.tvEndMessage.text = "Points: ${score.score}"
+                            "${score.position}.".also { b.tvEndPosition.text = it }
+                            "Points: ${score.score}".also { b.tvEndMessage.text = it }
                             b.tvEndHeader.text = if (score.position == 1) "Winner winner chicken dinner " else "Game Over!"
                         }
 
-                        b.tvPosition.text = "${score.position} / ${list.size}"
+                        "${score.position} / ${list.size}".also { b.tvPosition.text = it }
 
 
                         for ((i, entry) in list.withIndex()) {
@@ -119,7 +117,7 @@ class GameActivity : BaseActivity() {
                 }
 
                 gameSocket!!.socket.on("lobbyDetails"){ lobbyJson ->
-                    var lobby = (lobbyJson[0] as JSONObject).toLobby()
+                    val lobby = (lobbyJson[0] as JSONObject).toLobby()
                     Log.d("lobbyDetails", lobby.toString())
 
                     if(lobby.duration != -1){
@@ -127,11 +125,11 @@ class GameActivity : BaseActivity() {
                             object : CountDownTimer((lobby.duration).toLong(), 1000) {
 
                                 override fun onTick(millisUntilFinished: Long) {
-                                    b.tvTime.text = "${((millisUntilFinished + 999) / 1000)}s"
+                                    "${((millisUntilFinished + 999) / 1000)}s".also { b.tvTime.text = it }
                                 }
 
                                 override fun onFinish() {
-                                    b.tvTime.text = "0s"
+                                    "0s".also { b.tvTime.text = it }
                                 }
                             }.start()
 
@@ -141,9 +139,9 @@ class GameActivity : BaseActivity() {
 
                 gameSocket!!.socket.emit("lobbyDetails", null)
                 gameSocket!!.socket.emit("score", 0)
-            }
+
         }
-        b.tvScore.text = "Points: 0"
+        "Points: 0".also { b.tvScore.text = it }
 
         manager = GameManager(
             b.root.context,
@@ -154,7 +152,7 @@ class GameActivity : BaseActivity() {
         manager.addStartTiles()
 
         manager.scoreCallback = { score: Int ->
-            b.tvScore.text = "Points: $score"
+            "Points: $score".also { b.tvScore.text = it }
             gameSocket?.score(score)
         }
         manager.overCallback = { score: Int ->

@@ -1,13 +1,12 @@
 package com.dhbw.br2048.presentation
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dhbw.br2048.data.User
 import com.dhbw.br2048.databinding.ItemUserBinding
 
-class UserAdapter(var users: MutableList<User>) :
+class UserAdapter(private var users: MutableList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     inner class UserViewHolder(val b: ItemUserBinding) : RecyclerView.ViewHolder(b.root)
 

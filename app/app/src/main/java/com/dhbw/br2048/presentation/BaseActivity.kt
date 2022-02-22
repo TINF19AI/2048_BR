@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dhbw.br2048.R
 
 // open keyword is to make BaseActivity inheritable
-open class BaseActivity() : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
 
     var currentThemeId: Int = 0
 

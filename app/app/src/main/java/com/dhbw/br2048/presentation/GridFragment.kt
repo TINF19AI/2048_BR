@@ -17,15 +17,10 @@ class GridFragment : Fragment() {
     private var _binding: FragmentGridBinding? = null
     private val b get() = _binding!!
 
-    private var columns: Int = 4
-    private var rows: Int = 4
-
-    private var tile: TileView? = null
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentGridBinding.inflate(layoutInflater, container, false)
         return b.root
     }
