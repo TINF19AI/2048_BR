@@ -135,17 +135,22 @@ class SettingsActivity : BaseActivity() {
         b.textInputUsername.setText(getUsername())
     }
 
-    private fun saveUsername() {
-        val sp = getSharedPreferences("general", MODE_PRIVATE)
-        val spe = sp.edit()
+    private fun saveUsername(){
         val username = b.textInputUsername.text.toString()
-        spe.putString("username", username)
-        spe.apply()
 
-        SocketHandler.setSocket(username, getUserId())
+        if (username.length <= 20) {
+            val sp = getSharedPreferences("general", MODE_PRIVATE)
+            val spe = sp.edit()
+            spe.putString("username", username)
+            spe.apply()
+            SocketHandler.setSocket(username, getUserId())
+            Snackbar.make(b.btChangeUsername, "Username changed to $username", Snackbar.LENGTH_LONG)
+                .show()
+        }
 
-        Snackbar.make(b.btChangeUsername, "Username changed to $username", Snackbar.LENGTH_LONG)
-            .show()
+        else {
+            Snackbar.make(b.btChangeUsername, "Username can't be longer than 20 characters", Snackbar.LENGTH_LONG).show()
+        }
     }
 
     private fun setCurrentFragment(fragment: Fragment) {
