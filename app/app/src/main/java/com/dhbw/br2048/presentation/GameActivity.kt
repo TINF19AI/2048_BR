@@ -93,7 +93,7 @@ class GameActivity : BaseActivity() {
             if (it != "") {
                 gameSocket = GameSocket(
                     gameId,
-                    Settings.Global.getString(baseContext.contentResolver, "device_name")
+                    getUserId()
                 ) { list, score ->
 
                     runOnUiThread {

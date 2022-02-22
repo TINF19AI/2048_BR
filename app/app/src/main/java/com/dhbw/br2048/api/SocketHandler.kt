@@ -1,6 +1,6 @@
 package com.dhbw.br2048.api
 
-import android.content.Context
+import android.app.Activity
 import android.provider.Settings
 import android.util.Log
 import io.socket.client.IO
@@ -16,13 +16,13 @@ object SocketHandler {
     lateinit var manager: Manager
 
     @Synchronized
-    fun setSocket(context: Context) {
+    fun setSocket(username: String, userId: String) {
         try {
             val opts = IO.Options()
             opts.forceNew = true
             opts.reconnection = true
             opts.query =
-                "CustomId=" + Settings.Global.getString(context.contentResolver, "device_name")
+                "CustomId=$userId&CustomUsername=$username"
 
             manager = Manager(URI.create("https://br2048.welt.sh"), opts)
             mSocket = manager.socket("/")

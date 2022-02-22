@@ -25,7 +25,7 @@ class MainActivity : BaseActivity() {
 
         generateUserIdIfEmpty()
 
-        SocketHandler.setSocket(b.root.context)
+        SocketHandler.setSocket(getUsername(), getUserId())
 
         b.btStartGame.setOnClickListener {
             startActivity(Intent(this, GameSelectionActivity::class.java))

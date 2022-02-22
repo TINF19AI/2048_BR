@@ -49,7 +49,7 @@ class LobbyActivity : BaseActivity() {
             gameId = it // set lobby id
             gameSocket = GameSocket(
                 it,
-                Settings.Global.getString(baseContext.contentResolver, "device_name")
+                getUserId()
             ) { list, position ->
                 Log.d("Lobby", "received user names")
                 userList.clear()
@@ -80,11 +80,7 @@ class LobbyActivity : BaseActivity() {
             val lobby = (it[0] as JSONObject).toLobby()
             runOnUiThread(Runnable {
                 // hide button if not owner
-                if (!(lobby.owner == Settings.Global.getString(
-                        baseContext.contentResolver,
-                        "device_name"
-                    ))
-                ) {
+                if (!(lobby.owner == getUserId())) {
                     b.btStartGame.visibility = View.GONE
                 }
 

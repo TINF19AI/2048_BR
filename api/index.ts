@@ -21,8 +21,8 @@ io.on("connection", function (socket) {
     console.log(
       `[${socket.handshake.query.CustomId}] Created a new Game ${gameId}`
     );
-    const username = socket.handshake.query.CustomId as string;
-    newGame(gameId, username);
+    const userId = socket.handshake.query.CustomId as string;
+    newGame(gameId, userId);
     socket.emit("newGame", getLobbyDetails(gameId));
     socket.broadcast.emit("getLobbys", getLobbys());
   });
@@ -33,14 +33,14 @@ io.on("connection", function (socket) {
   });
 
   socket.on("disconnect", (reason) => {
-    const username = socket.handshake.query.CustomId as string;
-    console.log(`[${username}] User disconnected because of ${reason}`);
+    const userId = socket.handshake.query.CustomId as string;
+    console.log(`[${userId}] User disconnected because of ${reason}`);
   });
 });
 
-function newGame(gameId: string, username: string) {
+function newGame(gameId: string, userId: string) {
   lobbys[gameId] = {
-    owner: username,
+    owner: userId,
     currentUsers: 0,
     maxUsers: 48,
     running: false,
@@ -52,25 +52,26 @@ function newGame(gameId: string, username: string) {
   games[gameId] = {};
   const nsp = io.of("/game/" + gameId);
   nsp.on("connection", function (socket) {
-    const username = socket.handshake.query.CustomId as string;
+    const userId = socket.handshake.query.CustomId as string;
+    const username = socket.handshake.query.CustomUsername as string;
     console.log(
-      `[${gameId} - ${username}] User connected from ${socket.request.socket.remoteAddress}`
+      `[${gameId} - ${userId}] User connected from ${socket.request.socket.remoteAddress}`
     );
-    addScore(gameId, username, 0);
+    addScore(gameId, userId, username, 0);
     nsp.emit("score", getScore(gameId));
 
     socket.on("score", function (score) {
-      addScore(gameId, username, score);
+      addScore(gameId, userId, username, score);
       nsp.emit("score", getScore(gameId));
     });
 
     socket.on("won", function (score) {
-      addScore(gameId, username, score, false);
+      addScore(gameId, userId, username, score, false);
       nsp.emit("score", getScore(gameId));
     });
 
     socket.on("over", function (score) {
-      addScore(gameId, username, score, false);
+      addScore(gameId, userId, username, score, false);
       nsp.emit("score", getScore(gameId));
     });
 
@@ -86,10 +87,10 @@ function newGame(gameId: string, username: string) {
     });
 
     socket.on("disconnect", (reason) => {
-      const username = socket.handshake.query.CustomId as string;
-      leaveLobby(gameId, username, nsp);
+      const userId = socket.handshake.query.CustomId as string;
+      leaveLobby(gameId, userId, nsp);
       console.log(
-        `[${gameId} - ${username}] User disconnected because of ${reason}`
+        `[${gameId} - ${userId}] User disconnected because of ${reason}`
       );
       if (lobbys[gameId]) {
         nsp.emit("lobbyDetails", getLobbyDetails(gameId));
@@ -101,24 +102,26 @@ function newGame(gameId: string, username: string) {
 
 function addScore(
   gameId: string,
+  userId: string,
   username: string,
   score: number,
   alive = true
 ) {
-  console.log(`[${gameId} - ${username}] ${alive ? "Alive" : "Dead"} ${score}`);
+  console.log(`[${gameId} - ${userId}] ${alive ? "Alive" : "Dead"} ${score}`);
 
   if (!games[gameId]) {
     games[gameId] = {};
   }
-  if (!games[gameId][username]) {
-    games[gameId][username] = {
+  if (!games[gameId][userId]) {
+    games[gameId][userId] = {
+      username,
       score: 0,
       alive: true,
     };
   }
 
-  games[gameId][username].score = score;
-  games[gameId][username].alive = alive;
+  games[gameId][userId].score = score;
+  games[gameId][userId].alive = alive;
 }
 
 function getScore(gameId: string) {
@@ -130,7 +133,7 @@ function getScore(gameId: string) {
   var score = Object.keys(games[gameId]).map((key) => {
     return {
       ...games[gameId][key],
-      username: key,
+      userId: key,
     };
   });
 
@@ -193,23 +196,23 @@ function generateLobbyName(): string {
 
 function leaveLobby(
   gameId: string,
-  username: string,
+  userId: string,
   namespace: SocketNamespace
 ) {
-  console.log(`[${gameId} - ${username}] Left the lobby`);
+  console.log(`[${gameId} - ${userId}] Left the lobby`);
 
-  if (!games[gameId] || !games[gameId][username]) {
+  if (!games[gameId] || !games[gameId][userId]) {
     return;
   }
 
-  delete games[gameId][username];
+  delete games[gameId][userId];
 
   if (Object.keys(games[gameId]).length == 0) {
     closeLobby(gameId, namespace);
     return;
   }
 
-  if (lobbys[gameId].owner == username) {
+  if (lobbys[gameId].owner == userId) {
     lobbys[gameId].owner = Object.keys(games[gameId])[0];
   }
 }
@@ -274,10 +277,10 @@ function removePlayerByScore(gameId: string, namespace: SocketNamespace) {
     return true;
   }
 
-  games[gameId][removePlayer.username].alive = false;
+  games[gameId][removePlayer.userId].alive = false;
 
   console.log(
-    `[${gameId} - SYSTEM] removed ${removePlayer.username} ${
+    `[${gameId} - SYSTEM] removed ${removePlayer.userId} ${
       remainingPlayers.length - 1
     } players remaining`
   );

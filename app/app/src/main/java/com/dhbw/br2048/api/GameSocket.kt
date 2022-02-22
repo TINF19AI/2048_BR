@@ -7,7 +7,7 @@ import io.socket.client.Socket
 import org.json.JSONArray
 
 
-class GameSocket(sessionName: String, username: String, scoreboard: (ArrayList<Score>, Score) -> Unit){
+class GameSocket(sessionName: String, userId: String, scoreboard: (ArrayList<Score>, Score) -> Unit){
     var socket: Socket
     lateinit var currentScore: Score
 
@@ -47,7 +47,7 @@ class GameSocket(sessionName: String, username: String, scoreboard: (ArrayList<S
 
                 list.add(score)
 
-                if(score.username == username){
+                if(score.userId == userId){
                     currentScore = score
                 }
             }

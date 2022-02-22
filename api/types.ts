@@ -3,7 +3,8 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
 export type Game = {
   [gameId: string]: {
-    [username: string]: {
+    [userId: string]: {
+      username: string;
       score: number;
       alive: boolean;
       position?: number;

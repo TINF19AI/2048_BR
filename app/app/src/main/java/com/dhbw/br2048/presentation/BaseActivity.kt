@@ -30,7 +30,7 @@ open class BaseActivity() : AppCompatActivity() {
         super.onResume()
     }
 
-    private fun getUserId(): String {
+    fun getUserId(): String {
         val sp = getSharedPreferences("general", MODE_PRIVATE)
         val userId = sp.getString("userId", "")
 
@@ -41,7 +41,7 @@ open class BaseActivity() : AppCompatActivity() {
         }
     }
 
-    private fun getUsername(): String {
+    fun getUsername(): String {
         val sp = getSharedPreferences("general", MODE_PRIVATE)
         val userName = sp.getString(
             "username",
