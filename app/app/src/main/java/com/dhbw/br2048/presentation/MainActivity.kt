@@ -23,6 +23,8 @@ class MainActivity : BaseActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
+        generateUserIdIfEmpty()
+
         SocketHandler.setSocket(b.root.context)
 
         b.btStartGame.setOnClickListener {
@@ -38,6 +40,21 @@ class MainActivity : BaseActivity() {
             replace(R.id.flFragment, gridFragment)
             commit()
         }
+
+    }
+
+    private fun generateUserIdIfEmpty() {
+        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        val userId = sp.getString("userId", "")
+        Log.d("MainActivity", "UserID: $userId")
+        if (userId == "") {
+            val spe = sp.edit()
+            val newGeneratedUserId = UUID.randomUUID().toString()
+            spe.putString("userId", newGeneratedUserId) // TODO: theme selection
+            spe.apply()
+            Log.d("MainActivity", "Generated new UserID: $newGeneratedUserId")
+        }
+
     }
 
     private fun newBackgroundGame(){

@@ -1,6 +1,7 @@
 package com.dhbw.br2048.presentation
 
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.dhbw.br2048.R
@@ -20,13 +21,37 @@ open class BaseActivity() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
-// not needed because App is restarted after theme change
-//    override fun onResume() {
-//        val sp = getSharedPreferences("theme", MODE_PRIVATE)
-//        val tempThemeId = sp.getInt("currentTheme", R.style.Theme_Original)
-//        if (currentThemeId != tempThemeId) {
-//            this.recreate() // recreate activity if theme has changed
-//        }
-//        super.onResume()
-//    }
+    override fun onResume() {
+        val sp = getSharedPreferences("theme", MODE_PRIVATE)
+        val tempThemeId = sp.getInt("currentTheme", R.style.Theme_Original)
+        if (currentThemeId != tempThemeId) {
+            this.recreate() // recreate activity if theme has changed
+        }
+        super.onResume()
+    }
+
+    private fun getUserId(): String {
+        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        val userId = sp.getString("userId", "")
+
+        userId?.let {
+            return it
+        } ?: run {
+            return ""
+        }
+    }
+
+    private fun getUsername(): String {
+        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        val userName = sp.getString(
+            "username",
+            Settings.Global.getString(baseContext.contentResolver, "device_name")
+        )
+
+        userName?.let {
+            return it
+        } ?: run {
+            return Settings.Global.getString(baseContext.contentResolver, "device_name")
+        }
+    }
 }

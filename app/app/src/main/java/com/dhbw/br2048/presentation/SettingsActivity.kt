@@ -8,7 +8,6 @@ import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivitySettingsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.jakewharton.processphoenix.ProcessPhoenix
 
 class SettingsActivity : BaseActivity() {
     private lateinit var b: ActivitySettingsBinding
@@ -119,19 +118,19 @@ class SettingsActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (restartRequired) {
-            MaterialAlertDialogBuilder(
-                b.root.context,
-                com.google.android.material.R.style.MaterialAlertDialog_Material3
-            )
-                .setMessage(resources.getString(R.string.restart_message))
-                .setCancelable(false)
-                .setPositiveButton(resources.getString(R.string.ok)) { dialog, which ->
-                    ProcessPhoenix.triggerRebirth(b.root.context)
-                }
-                .show()
-        } else {
+//        if (restartRequired) {
+//            MaterialAlertDialogBuilder(
+//                b.root.context,
+//                com.google.android.material.R.style.MaterialAlertDialog_Material3
+//            )
+//                .setMessage(resources.getString(R.string.restart_message))
+//                .setCancelable(false)
+//                .setPositiveButton(resources.getString(R.string.ok)) { dialog, which ->
+//                    ProcessPhoenix.triggerRebirth(b.root.context)
+//                }
+//                .show()
+//        } else {
             super.onBackPressed()
-        }
+//        }
     }
 }
