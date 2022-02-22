@@ -127,11 +127,11 @@ class GameActivity : BaseActivity() {
                             object : CountDownTimer((lobby.duration).toLong(), 1000) {
 
                                 override fun onTick(millisUntilFinished: Long) {
-                                    b.tvTime.text = ((millisUntilFinished + 999) / 1000).toString()
+                                    b.tvTime.text = "${((millisUntilFinished + 999) / 1000)}s"
                                 }
 
                                 override fun onFinish() {
-                                    b.tvTime.text = "0"
+                                    b.tvTime.text = "0s"
                                 }
                             }.start()
 
