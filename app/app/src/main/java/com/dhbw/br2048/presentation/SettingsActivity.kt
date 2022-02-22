@@ -1,14 +1,20 @@
 package com.dhbw.br2048.presentation
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
+import com.dhbw.br2048.api.SocketHandler
 import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivitySettingsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+
 
 class SettingsActivity : BaseActivity() {
     private lateinit var b: ActivitySettingsBinding
@@ -80,11 +86,20 @@ class SettingsActivity : BaseActivity() {
                 .show()
         }
 
+        b.textInputUsername.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                saveUsername()
+                this.currentFocus?.let { view ->
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
+                }
+                return@OnEditorActionListener true
+            }
+            false
+        })
+
         b.btChangeUsername.setOnClickListener {
-            val sp = getSharedPreferences("general", MODE_PRIVATE)
-            val spe = sp.edit()
-            spe.putString("username", b.textInputUsername.text.toString())
-            spe.apply()
+            saveUsername()
         }
 
         b.btShowLicenses.setOnClickListener {
@@ -116,7 +131,19 @@ class SettingsActivity : BaseActivity() {
         manager.setTile(1024, Coordinates(1, 2))
         manager.setTile(2048, Coordinates(2, 2))
 
-        b.textInputUsername.text = getUsername()
+        b.textInputUsername.setText(getUsername())
+    }
+
+    private fun saveUsername(){
+        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        val spe = sp.edit()
+        val username = b.textInputUsername.text.toString()
+        spe.putString("username", username)
+        spe.apply()
+
+        SocketHandler.setSocket(username, getUserId())
+
+        Snackbar.make(b.btChangeUsername, "Username changed to $username", Snackbar.LENGTH_LONG).show()
     }
 
     private fun setCurrentFragment(fragment: Fragment) {

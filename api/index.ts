@@ -55,7 +55,7 @@ function newGame(gameId: string, userId: string) {
     const userId = socket.handshake.query.CustomId as string;
     const username = socket.handshake.query.CustomUsername as string;
     console.log(
-      `[${gameId} - ${userId}] User connected from ${socket.request.socket.remoteAddress}`
+      `[${gameId} - ${userId} - ${username}] User connected from ${socket.request.socket.remoteAddress}`
     );
     addScore(gameId, userId, username, 0);
     nsp.emit("score", getScore(gameId));
@@ -90,7 +90,7 @@ function newGame(gameId: string, userId: string) {
       const userId = socket.handshake.query.CustomId as string;
       leaveLobby(gameId, userId, nsp);
       console.log(
-        `[${gameId} - ${userId}] User disconnected because of ${reason}`
+        `[${gameId} - ${userId} - ${username}] User disconnected because of ${reason}`
       );
       if (lobbys[gameId]) {
         nsp.emit("lobbyDetails", getLobbyDetails(gameId));

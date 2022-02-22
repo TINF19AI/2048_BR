@@ -17,6 +17,10 @@ object SocketHandler {
 
     @Synchronized
     fun setSocket(username: String, userId: String) {
+        if(this::mSocket.isInitialized && mSocket.connected()){
+            mSocket.close()
+        }
+
         try {
             val opts = IO.Options()
             opts.forceNew = true
