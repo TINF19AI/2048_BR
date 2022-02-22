@@ -1,5 +1,6 @@
 package com.dhbw.br2048.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -63,7 +64,7 @@ class SettingsActivity : BaseActivity() {
                     val sp = getSharedPreferences("theme", MODE_PRIVATE)
                     val spe = sp.edit()
                     val newTheme = themeId[which]
-                    spe.putInt("currentTheme", newTheme) // TODO: theme selection
+                    spe.putInt("currentTheme", newTheme)
                     spe.apply()
                     this.currentThemeId = newTheme
                     Log.d("SettingsActivity", "Theme was changed")
@@ -77,6 +78,13 @@ class SettingsActivity : BaseActivity() {
                     }
                 }
                 .show()
+        }
+
+        b.btChangeUsername.setOnClickListener {
+            val sp = getSharedPreferences("general", MODE_PRIVATE)
+            val spe = sp.edit()
+            spe.putString("username", b.textInputUsername.text.toString())
+            spe.apply()
         }
 
         b.btShowLicenses.setOnClickListener {
@@ -107,6 +115,8 @@ class SettingsActivity : BaseActivity() {
         manager.setTile(512, Coordinates(0, 2))
         manager.setTile(1024, Coordinates(1, 2))
         manager.setTile(2048, Coordinates(2, 2))
+
+        b.textInputUsername.text = getUsername()
     }
 
     private fun setCurrentFragment(fragment: Fragment) {

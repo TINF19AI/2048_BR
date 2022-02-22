@@ -6,7 +6,7 @@
     <string name="singleplayer">Einzelspieler</string>
     <string name="join_lobby">Lobby beitreten</string>
     <string name="create_lobby">Lobby erstellen</string>
-    <string name="change_theme">Theme verändern</string>
+    <string name="change_theme">Theme ändern</string>
     <string name="licenses">Lizenzen</string>
     <string name="game_exit_confirmation">Möchtest du das laufende Spiel verlassen?</string>
     <string name="exit">Verlassen</string>
@@ -23,4 +23,5 @@
     <string name="points_0">Punkte: 0</string>
     <string name="points">Punkte</string>
     <string name="players">Spieler</string>
+    <string name="change_username">Benutzername ändern</string>
 </resources>
