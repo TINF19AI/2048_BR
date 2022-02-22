@@ -48,6 +48,11 @@ class TileView @JvmOverloads constructor(
 
     fun updateText() {
         this.text = value.toString()
+        if (text.length >= 4) {
+            this.textSize = context.pxToDp(80).toFloat()
+        } else {
+            this.textSize = context.pxToDp(100).toFloat()
+        }
     }
 
     // sets the background color of the tile depending on the text
@@ -90,6 +95,7 @@ class TileView @JvmOverloads constructor(
     fun setGridLayout(newGrid: GridLayout, doAppearAnim: Boolean = true) {
         grid = newGrid
 
+
         // only set these parameters if tile is visible in grid
         this.setBackgroundResource(R.drawable.shape_tile)
         refreshColor()
@@ -101,6 +107,8 @@ class TileView @JvmOverloads constructor(
         this.layoutParams = setCoordLayoutParams(this.coordinates)
 
         grid!!.addView(this)
+
+        updateText()
 
         if (doAppearAnim) {
             appearAnimation()

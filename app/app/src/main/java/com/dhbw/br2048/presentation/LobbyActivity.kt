@@ -37,6 +37,7 @@ class LobbyActivity : BaseActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
 
@@ -88,8 +89,8 @@ class LobbyActivity : BaseActivity() {
         }
         gameSocket?.lobbyDetails()
 
-        Log.d("Lobby", "Joined Lobby: $gameId")
-        b.lobbyID.text = gameId
+        Log.d("Lobby", "Joined Lobby: " + gameId)
+        b.lobbyID.text = "ID: $gameId"
     }
 
     override fun onStop() {

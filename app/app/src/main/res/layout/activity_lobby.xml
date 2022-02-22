@@ -18,7 +18,9 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardLobbyID"
         style="@style/CardRegular"
-        app:layout_constraintTop_toBottomOf="@id/abTop">
+        app:layout_constraintTop_toBottomOf="@id/abTop"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:text="Lobby ID" />
+                android:text="Lobby Information" />
 
             <TextView
                 android:id="@+id/lobbyID"
