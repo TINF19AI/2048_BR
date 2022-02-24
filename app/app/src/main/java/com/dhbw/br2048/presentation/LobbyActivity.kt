@@ -31,6 +31,7 @@ class LobbyActivity : BaseActivity() {
 
         b = ActivityLobbyBinding.inflate(layoutInflater)
         setContentView(b.root)
+        setToolbar(b.abTop)
 
         b.btStartGame.setOnClickListener {
             gameSocket?.startGame()

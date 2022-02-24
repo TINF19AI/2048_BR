@@ -34,6 +34,9 @@ class GameActivity : BaseActivity() {
             replace(R.id.flFragment, gridFragment)
             commit()
         }
+
+
+        setToolbar(b.abTop)
         b.cardEndScreen.alpha = 0f
 
         // Author: Caspar

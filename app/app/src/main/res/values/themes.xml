@@ -8,12 +8,12 @@
         <item name="android:textViewStyle">@style/TextRegular</item>
         <item name="android:buttonStyle">@style/ButtonPrimary</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/origTile2048</item>
+        <item name="colorPrimaryVariant">@color/origTile1024</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorSecondary">@color/origTile32</item>
+        <item name="colorSecondaryVariant">@color/origTile64</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/md_grey_900</item>

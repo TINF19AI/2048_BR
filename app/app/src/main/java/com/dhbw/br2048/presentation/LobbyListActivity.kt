@@ -28,6 +28,7 @@ class LobbyListActivity : BaseActivity() {
 
         b = ActivityLobbyListBinding.inflate(layoutInflater)
         setContentView(b.root)
+        setToolbar(b.abTop)
 
         b.btCreateLobby.setOnClickListener {
             SocketHandler.request("newGame", null) {

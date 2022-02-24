@@ -3,7 +3,9 @@ package com.dhbw.br2048.presentation
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.dhbw.br2048.R
 
 // open keyword is to make BaseActivity inheritable
@@ -55,5 +57,26 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                Log.d("BaseActivity", "back button pressed")
+                finish()
+            }
+            else -> {
+                Log.d("BaseActivity", "unknown button pressed: " + item.itemId.toString())
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    fun setToolbar(toolbar: Toolbar) {
+        // Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+    }
 
 }

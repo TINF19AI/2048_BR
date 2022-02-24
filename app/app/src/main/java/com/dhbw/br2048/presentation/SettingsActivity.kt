@@ -54,6 +54,7 @@ class SettingsActivity : BaseActivity() {
         b = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(b.root)
         setCurrentFragment(gridFragment)
+        setToolbar(b.abTop)
 
         b.btChangeTheme.setOnClickListener {
             MaterialAlertDialogBuilder(
