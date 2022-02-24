@@ -60,7 +60,7 @@ class GameActivity : BaseActivity() {
     override fun onBackPressed() {
         MaterialAlertDialogBuilder(
             b.root.context,
-            com.google.android.material.R.style.MaterialAlertDialog_Material3
+            R.style.AlertDialogRegular
         ).setMessage(resources.getString(R.string.game_exit_confirmation))
             .setNegativeButton(resources.getString(R.string.continue_playing)) { _, _ ->
                 // do nothing when canceled

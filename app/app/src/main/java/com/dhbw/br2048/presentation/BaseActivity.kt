@@ -54,4 +54,6 @@ open class BaseActivity : AppCompatActivity() {
             return Settings.Global.getString(baseContext.contentResolver, "device_name")
         }
     }
+
+
 }

@@ -58,7 +58,7 @@ class SettingsActivity : BaseActivity() {
         b.btChangeTheme.setOnClickListener {
             MaterialAlertDialogBuilder(
                 b.root.context,
-                com.google.android.material.R.style.MaterialAlertDialog_Material3
+                R.style.AlertDialogRegular
             )
                 .setNeutralButton(resources.getString(R.string.cancel)) { _, _ ->
 
@@ -106,7 +106,6 @@ class SettingsActivity : BaseActivity() {
         b.btShowLicenses.setOnClickListener {
             MaterialAlertDialogBuilder(
                 b.root.context,
-                com.google.android.material.R.style.MaterialAlertDialog_Material3_Body_Text_CenterStacked
             ).setMessage("test")
                 .show()
         }

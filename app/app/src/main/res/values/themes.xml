@@ -1,9 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+
+
     <!-- Base application theme. -->
     <style name="Theme.br2048" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="actionBarStyle">@style/topAppBar</item>
-        <item name= "android:textViewStyle" > @style/TextRegular</item>
-        <item name= "android:buttonStyle" > @style/ButtonPrimary</item>
+        <item name="android:textViewStyle">@style/TextRegular</item>
+        <item name="android:buttonStyle">@style/ButtonPrimary</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -15,6 +18,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/md_grey_900</item>
         <item name="android:colorBackground">@color/md_grey_900</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="colorBackgroundFloating">@color/md_grey_900</item>
+        <item name="android:colorBackgroundFloating" tools:targetApi="23">@color/md_grey_900</item>
+
+
         <!-- Customize your theme here. -->
 
         <item name="brTile2">@color/origTile2</item>
@@ -43,6 +51,7 @@
         <item name="brEmpty">@color/origEmpty</item>
         <item name="brBackground">@color/origBackground</item>
     </style>
+
 
     <style name="Theme.Original" parent="@style/Theme.br2048"></style>
 

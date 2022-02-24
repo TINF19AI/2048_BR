@@ -3,6 +3,8 @@ package com.dhbw.br2048.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.SocketHandler
 import com.dhbw.br2048.data.Coordinates
@@ -19,6 +21,8 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
         Log.d("MainActivity", "game started")
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
