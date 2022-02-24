@@ -36,8 +36,8 @@ class GridFragment : Fragment() {
 
     // Author: Maxi
     fun clearGrid() {
-        for (e in b.grid2048.iterator()){
-            if (e is TileView){
+        for (e in b.grid2048.iterator()) {
+            if (e is TileView) {
                 b.grid2048.removeView(e)
             }
         }
@@ -54,7 +54,6 @@ class GridFragment : Fragment() {
             val backgroundColor = TypedValue()
             context.theme.resolveAttribute(R.attr.brBackground, backgroundColor, true)
             this.setBackgroundColor(backgroundColor.data)
-            this.setPadding(20, 20, 20, 20)
         }
 
         for (i in 0 until 4) {
@@ -72,7 +71,10 @@ class GridFragment : Fragment() {
                 empty.layoutParams.height = 0
                 empty.layoutParams.width = 0
                 b.grid2048.addView(empty)
-                (empty.layoutParams as GridLayout.LayoutParams).setMargins(20)
+
+                val scale = b.root.context.resources.displayMetrics.density
+                val px = (5 * scale + 0.5f).toInt()
+                (empty.layoutParams as GridLayout.LayoutParams).setMargins(px)
             }
         }
     }
