@@ -45,15 +45,12 @@ open class BaseActivity : AppCompatActivity() {
 
     fun getUsername(): String {
         val sp = getSharedPreferences("general", MODE_PRIVATE)
-        val userName = sp.getString(
-            "username",
-            Settings.Global.getString(baseContext.contentResolver, "device_name")
-        )
+        val userName = sp.getString("username", "Slider")
 
         userName?.let {
             return it
         } ?: run {
-            return Settings.Global.getString(baseContext.contentResolver, "device_name")
+            return "Slider"
         }
     }
 
