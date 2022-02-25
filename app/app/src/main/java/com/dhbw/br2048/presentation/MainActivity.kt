@@ -80,6 +80,10 @@ class MainActivity : BaseActivity() {
             }
         }
 
+        manager?.wonCallback = {
+            timer?.cancel()
+        }
+
         timer = Timer()
         timer?.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
