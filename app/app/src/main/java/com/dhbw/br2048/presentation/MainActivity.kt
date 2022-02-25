@@ -11,6 +11,7 @@ import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityMainBinding
 import java.util.*
+import kotlin.random.Random
 
 class MainActivity : BaseActivity() {
 
@@ -46,6 +47,10 @@ class MainActivity : BaseActivity() {
             commit()
         }
 
+        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        // if username is empty
+        if (sp.getString("username", "") == "")
+            setRandomUsername()
     }
 
     private fun generateUserIdIfEmpty() {
@@ -92,6 +97,13 @@ class MainActivity : BaseActivity() {
                 }
             }
         }, 1000, 2000)
+    }
+
+    private fun setRandomUsername() {
+        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        val spe = sp.edit()
+        spe.putString("username", "Slider ${Random.nextInt(10000, 100000)}")
+        spe.apply()
     }
 
     override fun onResume() {

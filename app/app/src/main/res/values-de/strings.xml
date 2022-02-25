@@ -24,4 +24,5 @@
     <string name="points">Punkte</string>
     <string name="players">Spieler</string>
     <string name="change_username">Benutzername ändern</string>
+    <string name="username">Benutzername</string>
 </resources>
