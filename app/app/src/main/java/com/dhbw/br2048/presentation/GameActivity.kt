@@ -102,7 +102,7 @@ class GameActivity : BaseActivity() {
                             manager.alive = false
                             showEndScreen()
                             "${score.position}.".also { b.tvEndPosition.text = it }
-                            "Points: ${score.score}".also { b.tvEndMessage.text = it }
+                            "Points: ${score.score}\nHighscore: ${getHighscore()}".also { b.tvEndMessage.text = it }
                             b.tvEndHeader.text = if (score.position == 1) "Winner winner chicken dinner " else "Game Over!"
                         }
 
@@ -144,7 +144,9 @@ class GameActivity : BaseActivity() {
                 gameSocket!!.socket.emit("score", 0)
 
         }
-        "Points: 0".also { b.tvScore.text = it }
+        val highscore = getHighscore()
+        "Points: 0\nHighscore: $highscore".also { b.tvScore.text = it }
+
 
         manager = GameManager(
             b.root.context,
@@ -155,19 +157,21 @@ class GameActivity : BaseActivity() {
         manager.addStartTiles()
 
         manager.scoreCallback = { score: Int ->
-            "Points: $score".also { b.tvScore.text = it }
+            "Points: $score\nHighscore: $highscore".also { b.tvScore.text = it }
             gameSocket?.score(score)
         }
         manager.overCallback = { score: Int ->
             Snackbar.make(b.tvScore, "Game Over!", Snackbar.LENGTH_LONG).show()
             showEndScreen()
             gameSocket?.over(score)
-
+            setHighscore(score)
+            "Points: $score\nHighscore: ${getHighscore()}".also { b.tvScore.text = it }
         }
         manager.wonCallback = { score: Int ->
             Snackbar.make(b.tvScore, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
             gameSocket?.won(score)
-
+            setHighscore(score)
+            "Points: $score\nHighscore: ${getHighscore()}".also { b.tvScore.text = it }
         }
     }
 
@@ -212,5 +216,21 @@ class GameActivity : BaseActivity() {
             .alpha(0f)
             .setDuration(1000)
             .start()
+    }
+
+    private fun getHighscore(): Int {
+        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        return sp.getInt("highscore", 0)
+    }
+
+    private fun setHighscore(score: Int) {
+        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        val highscore = sp.getInt("highscore", 0)
+
+        if (score > highscore) {
+            val spe = sp.edit()
+            spe.putInt("highscore", score)
+            spe.apply()
+        }
     }
 }
