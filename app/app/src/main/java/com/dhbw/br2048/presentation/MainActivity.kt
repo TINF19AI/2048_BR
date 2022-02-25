@@ -78,6 +78,12 @@ class MainActivity : BaseActivity() {
                 newBackgroundGame()
             }
         }*/
+        manager?.overCallback = {
+            runOnUiThread {
+                manager?.clearGrid()
+                manager?.addStartTiles()
+            }
+        }
 
         timer = Timer()
         timer?.scheduleAtFixedRate(object : TimerTask() {
@@ -86,7 +92,7 @@ class MainActivity : BaseActivity() {
                     manager?.moveRandom()
                 }
             }
-        }, 1000, 2500)
+        }, 1000, 2000)
     }
 
     override fun onResume() {

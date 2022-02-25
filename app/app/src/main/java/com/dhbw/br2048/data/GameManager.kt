@@ -41,11 +41,7 @@ class GameManager(
         }
 
     fun clearGrid() {
-        grid.eachCell { _, tile ->
-            @Suppress("IfThenToSafeAccess")
-            if (tile != null)
-                tile.removeFromGrid()
-        }
+        grid.clearGrid()
     }
 
     // Set up the initial tiles to start the game with
@@ -218,19 +214,18 @@ class GameManager(
         return moved
     }
 
-    fun moveRandom(): Boolean {
+    fun moveRandom() {
         val directions = mutableListOf(0, 1, 2, 3)
         for (i in 4 downTo 1) {
             val random = Random.nextInt(0, i)
 
-            // move tiles and exit when success
+            // move tiles and exit loop when success
             if (move(Direction.values()[directions[random]])) {
-                return true
+                break
             }
             // remove failed direction
             directions.removeAt(random)
         }
-        return false
     }
 
     // From open source 2048, ported by Maxi
