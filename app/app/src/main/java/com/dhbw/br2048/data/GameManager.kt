@@ -19,6 +19,9 @@ class GameManager(
     var alive = true
     private val grid = Grid(gridSize)
 
+    var moveDebounce: Long = 400
+    var lastDebounce: Long = 0
+
     var wonCallback: ((Int) -> Unit)? = null
     private var won = false
         set(newValue) {
@@ -120,7 +123,13 @@ class GameManager(
     // Move tiles on the grid in the specified direction
     // From open source 2048, ported by Maxi
     fun move(direction: Direction): Boolean {
-        if(!alive) return false
+        if (!alive) return false
+
+        val currentTime = System.currentTimeMillis()
+        if ((currentTime - lastDebounce) < moveDebounce)
+            return false
+
+        lastDebounce = currentTime
 
         // 0: up, 1: right, 2: down, 3: left
 
