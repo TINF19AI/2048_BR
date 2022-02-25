@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.animation.AccelerateInterpolator
 import android.widget.GridLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.animation.doOnEnd
@@ -22,6 +23,9 @@ import com.dhbw.br2048.data.Coordinates
 class TileView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, pos: Coordinates, startValue: Int
 ) : AppCompatTextView(context, attrs) {
+
+    private val APPEAR_DURATION: Long = 300
+    private val APPEAR_DELAY: Long = 250
 
     var mergedFrom: Array<TileView>? = null
 
@@ -145,16 +149,24 @@ class TileView @JvmOverloads constructor(
     }
 
     fun mergeAnimation(removedTile: TileView): Animator {
-        val scaleX = PropertyValuesHolder.ofFloat(SCALE_X, 1.2f, 1.0f)
-        val scaleY = PropertyValuesHolder.ofFloat(SCALE_Y, 1.2f, 1.0f)
+        val scaleX = PropertyValuesHolder.ofFloat(SCALE_X, 1.2f)
+        val scaleY = PropertyValuesHolder.ofFloat(SCALE_Y, 1.2f)
         val animator = ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY)
         animator.doOnStart {
-            updateText()
-            this.invalidate()
-            refreshColor()
+
         }
         animator.doOnEnd {
             grid?.removeView(removedTile)
+            updateText()
+            refreshColor()
+            this.invalidate()
+            this.animate()
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(100)
+                .setStartDelay(30)
+                .setInterpolator(AccelerateInterpolator())
+                .start()
         }
 
         return animator
@@ -181,7 +193,6 @@ class TileView @JvmOverloads constructor(
                 moveTo(newCoord) // update grid position
             }
         }
-        // @todo Prevent bugs if function is run multiple times during animation duration
 
         return animator
     }
@@ -203,8 +214,8 @@ class TileView @JvmOverloads constructor(
         this.animate()
             .scaleX(1f)
             .scaleY(1f)
-            .setDuration(200)
-            .setStartDelay(250)
+            .setDuration(APPEAR_DURATION)
+            .setStartDelay(APPEAR_DELAY)
             .start()
     }
 }
