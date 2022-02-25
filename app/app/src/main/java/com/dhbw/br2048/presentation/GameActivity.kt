@@ -102,7 +102,7 @@ class GameActivity : BaseActivity() {
                             manager.alive = false
                             showEndScreen()
                             "${score.position}.".also { b.tvEndPosition.text = it }
-                            "Points: ${score.score}\nHighscore: ${getHighscore()}".also { b.tvEndMessage.text = it }
+                            displayPoints(score.score, gameId)
                             b.tvEndHeader.text = if (score.position == 1) "Winner winner chicken dinner " else "Game Over!"
                         }
 
@@ -144,8 +144,7 @@ class GameActivity : BaseActivity() {
                 gameSocket!!.socket.emit("score", 0)
 
         }
-        val highscore = getHighscore()
-        "Points: 0\nHighscore: $highscore".also { b.tvScore.text = it }
+        displayPoints(0, gameId)
 
 
         manager = GameManager(
@@ -157,7 +156,7 @@ class GameActivity : BaseActivity() {
         manager.addStartTiles()
 
         manager.scoreCallback = { score: Int ->
-            "Points: $score\nHighscore: $highscore".also { b.tvScore.text = it }
+            displayPoints(score, gameId)
             gameSocket?.score(score)
         }
         manager.overCallback = { score: Int ->
@@ -165,14 +164,21 @@ class GameActivity : BaseActivity() {
             showEndScreen()
             gameSocket?.over(score)
             setHighscore(score)
-            "Points: $score\nHighscore: ${getHighscore()}".also { b.tvScore.text = it }
+            displayPoints(score, gameId)
         }
         manager.wonCallback = { score: Int ->
             Snackbar.make(b.tvScore, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
             gameSocket?.won(score)
             setHighscore(score)
-            "Points: $score\nHighscore: ${getHighscore()}".also { b.tvScore.text = it }
+            displayPoints(score, gameId)
         }
+    }
+
+    private fun displayPoints(score: Int, gameId: String?) {
+        var pointsString = "Points: $score"
+        if (gameId == "")
+            pointsString += "\nHighscore: ${getHighscore()}"
+        pointsString.also { b.tvScore.text = it }
     }
 
     override fun onStop() {
