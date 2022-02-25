@@ -72,12 +72,7 @@ class MainActivity : BaseActivity() {
             4,
         )
         manager?.addStartTiles()
-        // @todo reset after time or score
-        /* manager.scoreCallback = {
-            if (it > 100){
-                newBackgroundGame()
-            }
-        }*/
+
         manager?.overCallback = {
             runOnUiThread {
                 manager?.clearGrid()
