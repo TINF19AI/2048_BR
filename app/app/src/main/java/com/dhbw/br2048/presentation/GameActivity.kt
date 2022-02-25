@@ -161,6 +161,7 @@ class GameActivity : BaseActivity() {
         }
         manager.overCallback = { score: Int ->
             Snackbar.make(b.tvScore, "Game Over!", Snackbar.LENGTH_LONG).show()
+            "Points: $score".also { b.tvEndMessage.text = it }
             showEndScreen()
             gameSocket?.over(score)
             setHighscore(score)
@@ -168,6 +169,7 @@ class GameActivity : BaseActivity() {
         }
         manager.wonCallback = { score: Int ->
             Snackbar.make(b.tvScore, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
+            "Points: $score".also { b.tvEndMessage.text = it }
             gameSocket?.won(score)
             setHighscore(score)
             displayPoints(score, gameId)
