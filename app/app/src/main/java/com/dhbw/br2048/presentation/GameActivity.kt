@@ -103,6 +103,7 @@ class GameActivity : BaseActivity() {
                             showEndScreen()
                             "${score.position}.".also { b.tvEndPosition.text = it }
                             displayPoints(score.score, gameId)
+                            "Points: ${score.score}".also { b.tvEndMessage.text = it }
                             b.tvEndHeader.text = if (score.position == 1) "Winner winner chicken dinner " else "Game Over!"
                         }
 
