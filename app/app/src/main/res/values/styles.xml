@@ -49,6 +49,7 @@
         <item name="titleTextColor">@color/white</item>
         <item name="android:elevation">200dp</item>
         <item name="android:outlineProvider">bounds</item>
+        <item name="android:layout_marginBottom">20dp</item>
     </style>
 
     <style name="CardRegular">
