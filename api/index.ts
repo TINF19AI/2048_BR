@@ -33,7 +33,7 @@ io.on("connection", function (socket) {
 
     setTimeout(() => {
       // Cheanup if not connected
-      if (lobbys[gameId].owner == OPENING_TEXT) {
+      if (lobbys[gameId] && lobbys[gameId].owner == OPENING_TEXT) {
         closeLobby(gameId, nsp);
       }
     }, 60000);
