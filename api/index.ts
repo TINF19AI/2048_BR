@@ -275,10 +275,14 @@ function endRound(gameId: string, round: number, namespace: SocketNamespace) {
     endGame(gameId, namespace);
     return;
   }
+  const playerCount = getScore(gameId).filter((score) => score.alive).length;
+  const playersToRemove = Math.floor(playerCount / 2);
 
-  if (removePlayerByScore(gameId, namespace)) {
-    endGame(gameId, namespace);
-    return;
+  for (let i = 0; i < playersToRemove; i++) {
+    if (removePlayerByScore(gameId, namespace)) {
+      endGame(gameId, namespace);
+      return;
+    }
   }
 
   console.log(
