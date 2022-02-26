@@ -1,8 +1,11 @@
 package com.dhbw.br2048.presentation
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.KeyEvent
 import com.dhbw.br2048.R
@@ -144,6 +147,10 @@ class GameActivity : BaseActivity() {
                 gameSocket!!.socket.emit("lobbyDetails", null)
                 gameSocket!!.socket.emit("score", 0)
 
+                gameSocket!!.socket.on("disconnect"){
+                    checkConnection(0)
+                }
+
         }
         displayPoints(0, gameId)
 
@@ -182,6 +189,41 @@ class GameActivity : BaseActivity() {
         if (gameId == "")
             pointsString += "\nHighscore: ${getHighscore()}"
         pointsString.also { b.tvScore.text = it }
+    }
+
+    private fun checkConnection(attempt: Int){
+        if(gameSocket?.isConnected() == false && manager.alive){
+            Handler(Looper.getMainLooper()).postDelayed({
+                if (attempt == 2){
+                    runOnUiThread {
+                        Snackbar.make(b.tvScore, "No Internet connection, reconnecting...", Snackbar.LENGTH_LONG).show()
+                    }
+                }
+
+                if (attempt == 9){
+                    runOnUiThread {
+                        Snackbar.make(b.tvScore, "Reconnecting failed ⊙﹏⊙∥", Snackbar.LENGTH_LONG).show()
+                }
+
+                if (attempt > 9){
+                    runOnUiThread {
+                        Snackbar.make(b.tvScore, "Reconnecting failed ⊙﹏⊙∥", Snackbar.LENGTH_LONG).show()
+                        gameSocket!!.close()
+                        startActivity(Intent(this, GameSelectionActivity::class.java))
+                    }
+
+                }else{
+                    checkConnection(attempt + 1)
+                }
+            }, 2000)
+        }else{
+            if (attempt >= 2){
+                runOnUiThread {
+                    Snackbar.make(b.tvScore, "Reconnected φ(゜▽゜*)♪", Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
+
     }
 
     override fun onStop() {

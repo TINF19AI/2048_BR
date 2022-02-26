@@ -67,4 +67,9 @@ class GameSocket(sessionName: String, userId: String, scoreboard: (ArrayList<Sco
     fun lobbyDetails() {
         socket.emit("lobbyDetails", null)
     }
+
+    @Synchronized
+    fun isConnected(): Boolean {
+        return socket.connected()
+    }
 }

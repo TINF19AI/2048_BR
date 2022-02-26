@@ -77,4 +77,9 @@ object SocketHandler {
     fun emit(topic: String, data: Any?) {
         mSocket.emit(topic, data)
     }
+
+    @Synchronized
+    fun isConnected(): Boolean {
+        return mSocket.connected()
+    }
 }

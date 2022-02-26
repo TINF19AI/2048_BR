@@ -5,6 +5,7 @@ import { Game, Lobby, SocketNamespace } from "./types";
 const io = new Server().listen(3000);
 const games: Game = {};
 const lobbys: Lobby = {};
+const OPENING_TEXT = "Opening...";
 
 const uuid = shortUUID(shortUUID.constants.flickrBase58, {
   consistentLength: true,
@@ -22,13 +23,20 @@ io.on("connection", function (socket) {
       `[${socket.handshake.query.CustomId}] Created a new Game ${gameId}`
     );
     const userId = socket.handshake.query.CustomId as string;
-    newGame(gameId, userId);
+    const nsp = newGame(gameId, userId);
     socket.emit("newGame", getLobbyDetails(gameId));
     socket.broadcast.emit("getLobbys", getLobbys());
     setTimeout(() => {
       // Update once lobby is open
       socket.broadcast.emit("getLobbys", getLobbys());
     }, 1500);
+
+    setTimeout(() => {
+      // Cheanup if not connected
+      if (lobbys[gameId].owner == OPENING_TEXT) {
+        closeLobby(gameId, nsp);
+      }
+    }, 60000);
   });
 
   socket.on("getLobbys", function () {
@@ -102,6 +110,8 @@ function newGame(gameId: string, userId: string) {
       }
     });
   });
+
+  return nsp;
 }
 
 function addScore(
@@ -166,7 +176,7 @@ function getLobbys() {
 
     return {
       ...details,
-      owner: owner ? owner.username : "Opening...",
+      owner: owner ? owner.username : OPENING_TEXT,
     };
   });
 
