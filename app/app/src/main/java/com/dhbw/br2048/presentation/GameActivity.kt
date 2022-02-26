@@ -203,6 +203,7 @@ class GameActivity : BaseActivity() {
                 if (attempt == 9){
                     runOnUiThread {
                         Snackbar.make(b.tvScore, "Reconnecting failed ⊙﹏⊙∥", Snackbar.LENGTH_LONG).show()
+                    }
                 }
 
                 if (attempt > 9){
