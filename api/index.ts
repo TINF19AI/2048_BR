@@ -25,6 +25,10 @@ io.on("connection", function (socket) {
     newGame(gameId, userId);
     socket.emit("newGame", getLobbyDetails(gameId));
     socket.broadcast.emit("getLobbys", getLobbys());
+    setTimeout(() => {
+      // Update once lobby is open
+      socket.broadcast.emit("getLobbys", getLobbys());
+    }, 1500);
   });
 
   socket.on("getLobbys", function () {
@@ -157,7 +161,13 @@ function* enumerate(iterable) {
 
 function getLobbys() {
   var lobbyList = Object.keys(lobbys).map((gameId) => {
-    return getLobbyDetails(gameId);
+    var details = getLobbyDetails(gameId);
+    const owner = games[gameId][details.owner];
+
+    return {
+      ...details,
+      owner: owner ? owner.username : "Opening...",
+    };
   });
 
   lobbyList = lobbyList.filter((lobby) => !lobby.running);
