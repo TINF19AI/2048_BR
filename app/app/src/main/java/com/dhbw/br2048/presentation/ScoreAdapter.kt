@@ -1,5 +1,6 @@
 package com.dhbw.br2048.presentation
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -17,13 +18,23 @@ class ScoreAdapter(private var scores: MutableList<Score>) :
         return ScoreViewHolder(b)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ScoreViewHolder, position: Int) {
         val s = scores[position]
-        holder.b.tvPosition.text = s.position.toString()
         holder.b.tvName.text = s.username
         holder.b.tvScore.text = s.score.toString()
-    }
 
+        if (s.alive) {
+            when (s.position) {
+                1 -> holder.b.tvPosition.text = "\uD83E\uDD47" // gold medal
+                2 -> holder.b.tvPosition.text = "\uD83E\uDD48" // silver medal
+                3 -> holder.b.tvPosition.text = "\uD83E\uDD49" // bronze medal
+                else -> holder.b.tvPosition.text = s.position.toString()
+            }
+        } else {
+            holder.b.tvPosition.text = "\uD83E\uDEA6" // tombstone
+        }
+    }
 
     override fun getItemCount(): Int {
         return scores.size
