@@ -12,6 +12,14 @@ export type Game = {
   };
 };
 
+export type Score = {
+  userId: string;
+  username: string;
+  score: number;
+  alive: boolean;
+  position?: number;
+};
+
 export type Lobby = {
   [gameId: string]: {
     owner: string;

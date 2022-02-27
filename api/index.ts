@@ -1,6 +1,6 @@
 import { Namespace, Server } from "socket.io";
 import shortUUID from "short-uuid";
-import { Game, Lobby, SocketNamespace } from "./types";
+import { Game, Lobby, Score, SocketNamespace } from "./types";
 
 const io = new Server().listen(3000);
 const games: Game = {};
@@ -136,6 +136,20 @@ function addScore(
 
   games[gameId][userId].score = score;
   games[gameId][userId].alive = alive;
+
+  // Set final score
+  if (!alive) {
+    const deadPlayers = createScoreArray(gameId).filter((a) => a.position);
+    const smallestFinalPos = getBestDeadPlayer(deadPlayers, gameId).position;
+
+    console.log(
+      "Set final score",
+      games[gameId][userId].username,
+      smallestFinalPos - 1
+    );
+
+    games[gameId][userId].position = smallestFinalPos - 1;
+  }
 }
 
 function getScore(gameId: string) {
@@ -144,20 +158,45 @@ function getScore(gameId: string) {
     return [];
   }
 
-  var score = Object.keys(games[gameId]).map((key) => {
+  var score = createScoreArray(gameId);
+
+  const deadPlayers = score.filter((a) => a.position);
+  const smallestFinalPos = getBestDeadPlayer(deadPlayers, gameId).position;
+
+  const alivePlayers = score.filter((a) => !a.position);
+  alivePlayers.sort((a, b) => a.score - b.score);
+
+  for (const [i, player] of alivePlayers.entries()) {
+    const scoreIndex = score.findIndex((p) => p.userId == player.userId);
+    score[scoreIndex].position = smallestFinalPos - (i + 1);
+  }
+
+  return score;
+}
+
+function createScoreArray(gameId: string): Array<Score> {
+  return Object.keys(games[gameId]).map((key) => {
     return {
       ...games[gameId][key],
       userId: key,
     };
   });
+}
 
-  score.sort((a, b) => b.score - a.score);
-
-  for (const [i, key] of enumerate(Object.keys(score))) {
-    score[key].position = i + 1;
+function getBestDeadPlayer(deadPlayers: Array<Score>, gameId: string): Score {
+  if (deadPlayers.length == 0) {
+    return {
+      userId: "",
+      username: "",
+      score: 0,
+      alive: false,
+      position: Object.keys(games[gameId]).length + 1,
+    };
   }
 
-  return score;
+  return deadPlayers.reduce((prev, curr) =>
+    prev.position < curr.position ? prev : curr
+  );
 }
 
 function* enumerate(iterable) {
