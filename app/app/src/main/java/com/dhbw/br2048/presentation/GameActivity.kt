@@ -8,6 +8,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.KeyEvent
+import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
 import com.dhbw.br2048.data.*
