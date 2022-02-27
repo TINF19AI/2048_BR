@@ -8,13 +8,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.KeyEvent
-import android.view.MenuItem
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
-import com.dhbw.br2048.data.Coordinates
-import com.dhbw.br2048.data.Direction
-import com.dhbw.br2048.data.GameManager
-import com.dhbw.br2048.data.toLobby
+import com.dhbw.br2048.data.*
 import com.dhbw.br2048.databinding.ActivityGameBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -27,6 +23,9 @@ class GameActivity : BaseActivity() {
     private lateinit var manager: GameManager
     private var gameSocket: GameSocket? = null
 
+    private var scoreList: MutableList<Score> = mutableListOf()
+    private lateinit var scoreAdapter: ScoreAdapter
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +37,11 @@ class GameActivity : BaseActivity() {
             replace(R.id.flFragment, gridFragment)
             commit()
         }
+
+        scoreList.add(Score(username = "test", score = 2345, position = 1, alive = true, userId = "1"))
+        b.rvScores.layoutManager = LinearLayoutManager(b.root.context, RecyclerView.VERTICAL, false)
+        scoreAdapter = ScoreAdapter(scoreList)
+        b.rvScores.adapter = scoreAdapter
 
 
         setToolbar(b.abTop)
@@ -100,24 +104,13 @@ class GameActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        val scoreboardUsernames = arrayOf(
-            b.scoreboard1Username,
-            b.scoreboard2Username,
-            b.scoreboard3Username
-        )
-        val scoreboardScores = arrayOf(
-            b.scoreboard1Score,
-            b.scoreboard2Score,
-            b.scoreboard3Score
-        )
-
         val extras = intent.extras
         val gameId = extras?.getString("gameID")
             if (gameId != null && gameId != "") {
                 gameSocket = GameSocket(
                     gameId,
                     getUserId()
-                ) { list, score ->
+                ) { list, score -> // callback function when new score
 
                     runOnUiThread {
                         if(!score.alive){
@@ -131,14 +124,11 @@ class GameActivity : BaseActivity() {
 
                         "${score.position} / ${list.size}".also { b.tvPosition.text = it }
 
-
-                        for ((i, entry) in list.withIndex()) {
-                            val pos = i + 1
-                            if (pos in 1..3) {
-                                scoreboardScores[i].text = entry.score.toString()
-                                scoreboardUsernames[i].text = entry.username
-                            }
+                        scoreList.clear()
+                        for (s in list) {
+                            scoreList.add(s)
                         }
+                        scoreAdapter.notifyDataSetChanged()
                     }
                 }
 
