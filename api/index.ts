@@ -171,7 +171,7 @@ function getScore(gameId: string) {
     score[scoreIndex].position = smallestFinalPos - (i + 1);
   }
 
-  score.sort((a, b) => b.position - a.position);
+  score.sort((a, b) => a.position - b.position);
 
   return score;
 }
@@ -318,6 +318,11 @@ function endRound(gameId: string, round: number, namespace: SocketNamespace) {
   }
   const playerCount = getScore(gameId).filter((score) => score.alive).length;
   const playersToRemove = Math.floor(playerCount / 2);
+
+  if (playerCount <= 1) {
+    endGame(gameId, namespace);
+    return;
+  }
 
   for (let i = 0; i < playersToRemove; i++) {
     if (removePlayerByScore(gameId, namespace)) {

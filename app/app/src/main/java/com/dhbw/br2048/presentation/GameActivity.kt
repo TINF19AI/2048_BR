@@ -25,6 +25,7 @@ class GameActivity : BaseActivity() {
     private val gridFragment = GridFragment()
     private lateinit var manager: GameManager
     private var gameSocket: GameSocket? = null
+    private lateinit var timer: CountDownTimer
 
     private var scoreList: MutableList<Score> = mutableListOf()
     private lateinit var scoreAdapter: ScoreAdapter
@@ -106,7 +107,7 @@ class GameActivity : BaseActivity() {
     // Author: Maxi
     override fun onResume() {
         super.onResume()
-
+        var noOneAlive = false
         val extras = intent.extras
         val gameId = extras?.getString("gameID")
             if (gameId != null && gameId != "") {
@@ -128,8 +129,13 @@ class GameActivity : BaseActivity() {
                         "${score.position} / ${list.size}".also { b.tvPosition.text = it }
 
                         scoreList.clear()
+                        var alive = false
                         for (s in list) {
                             scoreList.add(s)
+                            if(s.alive) alive = true
+                        }
+                        if(!alive && this::timer.isInitialized){
+                            timer.cancel()
                         }
                         scoreAdapter.notifyDataSetChanged()
                     }
@@ -141,7 +147,7 @@ class GameActivity : BaseActivity() {
 
                     if(lobby.duration != -1){
                         runOnUiThread {
-                            object : CountDownTimer((lobby.duration).toLong(), 1000) {
+                            timer = object : CountDownTimer((lobby.duration).toLong(), 1000) {
 
                                 override fun onTick(millisUntilFinished: Long) {
                                     "${((millisUntilFinished + 999) / 1000)}s".also { b.tvTime.text = it }
@@ -151,7 +157,6 @@ class GameActivity : BaseActivity() {
                                     "0s".also { b.tvTime.text = it }
                                 }
                             }.start()
-
                         }
                     }
                 }
