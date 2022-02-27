@@ -171,6 +171,8 @@ function getScore(gameId: string) {
     score[scoreIndex].position = smallestFinalPos - (i + 1);
   }
 
+  score.sort((a, b) => b.position - a.position);
+
   return score;
 }
 
