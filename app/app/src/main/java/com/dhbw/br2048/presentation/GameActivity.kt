@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.KeyEvent
+import android.view.MenuItem
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
 import com.dhbw.br2048.data.Coordinates
@@ -63,7 +64,25 @@ class GameActivity : BaseActivity() {
         // End Caspar
     }
 
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                Log.d("GameActivity", "back button pressed")
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
     override fun onBackPressed() {
+        if(manager.over){
+            super.onBackPressed()
+            return
+        }
+
         MaterialAlertDialogBuilder(
             b.root.context,
             R.style.AlertDialogRegular

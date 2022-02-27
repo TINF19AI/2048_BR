@@ -29,7 +29,7 @@ class GameManager(
         }
 
     var overCallback: ((Int) -> Unit)? = null
-    private var over = false
+    var over = false
         set(newValue) {
             field = newValue
             overCallback?.let { it(score) }
@@ -126,7 +126,7 @@ class GameManager(
 
         val currentTime = System.currentTimeMillis()
         if ((currentTime - lastDebounce) < moveDebounce)
-            return false
+            //return false
 
         lastDebounce = currentTime
 
