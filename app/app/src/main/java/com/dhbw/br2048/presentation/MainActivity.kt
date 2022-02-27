@@ -122,4 +122,5 @@ class MainActivity : BaseActivity() {
         timer?.purge()
         timer = null
     }
+
 }

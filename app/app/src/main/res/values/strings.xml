@@ -28,4 +28,7 @@
     <string name="players">Players</string>
     <string name="change_username">Change Username</string>
     <string name="username">Username</string>
+    <string name="username_saved">Username saved.</string>
+    <string name="longer_than_20_chars">Username can\'t be longer than 20 characters</string>
+    <string name="shorter_than_3">Username can\'t be shorter than 3 characters</string>
 </resources>

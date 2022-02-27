@@ -18,7 +18,7 @@ class GameManager(
     var alive = true
     private val grid = Grid(gridSize)
 
-    var moveDebounce: Long = 400
+    var moveDebounce: Long = 200
     var lastDebounce: Long = 0
 
     var wonCallback: ((Int) -> Unit)? = null

@@ -146,7 +146,11 @@ class SettingsActivity : BaseActivity() {
             spe.apply()
             SocketHandler.setSocket(username, getUserId())
             b.textInputUsername.setText(username)
-            Snackbar.make(b.btChangeUsername, "Username changed to $username", Snackbar.LENGTH_LONG)
+            Snackbar.make(
+                b.btChangeUsername,
+                getString(R.string.username_saved),
+                Snackbar.LENGTH_LONG
+            )
                 .show()
         }
     }
@@ -155,11 +159,19 @@ class SettingsActivity : BaseActivity() {
         val length = username.length
 
         if (length > 20) {
-            Snackbar.make(b.btChangeUsername, "Username can't be longer than 20 characters", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                b.btChangeUsername,
+                getString(R.string.longer_than_20_chars),
+                Snackbar.LENGTH_LONG
+            ).show()
             return false
         }
         if (length < 3) {
-            Snackbar.make(b.btChangeUsername, "Username can't be shorter than 3 characters", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                b.btChangeUsername,
+                getString(R.string.shorter_than_3),
+                Snackbar.LENGTH_LONG
+            ).show()
             return false
         }
         return true
@@ -178,7 +190,7 @@ class SettingsActivity : BaseActivity() {
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(mainIntent)
         finish()
-//        super.onBackPressed()
+        super.onBackPressed()
     }
 
 }
