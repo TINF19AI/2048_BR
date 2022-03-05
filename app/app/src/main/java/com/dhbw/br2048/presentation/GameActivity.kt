@@ -108,7 +108,7 @@ class GameActivity : BaseActivity() {
         super.onResume()
         var noOneAlive = false
         val extras = intent.extras
-        val gameId = extras?.getString("gameID")
+        val gameId = extras?.getString(Constants.BUNDLE_KEY_GAMEID)
             if (gameId != null && gameId != "") {
                 gameSocket = GameSocket(
                     gameId,
@@ -145,7 +145,7 @@ class GameActivity : BaseActivity() {
                     }
                 }
 
-                gameSocket!!.socket.on("lobbyDetails"){ lobbyJson ->
+                gameSocket!!.socket.on(Constants.SOCK_LOBBYDETAILS){ lobbyJson ->
                     val lobby = (lobbyJson[0] as JSONObject).toLobby()
                     Log.d("lobbyDetails", lobby.toString())
 
@@ -165,10 +165,10 @@ class GameActivity : BaseActivity() {
                     }
                 }
 
-                gameSocket!!.socket.emit("lobbyDetails", null)
-                gameSocket!!.socket.emit("score", 0)
+                gameSocket!!.socket.emit(Constants.SOCK_LOBBYDETAILS, null)
+                gameSocket!!.socket.emit(Constants.SOCK_SCORE, 0)
 
-                gameSocket!!.socket.on("disconnect"){
+                gameSocket!!.socket.on(Constants.SOCK_DISCONNECT){
                     checkConnection(0)
                 }
 
@@ -296,17 +296,17 @@ class GameActivity : BaseActivity() {
     }
 
     private fun getHighscore(): Int {
-        val sp = getSharedPreferences("general", MODE_PRIVATE)
-        return sp.getInt("highscore", 0)
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
+        return sp.getInt(Constants.SP_KEY_HIGHSCORE, 0)
     }
 
     private fun setHighscore(score: Int) {
-        val sp = getSharedPreferences("general", MODE_PRIVATE)
-        val highscore = sp.getInt("highscore", 0)
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
+        val highscore = sp.getInt(Constants.SP_KEY_HIGHSCORE, 0)
 
         if (score > highscore) {
             val spe = sp.edit()
-            spe.putInt("highscore", score)
+            spe.putInt(Constants.SP_KEY_HIGHSCORE, score)
             spe.apply()
         }
     }

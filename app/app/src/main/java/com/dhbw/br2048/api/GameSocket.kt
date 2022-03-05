@@ -1,6 +1,7 @@
 package com.dhbw.br2048.api
 
 import android.util.Log
+import com.dhbw.br2048.data.Constants
 import com.dhbw.br2048.data.Score
 import com.dhbw.br2048.data.toScore
 import io.socket.client.Socket
@@ -12,19 +13,19 @@ class GameSocket(sessionName: String, userId: String, scoreboard: (ArrayList<Sco
     lateinit var currentScore: Score
 
     fun score(score: Int) {
-        socket.emit("score", score)
+        socket.emit(Constants.SOCK_SCORE, score)
     }
 
     fun over(score: Int) {
-        socket.emit("over", score)
+        socket.emit(Constants.SOCK_OVER, score)
     }
 
     fun won(score: Int) {
-        socket.emit("won", score)
+        socket.emit(Constants.SOCK_WON, score)
     }
 
     fun startGame() {
-        socket.emit("start", null)
+        socket.emit(Constants.SOCK_START, null)
     }
 
     init {
@@ -38,7 +39,7 @@ class GameSocket(sessionName: String, userId: String, scoreboard: (ArrayList<Sco
             Log.d("EVENT_DISCONNECT", it.toString())
         }
 
-        socket.on("score") {
+        socket.on(Constants.SOCK_SCORE) {
             val scores = (it[0] as JSONArray)
             val list = arrayListOf<Score>()
 
@@ -65,7 +66,7 @@ class GameSocket(sessionName: String, userId: String, scoreboard: (ArrayList<Sco
     }
 
     fun lobbyDetails() {
-        socket.emit("lobbyDetails", null)
+        socket.emit(Constants.SOCK_LOBBYDETAILS, null)
     }
 
     @Synchronized

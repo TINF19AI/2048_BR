@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.SocketHandler
+import com.dhbw.br2048.data.Constants
 import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityGameSelectionBinding
 import com.google.android.material.snackbar.Snackbar
@@ -35,11 +36,11 @@ class GameSelectionActivity : BaseActivity() {
             }
 
 
-            SocketHandler.request("newGame", null) {
+            SocketHandler.request(Constants.SOCK_NEW_GAME, null) {
                 val lobby = (it[0] as JSONObject).toLobby()
                 runOnUiThread {
                     val lobbyIntent = Intent(this, LobbyActivity::class.java)
-                    lobbyIntent.putExtra("gameID", lobby.id)
+                    lobbyIntent.putExtra(Constants.BUNDLE_KEY_GAMEID, lobby.id)
                     startActivity(lobbyIntent)
                 }
             }
@@ -52,7 +53,7 @@ class GameSelectionActivity : BaseActivity() {
 
         b.btSinglePlayer.setOnClickListener {
             val gameIntent = Intent(this, GameActivity::class.java)
-            gameIntent.putExtra("gameID", "")
+            gameIntent.putExtra(Constants.BUNDLE_KEY_GAMEID, "") // empty gameID for singleplayer
             startActivity(gameIntent)
         }
     }

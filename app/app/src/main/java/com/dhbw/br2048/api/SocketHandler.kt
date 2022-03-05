@@ -1,8 +1,7 @@
 package com.dhbw.br2048.api
 
-import android.app.Activity
-import android.provider.Settings
 import android.util.Log
+import com.dhbw.br2048.data.Constants
 import io.socket.client.IO
 import io.socket.client.Manager
 import io.socket.client.Socket
@@ -49,7 +48,7 @@ object SocketHandler {
             Log.d("mEVENT_DISCONNECT", it.toString())
         }
 
-        mSocket.on("score") {
+        mSocket.on(Constants.SOCK_SCORE) {
             Log.d("mEVENT_SCORE", it.toString())
         }
     }

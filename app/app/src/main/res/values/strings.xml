@@ -48,4 +48,5 @@
     <string name="emoji_tombstone" translatable="false">🪦</string>
     <string name="position_current_total">%1$d / %2$d</string>
     <string name="lobby_user_count">Players (%1$d / %2$d)</string>
+    <string name="lobby_id">ID: %1$s</string>
 </resources>

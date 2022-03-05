@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dhbw.br2048.api.SocketHandler
 import com.dhbw.br2048.api.SocketHandler.emit
 import com.dhbw.br2048.api.SocketHandler.getSocket
+import com.dhbw.br2048.data.Constants
 import com.dhbw.br2048.data.Lobby
 import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityLobbyListBinding
@@ -31,11 +32,11 @@ class LobbyListActivity : BaseActivity() {
         setToolbar(b.abTop)
 
         b.btCreateLobby.setOnClickListener {
-            SocketHandler.request("newGame", null) {
+            SocketHandler.request(Constants.SOCK_NEW_GAME, null) {
                 val lobby = (it[0] as JSONObject).toLobby()
                 runOnUiThread {
                     val lobbyIntent = Intent(this, LobbyActivity::class.java)
-                    lobbyIntent.putExtra("gameID", lobby.id)
+                    lobbyIntent.putExtra(Constants.BUNDLE_KEY_GAMEID, lobby.id)
                     startActivity(lobbyIntent)
                     finish() // keep this from backstack
                 }
@@ -43,7 +44,7 @@ class LobbyListActivity : BaseActivity() {
         }
 
         b.swipeLobbys.setOnRefreshListener {
-            emit("getLobbys", null)
+            emit(Constants.SOCK_GET_LOBBYS, null)
         }
     }
 
@@ -59,7 +60,7 @@ class LobbyListActivity : BaseActivity() {
         b.rvLobbys.adapter = lobbyAdapter
         Log.d("LobbyList", "Created lobby recycler view")
 
-        getSocket().on("getLobbys") {
+        getSocket().on(Constants.SOCK_GET_LOBBYS) {
             Log.d("LobbyList", "Received lobby list from server")
             val lobbys = (it[0] as JSONArray)
             Log.d("LobbyList", "Lobby count: " + lobbys.length().toString())
@@ -86,7 +87,7 @@ class LobbyListActivity : BaseActivity() {
             Log.d("LobbyList", "End of lobby refresh")
         }
 
-        emit("getLobbys", null)
+        emit(Constants.SOCK_GET_LOBBYS, null)
 
         if (!getSocket().connected()) {
             Log.d("LobbyList", "no connection")
@@ -96,7 +97,7 @@ class LobbyListActivity : BaseActivity() {
     private fun joinGame(gameID: String) {
         Log.d("LobbyList", "Lobby clicked: $gameID")
         val lobbyIntent = Intent(this, LobbyActivity::class.java)
-        lobbyIntent.putExtra("gameID", gameID)
+        lobbyIntent.putExtra(Constants.BUNDLE_KEY_GAMEID, gameID)
         startActivity(lobbyIntent)
         finish() // go back to game selection
     }

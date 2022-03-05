@@ -1,12 +1,12 @@
 package com.dhbw.br2048.presentation
 
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.dhbw.br2048.R
+import com.dhbw.br2048.data.Constants
 
 // open keyword is to make BaseActivity inheritable
 open class BaseActivity : AppCompatActivity() {
@@ -17,15 +17,15 @@ open class BaseActivity : AppCompatActivity() {
         // Theme from shared preferences
         // Author: Kai
         Log.d("BaseActivity", "Activity created")
-        val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        currentThemeId = sp.getInt("currentTheme", R.style.Theme_Original)
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
+        currentThemeId = sp.getInt(Constants.SP_KEY_THEME, R.style.Theme_Original)
         setTheme(currentThemeId)
         super.onCreate(savedInstanceState)
     }
 
     override fun onResume() {
-        val sp = getSharedPreferences("theme", MODE_PRIVATE)
-        val tempThemeId = sp.getInt("currentTheme", R.style.Theme_Original)
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
+        val tempThemeId = sp.getInt(Constants.SP_KEY_THEME, R.style.Theme_Original)
         if (currentThemeId != tempThemeId) {
             this.recreate() // recreate activity if theme has changed
         }
@@ -33,8 +33,8 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun getUserId(): String {
-        val sp = getSharedPreferences("general", MODE_PRIVATE)
-        val userId = sp.getString("userId", "")
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
+        val userId = sp.getString(Constants.SP_KEY_USERID, "")
 
         userId?.let {
             return it
@@ -44,8 +44,8 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     fun getUsername(): String {
-        val sp = getSharedPreferences("general", MODE_PRIVATE)
-        val userName = sp.getString("username", "Slider")
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
+        val userName = sp.getString(Constants.SP_KEY_USERNAME, "Slider")
 
         userName?.let {
             return it

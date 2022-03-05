@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.GameSocket
+import com.dhbw.br2048.data.Constants
 import com.dhbw.br2048.data.User
 import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityLobbyBinding
@@ -46,7 +47,7 @@ class LobbyActivity : BaseActivity() {
         userAdapter = UserAdapter(userList)
         b.rvUsers.adapter = userAdapter
 
-        intent.extras?.getString("gameID")?.let {
+        intent.extras?.getString(Constants.BUNDLE_KEY_GAMEID)?.let {
             gameId = it // set lobby id
             gameSocket = GameSocket(
                 it,
@@ -65,18 +66,18 @@ class LobbyActivity : BaseActivity() {
             }
         }
 
-        gameSocket?.socket?.on("start") {
+        gameSocket?.socket?.on(Constants.SOCK_START) {
             Log.d("Lobby", "Received start signal for game: $gameId")
             runOnUiThread {
                 keepSocket = true
                 val lobbyIntent = Intent(this, GameActivity::class.java)
-                lobbyIntent.putExtra("gameID", gameId)
+                lobbyIntent.putExtra(Constants.BUNDLE_KEY_GAMEID, gameId)
                 startActivity(lobbyIntent)
                 finish() // stop activity to prevent adding it to backstack
             }
         }
 
-        gameSocket?.socket?.on("lobbyDetails") { jsonLobby ->
+        gameSocket?.socket?.on(Constants.SOCK_LOBBYDETAILS) { jsonLobby ->
             Log.d("Lobby", "Received lobbyDetails for game: $gameId")
             val lobby = (jsonLobby[0] as JSONObject).toLobby()
             runOnUiThread {
@@ -92,7 +93,7 @@ class LobbyActivity : BaseActivity() {
         gameSocket?.lobbyDetails()
 
         Log.d("Lobby", "Joined Lobby: " + gameId)
-        b.lobbyID.text = "ID: $gameId"
+        b.lobbyID.text = getString(R.string.lobby_id, gameId)
     }
 
     override fun onStop() {

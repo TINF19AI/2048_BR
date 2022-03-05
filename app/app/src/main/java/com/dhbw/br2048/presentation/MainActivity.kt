@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.SocketHandler
+import com.dhbw.br2048.data.Constants
 import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivityMainBinding
@@ -47,20 +48,20 @@ class MainActivity : BaseActivity() {
             commit()
         }
 
-        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
         // if username is empty
-        if (sp.getString("username", "") == "")
+        if (sp.getString(Constants.SP_KEY_USERNAME, "") == "")
             setRandomUsername()
     }
 
     private fun generateUserIdIfEmpty() {
-        val sp = getSharedPreferences("general", MODE_PRIVATE)
-        val userId = sp.getString("userId", "")
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
+        val userId = sp.getString(Constants.SP_KEY_USERID, "")
         Log.d("MainActivity", "UserID: $userId")
         if (userId == "") {
             val spe = sp.edit()
             val newGeneratedUserId = UUID.randomUUID().toString()
-            spe.putString("userId", newGeneratedUserId) // TODO: theme selection
+            spe.putString(Constants.SP_KEY_USERID, newGeneratedUserId) // TODO: theme selection
             spe.apply()
             Log.d("MainActivity", "Generated new UserID: $newGeneratedUserId")
         }
@@ -100,9 +101,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setRandomUsername() {
-        val sp = getSharedPreferences("general", MODE_PRIVATE)
+        val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
         val spe = sp.edit()
-        spe.putString("username", "Slider ${Random.nextInt(10000, 100000)}")
+        spe.putString(Constants.SP_KEY_USERNAME, "Slider ${Random.nextInt(10000, 100000)}")
         spe.apply()
     }
 

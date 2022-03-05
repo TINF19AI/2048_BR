@@ -10,6 +10,7 @@ import android.widget.TextView.OnEditorActionListener
 import androidx.fragment.app.Fragment
 import com.dhbw.br2048.R
 import com.dhbw.br2048.api.SocketHandler
+import com.dhbw.br2048.data.Constants
 import com.dhbw.br2048.data.Coordinates
 import com.dhbw.br2048.data.GameManager
 import com.dhbw.br2048.databinding.ActivitySettingsBinding
@@ -21,8 +22,6 @@ class SettingsActivity : BaseActivity() {
     private lateinit var b: ActivitySettingsBinding
     private val gridFragment = GridFragment()
     private lateinit var manager: GameManager
-
-    private var restartRequired: Boolean = false
 
     private val themeText = arrayOf(
         "Default",
@@ -49,8 +48,6 @@ class SettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        restartRequired = intent.getBooleanExtra("restartRequired", false)
-
         b = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(b.root)
         setCurrentFragment(gridFragment)
@@ -69,17 +66,16 @@ class SettingsActivity : BaseActivity() {
                     themeId.indexOf(this.currentThemeId)
                 ) { dialog, which ->
                     // https://stackoverflow.com/questions/13832459/android-how-to-refresh-activity-set-theme-dynamically
-                    val sp = getSharedPreferences("theme", MODE_PRIVATE)
+                    val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
                     val spe = sp.edit()
                     val newTheme = themeId[which]
-                    spe.putInt("currentTheme", newTheme)
+                    spe.putInt(Constants.SP_KEY_THEME, newTheme)
                     spe.apply()
                     this.currentThemeId = newTheme
                     Log.d("SettingsActivity", "Theme was changed")
                     dialog.dismiss()
                     runOnUiThread {
                         val intent = this.intent
-                        intent.putExtra("restartRequired", true)
                         this.finish()
                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                         this.startActivity(intent)
@@ -140,9 +136,9 @@ class SettingsActivity : BaseActivity() {
         username = username.trim()
 
         if (isUsernameValid(username)) {
-            val sp = getSharedPreferences("general", MODE_PRIVATE)
+            val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
             val spe = sp.edit()
-            spe.putString("username", username)
+            spe.putString(Constants.SP_KEY_USERNAME, username)
             spe.apply()
             SocketHandler.setSocket(username, getUserId())
             b.textInputUsername.setText(username)
