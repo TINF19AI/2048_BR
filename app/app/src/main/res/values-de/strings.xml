@@ -21,11 +21,22 @@
     <string name="create_new_lobby">Neue Lobby erstellen</string>
     <string name="no_connection">Keine Verbindung zum Spielserver möglich. Bitte prüfe deine Internetverbindung und versuche es erneut.</string>
     <string name="points_0">Punkte: 0</string>
-    <string name="points">Punkte</string>
+    <string name="points_num">Punkte: %1$d</string>
     <string name="players">Spieler</string>
     <string name="change_username">Benutzername ändern</string>
     <string name="username">Benutzername</string>
     <string name="username_saved">Benutzername gespeichert.</string>
     <string name="shorter_than_3">Der Name muss mindestens 3 Zeichen enthalten.</string>
-    <string name="longer_than_20_chars">Der Name darf nicht mehr als 20 Zeichen enthalten.</string>
+    <string name="longer_than_20_chars">Der Name darf nicht mehr als 16 Zeichen enthalten.</string>
+    <string name="lobby_information">Lobbyinformationen</string>
+    <string name="position">%1$d.</string>
+    <string name="highscore_num">Highscore: %1$d</string>
+    <string name="game_over">Game Over!</string>
+    <string name="game_won">Du hast gewonnen!</string>
+    <string name="connection_lost">Keine Internetverbindung, verbinde neu...</string>
+    <string name="reconnect_failed">Wiederverbinden fehlgeschlagen ⊙﹏⊙∥</string>
+    <string name="reconnect_successful">Wiederverbinden erfolgreich φ(゜▽゜*)♪</string>
+    <string name="time_0">0s</string>
+    <string name="time_num">%1$ds</string>
+    <string name="game_won_quote">Winner Winner Chicken Dinner!</string>
 </resources>

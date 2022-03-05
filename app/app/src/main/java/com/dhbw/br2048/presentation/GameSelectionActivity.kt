@@ -28,7 +28,7 @@ class GameSelectionActivity : BaseActivity() {
             if (!SocketHandler.getSocket().connected()) {
                 Log.d("LobbyList", "no connection")
                 runOnUiThread {
-                    Snackbar.make(b.btCreateLobby, R.string.no_connection, Snackbar.LENGTH_LONG)
+                    Snackbar.make(b.btCreateLobby, getString(R.string.no_connection), Snackbar.LENGTH_LONG)
                         .show()
                 }
                 return@setOnClickListener

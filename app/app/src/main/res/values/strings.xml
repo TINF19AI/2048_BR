@@ -24,11 +24,26 @@
     <string name="create_new_lobby">Create New Lobby</string>
     <string name="no_connection">Could not connect to game server. Please check your internet connection and try again.</string>
     <string name="points_0">Points: 0</string>
-    <string name="points">Points</string>
+    <string name="points_num">Points: %1$d</string>
     <string name="players">Players</string>
     <string name="change_username">Change Username</string>
     <string name="username">Username</string>
     <string name="username_saved">Username saved.</string>
-    <string name="longer_than_20_chars">Username can\'t be longer than 20 characters</string>
+    <string name="longer_than_20_chars">Username can\'t be longer than 16 characters</string>
     <string name="shorter_than_3">Username can\'t be shorter than 3 characters</string>
+    <string name="lobby_information">Lobby Information</string>
+    <string name="position">%1$d.</string>
+    <string name="highscore_num">Highscore: %1$d</string>
+    <string name="game_over">Game Over!</string>
+    <string name="game_won">You won!</string>
+    <string name="connection_lost">No Internet connection, reconnecting...</string>
+    <string name="reconnect_failed">Reconnecting failed ⊙﹏⊙∥</string>
+    <string name="reconnect_successful">Reconnected φ(゜▽゜*)♪</string>
+    <string name="time_0">0s</string>
+    <string name="time_num">%1$ds</string>
+    <string name="game_won_quote">Winner Winner Chicken Dinner!</string>
+    <string name="emoji_medal_first" translatable="false">🥇</string>
+    <string name="emoji_medal_second" translatable="false">🥈</string>
+    <string name="emoji_medal_third" translatable="false">🥉</string>
+    <string name="emoji_tombstone" translatable="false">🪦</string>
 </resources>

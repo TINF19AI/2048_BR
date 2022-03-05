@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.dhbw.br2048.R
 import com.dhbw.br2048.data.Score
 import com.dhbw.br2048.databinding.ItemScoreBinding
 
@@ -24,16 +25,22 @@ class ScoreAdapter(private var scores: MutableList<Score>) :
         holder.b.tvName.text = s.username
         holder.b.tvScore.text = s.score.toString()
 
-        if (s.alive) {
-            when (s.position) {
-                1 -> holder.b.tvPosition.text = "\uD83E\uDD47" // gold medal
-                2 -> holder.b.tvPosition.text = "\uD83E\uDD48" // silver medal
-                3 -> holder.b.tvPosition.text = "\uD83E\uDD49" // bronze medal
-                else -> holder.b.tvPosition.text = s.position.toString()
-            }
-        } else {
-            holder.b.tvPosition.text = "\uD83E\uDEA6" // tombstone
+        when (s.position) {
+            1 -> holder.b.tvPosition.text =
+                holder.itemView.context.getString(R.string.emoji_medal_first)
+
+            2 -> holder.b.tvPosition.text =
+                holder.itemView.context.getString(R.string.emoji_medal_second)
+
+            3 -> holder.b.tvPosition.text =
+                holder.itemView.context.getString(R.string.emoji_medal_third)
+
+            else -> holder.b.tvPosition.text = s.position.toString()
         }
+
+        if (!s.alive)
+            holder.b.tvPosition.text =
+                holder.b.tvPosition.text.toString() + holder.itemView.context.getString(R.string.emoji_tombstone)
     }
 
     override fun getItemCount(): Int {

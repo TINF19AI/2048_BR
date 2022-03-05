@@ -42,7 +42,6 @@ class GameActivity : BaseActivity() {
             commit()
         }
 
-        scoreList.add(Score(username = "test", score = 2345, position = 1, alive = true, userId = "1"))
         b.rvScores.layoutManager = LinearLayoutManager(b.root.context, RecyclerView.VERTICAL, false)
         scoreAdapter = ScoreAdapter(scoreList)
         b.rvScores.adapter = scoreAdapter
@@ -94,10 +93,10 @@ class GameActivity : BaseActivity() {
         MaterialAlertDialogBuilder(
             b.root.context,
             R.style.AlertDialogRegular
-        ).setMessage(resources.getString(R.string.game_exit_confirmation))
-            .setNegativeButton(resources.getString(R.string.continue_playing)) { _, _ ->
+        ).setMessage(getString(R.string.game_exit_confirmation))
+            .setNegativeButton(getString(R.string.continue_playing)) { _, _ ->
                 // do nothing when canceled
-            }.setPositiveButton(resources.getString(R.string.exit)) { _, _ ->
+            }.setPositiveButton(getString(R.string.exit)) { _, _ ->
                 super.onBackPressed()
             }
             .show()
@@ -120,10 +119,15 @@ class GameActivity : BaseActivity() {
                         if(!score.alive){
                             manager.alive = false
                             showEndScreen()
-                            "${score.position}.".also { b.tvEndPosition.text = it }
                             displayPoints(score.score, gameId)
-                            "Points: ${score.score}".also { b.tvEndMessage.text = it }
-                            b.tvEndHeader.text = if (score.position == 1) "Winner winner chicken dinner " else "Game Over!"
+                            b.tvEndPosition.text = getString(R.string.position, score.position)
+                            b.tvEndMessage.text = getString(R.string.points_num, score.score)
+
+                            if (score.position == 1) {
+                                b.tvEndHeader.text = getString(R.string.game_won_quote)
+                            } else {
+                                b.tvEndHeader.text = getString(R.string.game_over)
+                            }
                         }
 
                         "${score.position} / ${list.size}".also { b.tvPosition.text = it }
@@ -150,11 +154,11 @@ class GameActivity : BaseActivity() {
                             timer = object : CountDownTimer((lobby.duration).toLong(), 1000) {
 
                                 override fun onTick(millisUntilFinished: Long) {
-                                    "${((millisUntilFinished + 999) / 1000)}s".also { b.tvTime.text = it }
+                                    b.tvTime.text = getString(R.string.time_num, ((millisUntilFinished + 999) / 1000))
                                 }
 
                                 override fun onFinish() {
-                                    "0s".also { b.tvTime.text = it }
+                                    b.tvTime.text = getString(R.string.time_0)
                                 }
                             }.start()
                         }
@@ -185,27 +189,31 @@ class GameActivity : BaseActivity() {
             gameSocket?.score(score)
         }
         manager.overCallback = { score: Int ->
-            Snackbar.make(b.tvScore, "Game Over!", Snackbar.LENGTH_LONG).show()
-            "Points: $score".also { b.tvEndMessage.text = it }
+            Snackbar.make(b.tvScore, getString(R.string.game_over), Snackbar.LENGTH_LONG).show()
+            setEndScore()
             showEndScreen()
             gameSocket?.over(score)
             setHighscore(score)
             displayPoints(score, gameId)
         }
         manager.wonCallback = { score: Int ->
-            Snackbar.make(b.tvScore, "Wow good Job... Nerd!", Snackbar.LENGTH_LONG).show()
-            "Points: $score".also { b.tvEndMessage.text = it }
+            Snackbar.make(b.tvScore, getString(R.string.game_won), Snackbar.LENGTH_LONG).show()
+            setEndScore()
             gameSocket?.won(score)
             setHighscore(score)
             displayPoints(score, gameId)
         }
     }
 
+    private fun setEndScore() {
+
+    }
+
     private fun displayPoints(score: Int, gameId: String?) {
-        var pointsString = "Points: $score"
+        var pointsString = getString(R.string.points_num, score)
         if (gameId == "")
-            pointsString += "\nHighscore: ${getHighscore()}"
-        pointsString.also { b.tvScore.text = it }
+            pointsString += "\n" + getString(R.string.highscore_num, getHighscore())
+        b.tvScore.text = pointsString
     }
 
     private fun checkConnection(attempt: Int){
@@ -213,19 +221,19 @@ class GameActivity : BaseActivity() {
             Handler(Looper.getMainLooper()).postDelayed({
                 if (attempt == 2){
                     runOnUiThread {
-                        Snackbar.make(b.tvScore, "No Internet connection, reconnecting...", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(b.tvScore, getString(R.string.connection_lost), Snackbar.LENGTH_LONG).show()
                     }
                 }
 
                 if (attempt == 9){
                     runOnUiThread {
-                        Snackbar.make(b.tvScore, "Reconnecting failed ⊙﹏⊙∥", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(b.tvScore, getString(R.string.reconnect_failed), Snackbar.LENGTH_LONG).show()
                     }
                 }
 
                 if (attempt > 9){
                     runOnUiThread {
-                        Snackbar.make(b.tvScore, "Reconnecting failed ⊙﹏⊙∥", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(b.tvScore, getString(R.string.reconnect_failed), Snackbar.LENGTH_LONG).show()
                         gameSocket!!.close()
                         startActivity(Intent(this, GameSelectionActivity::class.java))
                     }
@@ -237,7 +245,7 @@ class GameActivity : BaseActivity() {
         }else{
             if (attempt >= 2){
                 runOnUiThread {
-                    Snackbar.make(b.tvScore, "Reconnected φ(゜▽゜*)♪", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(b.tvScore, R.string.reconnect_successful, Snackbar.LENGTH_LONG).show()
                 }
             }
         }

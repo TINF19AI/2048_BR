@@ -85,7 +85,9 @@ class LobbyActivity : BaseActivity() {
                     b.btStartGame.visibility = View.GONE
                 }
 
-                "${resources.getString(R.string.players)} (${lobby.currentUsers} / ${lobby.maxUsers})".also { b.tvUsers.text = it }
+                b.tvUsers.text = getString(R.string.players)
+
+                "${getString(R.string.players)} (${lobby.currentUsers} / ${lobby.maxUsers})".also { b.tvUsers.text = it }
             }
         }
         gameSocket?.lobbyDetails()

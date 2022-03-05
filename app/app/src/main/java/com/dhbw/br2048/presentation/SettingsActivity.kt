@@ -61,7 +61,7 @@ class SettingsActivity : BaseActivity() {
                 b.root.context,
                 R.style.AlertDialogRegular
             )
-                .setNeutralButton(resources.getString(R.string.cancel)) { _, _ ->
+                .setNeutralButton(getString(R.string.cancel)) { _, _ ->
 
                 }
                 .setSingleChoiceItems(
@@ -158,7 +158,7 @@ class SettingsActivity : BaseActivity() {
     private fun isUsernameValid(username: String): Boolean {
         val length = username.length
 
-        if (length > 20) {
+        if (length > 16) {
             Snackbar.make(
                 b.btChangeUsername,
                 getString(R.string.longer_than_20_chars),
