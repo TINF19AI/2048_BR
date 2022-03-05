@@ -130,7 +130,7 @@ class GameActivity : BaseActivity() {
                             }
                         }
 
-                        "${score.position} / ${list.size}".also { b.tvPosition.text = it }
+                        b.tvPosition.text = getString(R.string.position_current_total, score.position, list.size)
 
                         scoreList.clear()
                         var alive = false

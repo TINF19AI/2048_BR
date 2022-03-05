@@ -39,4 +39,6 @@
     <string name="time_0">0s</string>
     <string name="time_num">%1$ds</string>
     <string name="game_won_quote">Winner Winner Chicken Dinner!</string>
+    <string name="position_current_total">%1$d / %2$d</string>
+    <string name="lobby_user_count">Spieler (%1$d / %2$d)</string>
 </resources>

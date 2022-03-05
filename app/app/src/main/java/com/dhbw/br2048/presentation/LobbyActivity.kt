@@ -86,8 +86,7 @@ class LobbyActivity : BaseActivity() {
                 }
 
                 b.tvUsers.text = getString(R.string.players)
-
-                "${getString(R.string.players)} (${lobby.currentUsers} / ${lobby.maxUsers})".also { b.tvUsers.text = it }
+                b.tvUsers.text = getString(R.string.lobby_user_count, lobby.currentUsers, lobby.maxUsers)
             }
         }
         gameSocket?.lobbyDetails()
