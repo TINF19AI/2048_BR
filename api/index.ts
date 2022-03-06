@@ -210,15 +210,6 @@ function getBestDeadPlayer(deadPlayers: Array<Score>, gameId: string): Score {
   );
 }
 
-function* enumerate(iterable) {
-  let i = 0;
-
-  for (const x of iterable) {
-    yield [i, x];
-    i++;
-  }
-}
-
 function getLobbys() {
   var lobbyList = Object.keys(lobbys).map((gameId) => {
     var details = getLobbyDetails(gameId);
@@ -297,9 +288,9 @@ function closeLobby(gameId: string, namespace: SocketNamespace) {
   delete lobbys[gameId];
   delete games[gameId];
 
-  //namespace.disconnectSockets(false);
-  //namespace.removeAllListeners();
-  //delete io._nsps["/game/" + gameId];
+  namespace.disconnectSockets(false);
+  namespace.removeAllListeners();
+  delete io._nsps["/game/" + gameId];
 }
 
 function startRound(gameId: string, round: number, namespace: SocketNamespace) {
