@@ -69,6 +69,10 @@ class GameActivity : BaseActivity() {
             }
         })
         // End Caspar
+
+        b.btReturn.setOnClickListener {
+            onBackPressed()
+        }
     }
 
 

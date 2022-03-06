@@ -63,13 +63,13 @@
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="?attr/brEmpty"
-        app:cardCornerRadius="25dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="12dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardGameInfo"
-        app:layout_constraintWidth_percent="0.9">
+        app:layout_constraintWidth_percent="0.8">
 
         <FrameLayout
             android:id="@+id/flFragment"
@@ -87,14 +87,14 @@
         android:alpha="0.1"
         android:backgroundTint="?attr/brEmpty"
         android:padding="12dp"
-        app:cardCornerRadius="25dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="12dp"
         app:layout_constraintBottom_toBottomOf="@id/cardGrid"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="@id/cardGrid"
         app:layout_constraintRight_toRightOf="@id/cardGrid"
         app:layout_constraintTop_toTopOf="@id/cardGrid"
-        app:layout_constraintWidth_percent="0.9">
+        app:layout_constraintWidth_percent="0.8">
 
         <RelativeLayout
             android:id="@+id/layEndscreen"
@@ -109,8 +109,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                tools:ignore="RtlHardcoded"
-                tools:text="Game Over!" />
+                android:textAlignment="center"
+                android:layout_marginBottom="8dp"
+                tools:text="Winner Winner Chicken Dinner!" />
 
             <TextView
                 android:id="@+id/tvEndMessage"
@@ -130,13 +131,25 @@
                 android:layout_centerHorizontal="true"
                 tools:ignore="RtlHardcoded"
                 tools:text="0." />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btReturn"
+                style="@style/ButtonPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvEndPosition"
+                android:layout_centerHorizontal="true"
+                android:text="@string/exit" />
+
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardScoreboard"
         style="@style/CardRegular"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

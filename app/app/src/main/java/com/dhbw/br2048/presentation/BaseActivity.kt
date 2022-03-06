@@ -58,7 +58,7 @@ open class BaseActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 Log.d("BaseActivity", "back button pressed")
-                finish()
+                onBackPressed()
             }
             else -> {
                 Log.d("BaseActivity", "unknown button pressed: " + item.itemId.toString())
