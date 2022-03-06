@@ -1,5 +1,7 @@
 package com.dhbw.br2048.presentation
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -23,12 +25,14 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onResume() {
         val sp = getSharedPreferences(Constants.SP_CAT_GENERAL, MODE_PRIVATE)
         val tempThemeId = sp.getInt(Constants.SP_KEY_THEME, R.style.Theme_Original)
         if (currentThemeId != tempThemeId) {
             this.recreate() // recreate activity if theme has changed
         }
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         super.onResume()
     }
 
