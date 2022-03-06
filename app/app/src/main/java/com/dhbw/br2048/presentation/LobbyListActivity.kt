@@ -30,6 +30,7 @@ class LobbyListActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Log.d("LobbyListActivity", "Activity Created")
         b = ActivityLobbyListBinding.inflate(layoutInflater)
         setContentView(b.root)
         setToolbar(b.abTop)
