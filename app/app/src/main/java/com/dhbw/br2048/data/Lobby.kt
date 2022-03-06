@@ -7,7 +7,8 @@ data class Lobby(
     var owner: String,
     var currentUsers: Int,
     var maxUsers: Int,
-    var duration: Int
+    var duration: Int,
+    var running: Boolean
 )
 
 fun JSONObject.toLobby(): Lobby {
@@ -16,6 +17,7 @@ fun JSONObject.toLobby(): Lobby {
         this.getString("owner"),
         this.getInt("currentUsers"),
         this.getInt("maxUsers"),
-        this.getInt("duration")
+        this.getInt("duration"),
+        this.getBoolean("running")
     )
 }

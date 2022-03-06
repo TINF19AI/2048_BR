@@ -17,4 +17,5 @@ object Constants {
     const val SOCK_DISCONNECT = "disconnect"
     const val SOCK_NEW_GAME = "newGame"
     const val SOCK_GET_LOBBYS = "getLobbys"
+    const val SOCK_GET_LOBBY = "getLobby"
 }

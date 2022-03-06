@@ -6,13 +6,16 @@ import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.dhbw.br2048.R
 import com.dhbw.br2048.api.SocketHandler
 import com.dhbw.br2048.api.SocketHandler.emit
 import com.dhbw.br2048.api.SocketHandler.getSocket
+import com.dhbw.br2048.api.SocketHandler.request
 import com.dhbw.br2048.data.Constants
 import com.dhbw.br2048.data.Lobby
 import com.dhbw.br2048.data.toLobby
 import com.dhbw.br2048.databinding.ActivityLobbyListBinding
+import com.google.android.material.snackbar.Snackbar
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -42,7 +45,6 @@ class LobbyListActivity : BaseActivity() {
                 }
             }
         }
-
         b.swipeLobbys.setOnRefreshListener {
             emit(Constants.SOCK_GET_LOBBYS, null)
         }
@@ -68,7 +70,9 @@ class LobbyListActivity : BaseActivity() {
 
             for (i in 0 until lobbys.length()) {
                 val jsonLobby = lobbys.getJSONObject(i)
-                lobbyList.add(jsonLobby.toLobby())
+                val lobby = jsonLobby.toLobby()
+                if (!lobby.running)
+                    lobbyList.add(lobby)
             }
 
             runOnUiThread {
@@ -96,9 +100,42 @@ class LobbyListActivity : BaseActivity() {
 
     private fun joinGame(gameID: String) {
         Log.d("LobbyList", "Lobby clicked: $gameID")
-        val lobbyIntent = Intent(this, LobbyActivity::class.java)
-        lobbyIntent.putExtra(Constants.BUNDLE_KEY_GAMEID, gameID)
-        startActivity(lobbyIntent)
-        finish() // go back to game selection
+
+        request(Constants.SOCK_GET_LOBBY, gameID) {
+            val jsonLobby = (it[0] as JSONObject?)
+
+            if (jsonLobby == null) {
+                Log.d("LobbyList", "Lobby doesn't exist")
+                Snackbar.make(
+                    b.root,
+                    getString(R.string.lobby_already_closed),
+                    Snackbar.LENGTH_LONG
+                )
+                    .show()
+                return@request Unit
+            }
+
+            val lobby = jsonLobby.toLobby()
+
+            if (lobby.running) {
+                Log.d("LobbyList", "game is already running")
+                runOnUiThread {
+                    Snackbar.make(
+                        b.root,
+                        getString(R.string.game_already_running),
+                        Snackbar.LENGTH_LONG
+                    )
+                        .show()
+                }
+                return@request Unit
+            }
+
+            runOnUiThread {
+                val lobbyIntent = Intent(this, LobbyActivity::class.java)
+                lobbyIntent.putExtra(Constants.BUNDLE_KEY_GAMEID, gameID)
+                startActivity(lobbyIntent)
+                finish() // go back to game selection
+            }
+        }
     }
 }

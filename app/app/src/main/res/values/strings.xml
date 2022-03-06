@@ -51,4 +51,6 @@
     <string name="lobby_id">ID: %1$s</string>
     <string name="battle_royale_rules">Knockout Rules for Battle Royale:\nEvery 30 seconds, the bottom half of players will lose, sorted by achieved points. If you have no moves left, you lose, even if you are in the upper half of players.</string>
     <string name="lobby_opening">Please wait, we are creating the lobby…</string>
+    <string name="game_already_running">This game is already running. Please select another lobby.</string>
+    <string name="lobby_already_closed">This lobby was closed. Please select another one!</string>
 </resources>

@@ -43,5 +43,7 @@
     <string name="lobby_user_count">Spieler (%1$d / %2$d)</string>
     <string name="lobby_id">ID: %1$s</string>
     <string name="lobby_opening">Bitte hab geduld, wir erstellen die Lobby…</string>
-    <string name="battle_royale_rules" translatable="false">"Knockout-Regeln für Battle Royale:\nAlle 30 Sekunden verliert die untere Hälfte aller Spieler, sortiert nach Punkten. Wenn du keine Bewegungen mehr übrig hast, verlierst du, auch wenn du in der oberen Hälfte der Spieler bist."</string>
+    <string name="battle_royale_rules">Knockout-Regeln für Battle Royale:\nAlle 30 Sekunden verliert die untere Hälfte aller Spieler, sortiert nach Punkten. Wenn du keine Bewegungen mehr übrig hast, verlierst du, auch wenn du in der oberen Hälfte der Spieler bist.</string>
+    <string name="game_already_running">Dieses Spiel läuft bereits. Wähle bitte eine andere Lobby aus!</string>
+    <string name="lobby_already_closed">Diese Lobby wurde geschlossen. Wähle bitte eine andere aus!</string>
 </resources>

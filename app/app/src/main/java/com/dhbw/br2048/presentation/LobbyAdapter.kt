@@ -41,6 +41,7 @@ class LobbyAdapter(private var lobbys: MutableList<Lobby>, private val onClick: 
                 onClick(l.id)
             }
         }
+
     }
 
 
