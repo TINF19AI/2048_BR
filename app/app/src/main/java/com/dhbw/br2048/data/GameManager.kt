@@ -18,7 +18,7 @@ class GameManager(
     var alive = true
     private val grid = Grid(gridSize)
 
-    var moveDebounce: Long = 200
+    var moveDebounce: Long = 250
     var lastDebounce: Long = 0
 
     var wonCallback: ((Int) -> Unit)? = null
@@ -125,7 +125,7 @@ class GameManager(
 
         val currentTime = System.currentTimeMillis()
         if ((currentTime - lastDebounce) < moveDebounce)
-            //return false
+            return false
 
         lastDebounce = currentTime
 
