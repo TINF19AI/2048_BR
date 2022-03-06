@@ -34,6 +34,7 @@ io.on("connection", function (socket) {
     setTimeout(() => {
       // Cheanup if not connected
       if (lobbys[gameId] && lobbys[gameId].owner == OPENING_TEXT) {
+        console.log(`[${gameId} - SYSTEM] Lobby opening failed, closing...`);
         closeLobby(gameId, nsp);
       }
     }, 60000);
@@ -277,6 +278,7 @@ function leaveLobby(
   delete games[gameId][userId];
 
   if (Object.keys(games[gameId]).length == 0) {
+    console.log(`[${gameId} - SYSTEM] Lobby is empty, closing...`);
     closeLobby(gameId, namespace);
     return;
   }
@@ -290,14 +292,14 @@ function leaveLobby(
 }
 
 function closeLobby(gameId: string, namespace: SocketNamespace) {
-  console.log(`[${gameId} - SYSTEM] Lobby is empty, closing...`);
+  console.log(`[${gameId} - SYSTEM] Lobby closing...`);
 
   delete lobbys[gameId];
   delete games[gameId];
 
-  namespace.disconnectSockets(false);
-  namespace.removeAllListeners();
-  delete io._nsps["/game/" + gameId];
+  //namespace.disconnectSockets(false);
+  //namespace.removeAllListeners();
+  //delete io._nsps["/game/" + gameId];
 }
 
 function startRound(gameId: string, round: number, namespace: SocketNamespace) {
