@@ -127,7 +127,6 @@ class GameManager(
         if ((currentTime - lastDebounce) < moveDebounce)
             return false
 
-        lastDebounce = currentTime
 
         // 0: up, 1: right, 2: down, 3: left
 
@@ -188,6 +187,7 @@ class GameManager(
         }
 
         if (moved) {
+            lastDebounce = currentTime
             // Author: Kai
             val mergeAniSet = AnimatorSet()
             with(mergeAniSet) {

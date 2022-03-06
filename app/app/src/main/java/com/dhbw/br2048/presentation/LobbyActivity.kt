@@ -88,7 +88,6 @@ class LobbyActivity : BaseActivity() {
                     b.btStartGame.visibility = View.VISIBLE
                 }
 
-                b.tvUsers.text = getString(R.string.players)
                 b.tvUsers.text = getString(R.string.lobby_user_count, lobby.currentUsers, lobby.maxUsers)
             }
         }
