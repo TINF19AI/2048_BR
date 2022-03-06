@@ -44,6 +44,14 @@ io.on("connection", function (socket) {
     socket.emit("getLobbys", getLobbys());
   });
 
+  socket.on("getLobby", function (gameId: string) {
+    if (lobbys[gameId]) {
+      socket.emit("getLobby", getLobbyDetails(gameId));
+    } else {
+      socket.emit("getLobby", null);
+    }
+  });
+
   socket.on("disconnect", (reason) => {
     const userId = socket.handshake.query.CustomId as string;
     console.log(`[${userId}] User disconnected because of ${reason}`);
@@ -293,6 +301,7 @@ function closeLobby(gameId: string, namespace: SocketNamespace) {
 }
 
 function startRound(gameId: string, round: number, namespace: SocketNamespace) {
+  lobbys[gameId].running = true;
   lobbys[gameId].round = round;
   const duration = lobbys[gameId].roundDurations[round];
   console.log(`[${gameId} - SYSTEM] round ${round} started`);
