@@ -24,7 +24,7 @@
         <entry key="..\:/Projekte/2048_BR/app/app/src/main/res/layout/item_tile_empty.xml" value="0.18645833333333334" />
         <entry key="..\:/Projekte/2048_BR/app/app/src/main/res/layout/item_user.xml" value="0.175" />
         <entry key="..\:/Projekte/2048_BR/app/app/src/main/res/layout/shape_tile.xml" value="0.35280797101449274" />
-        <entry key="..\:/Projekte/2048_BR/app/app/src/main/res/menu/menu_br.xml" value="0.24537037037037038" />
+        <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/drawable-anydpi/ic_action_help.xml" value="0.3725" />
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1995" />
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1995" />
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/drawable/shape_tile.xml" value="0.1995" />
@@ -36,6 +36,8 @@
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/item_lobby.xml" value="0.371875" />
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/item_score.xml" value="0.22864583333333333" />
         <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/layout/item_user.xml" value="0.22864583333333333" />
+        <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3725" />
+        <entry key="..\:/Projekte/DHBW/2048_BR/app/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3725" />
         <entry key="..\:/Users/Thorben Gafert/Documents/git/2048_BR/app/app/src/main/res/layout/activity_game.xml" value="0.2695035460992908" />
         <entry key="..\:/Users/Thorben Gafert/Documents/git/2048_BR/app/app/src/main/res/layout/activity_game_selection.xml" value="0.442481884057971" />
         <entry key="..\:/Users/Thorben Gafert/Documents/git/2048_BR/app/app/src/main/res/layout/activity_lobby.xml" value="0.25" />

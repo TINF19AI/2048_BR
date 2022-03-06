@@ -63,9 +63,9 @@
                 android:id="@+id/textInputUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:gravity="center"
-                android:hint="@string/username"/>
+                android:hint="@string/username"
+                android:inputType="text" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btChangeUsername"
@@ -83,6 +83,7 @@
         style="@style/ButtonSecondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/licenses"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
