@@ -9,6 +9,7 @@ import android.os.Looper
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MenuItem
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dhbw.br2048.R
@@ -89,7 +90,7 @@ class GameActivity : BaseActivity() {
 
 
     override fun onBackPressed() {
-        if(manager.over){
+        if (manager.over) {
             super.onBackPressed()
             return
         }
@@ -113,69 +114,78 @@ class GameActivity : BaseActivity() {
         var noOneAlive = false
         val extras = intent.extras
         val gameId = extras?.getString(Constants.BUNDLE_KEY_GAMEID)
-            if (gameId != null && gameId != "") {
-                gameSocket = GameSocket(
-                    gameId,
-                    getUserId()
-                ) { list, score -> // callback function when new score
+        if (gameId != null && gameId != "") {
+            b.cardScoreboard.visibility = View.VISIBLE // show scoreboard in multiplayer
 
+            gameSocket = GameSocket(
+                gameId,
+                getUserId()
+            ) { list, score -> // callback function when new score
+
+                runOnUiThread {
+                    if (!score.alive) {
+                        manager.alive = false
+                        showEndScreen()
+                        displayPoints(score.score, gameId)
+                        b.tvEndPosition.text = getString(R.string.position, score.position)
+                        b.tvEndMessage.text = getString(R.string.points_num, score.score)
+
+                        if (score.position == 1) {
+                            b.tvEndHeader.text = getString(R.string.game_won_quote)
+                        } else {
+                            b.tvEndHeader.text = getString(R.string.game_over)
+                        }
+                    }
+
+                    b.tvPosition.text =
+                        getString(R.string.position_current_total, score.position, list.size)
+
+                    scoreList.clear()
+                    var alive = false
+                    for (s in list) {
+                        scoreList.add(s)
+                        if (s.alive) alive = true
+                    }
+                    if (!alive && this::timer.isInitialized) {
+                        timer.cancel()
+                    }
+                    scoreAdapter.notifyDataSetChanged()
+                }
+            }
+
+            gameSocket!!.socket.on(Constants.SOCK_LOBBYDETAILS) { lobbyJson ->
+                val lobby = (lobbyJson[0] as JSONObject).toLobby()
+                Log.d("lobbyDetails", lobby.toString())
+
+                if (lobby.duration != -1) {
                     runOnUiThread {
-                        if(!score.alive){
-                            manager.alive = false
-                            showEndScreen()
-                            displayPoints(score.score, gameId)
-                            b.tvEndPosition.text = getString(R.string.position, score.position)
-                            b.tvEndMessage.text = getString(R.string.points_num, score.score)
+                        timer = object : CountDownTimer((lobby.duration).toLong(), 1000) {
 
-                            if (score.position == 1) {
-                                b.tvEndHeader.text = getString(R.string.game_won_quote)
-                            } else {
-                                b.tvEndHeader.text = getString(R.string.game_over)
+                            override fun onTick(millisUntilFinished: Long) {
+                                b.tvTime.text = getString(
+                                    R.string.time_num,
+                                    ((millisUntilFinished + 999) / 1000)
+                                )
                             }
-                        }
 
-                        b.tvPosition.text = getString(R.string.position_current_total, score.position, list.size)
-
-                        scoreList.clear()
-                        var alive = false
-                        for (s in list) {
-                            scoreList.add(s)
-                            if(s.alive) alive = true
-                        }
-                        if(!alive && this::timer.isInitialized){
-                            timer.cancel()
-                        }
-                        scoreAdapter.notifyDataSetChanged()
+                            override fun onFinish() {
+                                b.tvTime.text = getString(R.string.time_0)
+                            }
+                        }.start()
                     }
                 }
+            }
 
-                gameSocket!!.socket.on(Constants.SOCK_LOBBYDETAILS){ lobbyJson ->
-                    val lobby = (lobbyJson[0] as JSONObject).toLobby()
-                    Log.d("lobbyDetails", lobby.toString())
+            gameSocket!!.socket.emit(Constants.SOCK_LOBBYDETAILS, null)
+            gameSocket!!.socket.emit(Constants.SOCK_SCORE, 0)
 
-                    if(lobby.duration != -1){
-                        runOnUiThread {
-                            timer = object : CountDownTimer((lobby.duration).toLong(), 1000) {
+            gameSocket!!.socket.on(Constants.SOCK_DISCONNECT) {
+                checkConnection(0)
+            }
 
-                                override fun onTick(millisUntilFinished: Long) {
-                                    b.tvTime.text = getString(R.string.time_num, ((millisUntilFinished + 999) / 1000))
-                                }
-
-                                override fun onFinish() {
-                                    b.tvTime.text = getString(R.string.time_0)
-                                }
-                            }.start()
-                        }
-                    }
-                }
-
-                gameSocket!!.socket.emit(Constants.SOCK_LOBBYDETAILS, null)
-                gameSocket!!.socket.emit(Constants.SOCK_SCORE, 0)
-
-                gameSocket!!.socket.on(Constants.SOCK_DISCONNECT){
-                    checkConnection(0)
-                }
-
+        }
+        else { // Singleplayer
+            b.cardScoreboard.visibility = View.GONE
         }
         displayPoints(0, gameId)
 
@@ -220,36 +230,49 @@ class GameActivity : BaseActivity() {
         b.tvScore.text = pointsString
     }
 
-    private fun checkConnection(attempt: Int){
-        if(gameSocket?.isConnected() == false && manager.alive){
+    private fun checkConnection(attempt: Int) {
+        if (gameSocket?.isConnected() == false && manager.alive) {
             Handler(Looper.getMainLooper()).postDelayed({
-                if (attempt == 2){
+                if (attempt == 2) {
                     runOnUiThread {
-                        Snackbar.make(b.tvScore, getString(R.string.connection_lost), Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(
+                            b.tvScore,
+                            getString(R.string.connection_lost),
+                            Snackbar.LENGTH_LONG
+                        ).show()
                     }
                 }
 
-                if (attempt == 9){
+                if (attempt == 9) {
                     runOnUiThread {
-                        Snackbar.make(b.tvScore, getString(R.string.reconnect_failed), Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(
+                            b.tvScore,
+                            getString(R.string.reconnect_failed),
+                            Snackbar.LENGTH_LONG
+                        ).show()
                     }
                 }
 
-                if (attempt > 9){
+                if (attempt > 9) {
                     runOnUiThread {
-                        Snackbar.make(b.tvScore, getString(R.string.reconnect_failed), Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(
+                            b.tvScore,
+                            getString(R.string.reconnect_failed),
+                            Snackbar.LENGTH_LONG
+                        ).show()
                         gameSocket!!.close()
                         startActivity(Intent(this, GameSelectionActivity::class.java))
                     }
 
-                }else{
+                } else {
                     checkConnection(attempt + 1)
                 }
             }, 2000)
-        }else{
-            if (attempt >= 2){
+        } else {
+            if (attempt >= 2) {
                 runOnUiThread {
-                    Snackbar.make(b.tvScore, R.string.reconnect_successful, Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(b.tvScore, R.string.reconnect_successful, Snackbar.LENGTH_LONG)
+                        .show()
                 }
             }
         }
