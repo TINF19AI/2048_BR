@@ -313,7 +313,7 @@ class GameActivity : BaseActivity() {
     private fun showEndScreen() {
         Log.d("GameActivity", "showEndScreen")
         b.cardEndScreen.animate()
-            .alpha(0.8f)
+            .alpha(0.95f)
             .setDuration(1000)
             .start()
     }

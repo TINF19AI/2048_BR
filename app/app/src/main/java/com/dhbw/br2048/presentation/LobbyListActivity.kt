@@ -138,4 +138,9 @@ class LobbyListActivity : BaseActivity() {
             }
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        getSocket().off(Constants.SOCK_GET_LOBBYS)
+    }
 }
