@@ -20,6 +20,7 @@ class GameSelectionActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("GameSelectionActivity", "Activity created")
 
         b = ActivityGameSelectionBinding.inflate(layoutInflater)
         setContentView(b.root)

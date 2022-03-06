@@ -21,6 +21,7 @@ class LobbyActivity : BaseActivity() {
 
     private var gameId: String = ""
     private var keepSocket: Boolean = false
+    private var started: Boolean = false
 
     // For Lobby RecyclerView
     private val userList: MutableList<User> = mutableListOf()
@@ -29,6 +30,8 @@ class LobbyActivity : BaseActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.d("LobbyActivity", "Activity Created")
 
         b = ActivityLobbyBinding.inflate(layoutInflater)
         setContentView(b.root)
@@ -53,15 +56,18 @@ class LobbyActivity : BaseActivity() {
                 it,
                 getUserId()
             ) { list, _ ->
-                Log.d("Lobby", "received user names")
-                userList.clear()
-                for (user in list) {
-                    userList.add(User(user.username)) // add usernames to recyclerview
-                }
 
-                runOnUiThread {
-                    userAdapter.notifyDataSetChanged()
-                    Log.d("Lobby", "user count " + userList.size.toString())
+                if (!started) {
+                    Log.d("Lobby", "received user names")
+                    userList.clear()
+                    for (user in list) {
+                        userList.add(User(user.username)) // add usernames to recyclerview
+                    }
+
+                    runOnUiThread {
+                        userAdapter.notifyDataSetChanged()
+                        Log.d("Lobby", "user count " + userList.size.toString())
+                    }
                 }
             }
         }
@@ -70,6 +76,7 @@ class LobbyActivity : BaseActivity() {
             Log.d("Lobby", "Received start signal for game: $gameId")
             runOnUiThread {
                 keepSocket = true
+                started = true
                 val lobbyIntent = Intent(this, GameActivity::class.java)
                 lobbyIntent.putExtra(Constants.BUNDLE_KEY_GAMEID, gameId)
                 startActivity(lobbyIntent)

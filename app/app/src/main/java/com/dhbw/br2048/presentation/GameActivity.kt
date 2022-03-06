@@ -35,6 +35,7 @@ class GameActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Log.d("GameActivity", "Activity Created")
         b = ActivityGameBinding.inflate(layoutInflater)
         setContentView(b.root)
         supportFragmentManager.beginTransaction().apply {
