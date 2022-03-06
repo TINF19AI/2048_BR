@@ -47,7 +47,6 @@ class GameActivity : BaseActivity() {
         scoreAdapter = ScoreAdapter(scoreList)
         b.rvScores.adapter = scoreAdapter
 
-
         setToolbar(b.abTop)
         b.cardEndScreen.alpha = 0f
 
@@ -187,36 +186,40 @@ class GameActivity : BaseActivity() {
         else { // Singleplayer
             b.cardScoreboard.visibility = View.GONE
         }
-        displayPoints(0, gameId)
+
+        if(!this::manager.isInitialized){
+            displayPoints(0, gameId)
+
+            manager = GameManager(
+                b.root.context,
+                gridFragment.getGrid(),
+                Coordinates(4, 4),
+                2,
+            )
+            manager.addStartTiles()
+
+            manager.scoreCallback = { score: Int ->
+                displayPoints(score, gameId)
+                gameSocket?.score(score)
+            }
+            manager.overCallback = { score: Int ->
+                Snackbar.make(b.tvScore, getString(R.string.game_over), Snackbar.LENGTH_LONG).show()
+                setEndScore()
+                showEndScreen()
+                gameSocket?.over(score)
+                setHighscore(score)
+                displayPoints(score, gameId)
+            }
+            manager.wonCallback = { score: Int ->
+                Snackbar.make(b.tvScore, getString(R.string.game_won), Snackbar.LENGTH_LONG).show()
+                setEndScore()
+                gameSocket?.won(score)
+                setHighscore(score)
+                displayPoints(score, gameId)
+            }
+        }
 
 
-        manager = GameManager(
-            b.root.context,
-            gridFragment.getGrid(),
-            Coordinates(4, 4),
-            2,
-        )
-        manager.addStartTiles()
-
-        manager.scoreCallback = { score: Int ->
-            displayPoints(score, gameId)
-            gameSocket?.score(score)
-        }
-        manager.overCallback = { score: Int ->
-            Snackbar.make(b.tvScore, getString(R.string.game_over), Snackbar.LENGTH_LONG).show()
-            setEndScore()
-            showEndScreen()
-            gameSocket?.over(score)
-            setHighscore(score)
-            displayPoints(score, gameId)
-        }
-        manager.wonCallback = { score: Int ->
-            Snackbar.make(b.tvScore, getString(R.string.game_won), Snackbar.LENGTH_LONG).show()
-            setEndScore()
-            gameSocket?.won(score)
-            setHighscore(score)
-            displayPoints(score, gameId)
-        }
     }
 
     private fun setEndScore() {
