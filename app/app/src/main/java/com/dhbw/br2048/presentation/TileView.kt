@@ -24,7 +24,7 @@ class TileView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, pos: Coordinates, startValue: Int
 ) : AppCompatTextView(context, attrs) {
 
-    private var appearDuration: Long = 300
+    private var appearDuration: Long = 250
     private var appearDelay: Long = 250
 
     var mergedFrom: Array<TileView>? = null

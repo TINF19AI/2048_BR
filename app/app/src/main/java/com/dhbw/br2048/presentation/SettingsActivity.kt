@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView.OnEditorActionListener
@@ -48,11 +49,13 @@ class SettingsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         b = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(b.root)
         setCurrentFragment(gridFragment)
         setToolbar(b.abTop)
+
+        // prevent soft keyboard from showing when activity starts
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         b.btChangeTheme.setOnClickListener {
             MaterialAlertDialogBuilder(
