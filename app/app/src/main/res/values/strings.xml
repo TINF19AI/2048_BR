@@ -36,7 +36,7 @@
     <string name="highscore_num">Highscore: %1$d</string>
     <string name="game_over">Game Over!</string>
     <string name="game_won">You won!</string>
-    <string name="connection_lost">No Internet connection, reconnecting...</string>
+    <string name="connection_lost">No Internet connection, reconnecting…</string>
     <string name="reconnect_failed">Reconnecting failed ⊙﹏⊙∥</string>
     <string name="reconnect_successful">Reconnected φ(゜▽゜*)♪</string>
     <string name="time_0">0s</string>
@@ -49,4 +49,5 @@
     <string name="position_current_total">%1$d / %2$d</string>
     <string name="lobby_user_count">Players (%1$d / %2$d)</string>
     <string name="lobby_id">ID: %1$s</string>
+    <string name="lobby_opening">Please wait, we are creating the lobby…</string>
 </resources>
