@@ -187,7 +187,7 @@ class SettingsActivity : BaseActivity() {
 
     override fun onBackPressed() {
         val mainIntent = Intent(this, MainActivity::class.java)
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(mainIntent)
         finish()
         super.onBackPressed()
