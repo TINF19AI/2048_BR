@@ -1,7 +1,6 @@
 package com.dhbw.br2048.presentation
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -27,6 +26,9 @@ class GameActivity : BaseActivity() {
     private lateinit var manager: GameManager
     private var gameSocket: GameSocket? = null
     private lateinit var timer: CountDownTimer
+
+    private var reconnectHandler: Handler? = null
+    private var stopped = false
 
     private var scoreList: MutableList<Score> = mutableListOf()
     private lateinit var scoreAdapter: ScoreAdapter
@@ -183,12 +185,11 @@ class GameActivity : BaseActivity() {
                 checkConnection(0)
             }
 
-        }
-        else { // Singleplayer
+        } else { // Singleplayer
             b.cardScoreboard.visibility = View.GONE
         }
 
-        if(!this::manager.isInitialized){
+        if (!this::manager.isInitialized) {
             displayPoints(0, gameId)
 
             manager = GameManager(
@@ -235,8 +236,15 @@ class GameActivity : BaseActivity() {
     }
 
     private fun checkConnection(attempt: Int) {
+        Log.d("GameActivity", "CheckConnection")
         if (gameSocket?.isConnected() == false && manager.alive) {
-            Handler(Looper.getMainLooper()).postDelayed({
+            // todo: kill thread when activity exit
+            reconnectHandler = Handler(Looper.getMainLooper())
+            reconnectHandler?.postDelayed({
+                if (stopped) {
+                    Log.d("GameActivity", "Game stopped, returning from reconnect")
+                    return@postDelayed
+                }
                 if (attempt == 2) {
                     runOnUiThread {
                         Snackbar.make(
@@ -248,6 +256,7 @@ class GameActivity : BaseActivity() {
                 }
 
                 if (attempt == 9) {
+                    Log.d("GameActivity", "attempt 9")
                     runOnUiThread {
                         Snackbar.make(
                             b.tvScore,
@@ -258,14 +267,14 @@ class GameActivity : BaseActivity() {
                 }
 
                 if (attempt > 9) {
+                    Log.d("GameActivity", "attempt more than 9")
                     runOnUiThread {
                         Snackbar.make(
                             b.tvScore,
                             getString(R.string.reconnect_failed),
                             Snackbar.LENGTH_LONG
                         ).show()
-                        gameSocket!!.close()
-                        startActivity(Intent(this, GameSelectionActivity::class.java))
+                        finish()
                     }
 
                 } else {
@@ -280,10 +289,11 @@ class GameActivity : BaseActivity() {
                 }
             }
         }
-
     }
 
     override fun onStop() {
+        stopped = true
+        gameSocket?.socket?.off(Constants.SOCK_DISCONNECT)
         gameSocket?.close()
         Log.d("GameActivity", "onStop")
         super.onStop()

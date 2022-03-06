@@ -91,11 +91,12 @@ class LobbyActivity : BaseActivity() {
                 // hide button if not owner
                 if (lobby.owner != getUserId()) {
                     b.btStartGame.visibility = View.GONE
-                }else{
+                } else {
                     b.btStartGame.visibility = View.VISIBLE
                 }
 
-                b.tvUsers.text = getString(R.string.lobby_user_count, lobby.currentUsers, lobby.maxUsers)
+                b.tvUsers.text =
+                    getString(R.string.lobby_user_count, lobby.currentUsers, lobby.maxUsers)
             }
         }
         gameSocket?.lobbyDetails()
