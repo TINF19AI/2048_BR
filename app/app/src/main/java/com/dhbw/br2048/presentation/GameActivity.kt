@@ -89,7 +89,7 @@ class GameActivity : BaseActivity() {
 
 
     override fun onBackPressed() {
-        if (manager.over) {
+        if (manager.over || !manager.alive) {
             super.onBackPressed()
             return
         }
