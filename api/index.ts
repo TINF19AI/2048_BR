@@ -275,6 +275,9 @@ function leaveLobby(
 
   if (lobbys[gameId].owner == userId) {
     lobbys[gameId].owner = Object.keys(games[gameId])[0];
+    console.log(
+      `[${gameId} - ${userId}] New lobby owner is ${lobbys[gameId].owner}`
+    );
   }
 }
 
