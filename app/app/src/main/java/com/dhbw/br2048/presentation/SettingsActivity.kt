@@ -102,10 +102,10 @@ class SettingsActivity : BaseActivity() {
         }
 
         b.btShowLicenses.setOnClickListener {
-            val url = "https://github.com/Tanikai/2048_BR/LICENSE-NOTICES.md";
-            val uri = Uri.parse(url);
-            val intent = Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
+            val url = "https://github.com/Tanikai/2048_BR/blob/main/LICENSE-NOTICES.md"
+            val uri = Uri.parse(url)
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
         }
     }
 
