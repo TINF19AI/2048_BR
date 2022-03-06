@@ -93,7 +93,7 @@ class Grid(
 
     fun clearGrid() {
         for ((x, column) in grid.withIndex()) {
-            for ((y, tile) in column.withIndex()) {
+            for ((y, _) in column.withIndex()) {
                 val tile = grid[x][y]
                 if (tile != null) {
                     tile.removeFromGrid()

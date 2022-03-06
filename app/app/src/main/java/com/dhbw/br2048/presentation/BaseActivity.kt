@@ -11,7 +11,7 @@ import com.dhbw.br2048.data.Constants
 // open keyword is to make BaseActivity inheritable
 open class BaseActivity : AppCompatActivity() {
 
-    var currentThemeId: Int = 0
+    protected var currentThemeId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Theme from shared preferences

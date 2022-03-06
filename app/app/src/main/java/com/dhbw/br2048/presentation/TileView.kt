@@ -24,8 +24,8 @@ class TileView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, pos: Coordinates, startValue: Int
 ) : AppCompatTextView(context, attrs) {
 
-    private val APPEAR_DURATION: Long = 300
-    private val APPEAR_DELAY: Long = 250
+    private var appearDuration: Long = 300
+    private var appearDelay: Long = 250
 
     var mergedFrom: Array<TileView>? = null
 
@@ -214,8 +214,8 @@ class TileView @JvmOverloads constructor(
         this.animate()
             .scaleX(1f)
             .scaleY(1f)
-            .setDuration(APPEAR_DURATION)
-            .setStartDelay(APPEAR_DELAY)
+            .setDuration(appearDuration)
+            .setStartDelay(appearDelay)
             .start()
     }
 }
