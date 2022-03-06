@@ -2,6 +2,7 @@ package com.dhbw.br2048.presentation
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.EditorInfo
@@ -101,10 +102,10 @@ class SettingsActivity : BaseActivity() {
         }
 
         b.btShowLicenses.setOnClickListener {
-            MaterialAlertDialogBuilder(
-                b.root.context,
-            ).setMessage("test")
-                .show()
+            val url = "https://github.com/Tanikai/2048_BR/LICENSE-NOTICES.md";
+            val uri = Uri.parse(url);
+            val intent = Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
     }
 
