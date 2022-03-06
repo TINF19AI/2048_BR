@@ -60,11 +60,19 @@ open class BaseActivity : AppCompatActivity() {
                 Log.d("BaseActivity", "back button pressed")
                 onBackPressed()
             }
+            R.id.actHelp -> {
+                Log.d("BaseActivity", "help button pressed")
+                onHelpPressed()
+            }
             else -> {
                 Log.d("BaseActivity", "unknown button pressed: " + item.itemId.toString())
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    protected open fun onHelpPressed() {
+        // do nothing
     }
 
 
@@ -73,7 +81,6 @@ open class BaseActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
 
 }
