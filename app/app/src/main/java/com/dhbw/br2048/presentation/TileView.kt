@@ -33,7 +33,6 @@ class TileView @JvmOverloads constructor(
     var deleteOnMove = false
     var updateOnMerge = true
 
-    //@todo Initialize with constructor
     var value: Int = startValue
         set(newValue) {
             if (!updateOnMerge) {

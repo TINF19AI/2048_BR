@@ -61,7 +61,7 @@ class MainActivity : BaseActivity() {
         if (userId == "") {
             val spe = sp.edit()
             val newGeneratedUserId = UUID.randomUUID().toString()
-            spe.putString(Constants.SP_KEY_USERID, newGeneratedUserId) // TODO: theme selection
+            spe.putString(Constants.SP_KEY_USERID, newGeneratedUserId)
             spe.apply()
             Log.d("MainActivity", "Generated new UserID: $newGeneratedUserId")
         }

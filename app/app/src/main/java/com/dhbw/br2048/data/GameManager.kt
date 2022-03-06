@@ -106,7 +106,6 @@ class GameManager(
         val traversalsX = mutableListOf<Int>()
         val traversalsY = mutableListOf<Int>()
 
-        // @todo supports only square grid
         for (pos in 0 until gridSize.x) {
             traversalsX.add(pos)
             traversalsY.add(pos)
