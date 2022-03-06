@@ -19,6 +19,7 @@
         android:id="@+id/cardGrid"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="?attr/brEmpty"
         app:cardCornerRadius="25dp"
         app:cardElevation="12dp"
