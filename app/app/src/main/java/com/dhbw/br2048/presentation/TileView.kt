@@ -12,7 +12,6 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.GridLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.animation.doOnEnd
-import androidx.core.animation.doOnStart
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.setMargins
@@ -151,9 +150,7 @@ class TileView @JvmOverloads constructor(
         val scaleX = PropertyValuesHolder.ofFloat(SCALE_X, 1.2f)
         val scaleY = PropertyValuesHolder.ofFloat(SCALE_Y, 1.2f)
         val animator = ObjectAnimator.ofPropertyValuesHolder(this, scaleX, scaleY)
-        animator.doOnStart {
 
-        }
         animator.doOnEnd {
             grid?.removeView(removedTile)
             updateText()

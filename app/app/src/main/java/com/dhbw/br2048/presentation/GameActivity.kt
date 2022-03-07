@@ -127,16 +127,16 @@ class GameActivity : BaseActivity() {
                 runOnUiThread {
                     if (!score.alive) {
                         manager.alive = false
-                        showEndScreen()
-                        displayPoints(score.score, gameId)
+
                         b.tvEndPosition.text = getString(R.string.position, score.position)
-                        b.tvEndMessage.text = getString(R.string.points_num, score.score)
 
                         if (score.position == 1) {
                             b.tvEndHeader.text = getString(R.string.game_won_quote)
                         } else {
                             b.tvEndHeader.text = getString(R.string.game_over)
                         }
+
+                        showEndScore(score.score, gameId)
                     }
 
                     b.tvPosition.text =
@@ -205,27 +205,30 @@ class GameActivity : BaseActivity() {
                 gameSocket?.score(score)
             }
             manager.overCallback = { score: Int ->
-                Snackbar.make(b.tvScore, getString(R.string.game_over), Snackbar.LENGTH_LONG).show()
-                setEndScore()
+                showEndScore(score, gameId)
+                gameSocket?.over(score) ?: run {
+                    b.tvEndHeader.text = getString(R.string.game_over)
+                }
                 showEndScreen()
-                gameSocket?.over(score)
-                setHighscore(score)
-                displayPoints(score, gameId)
             }
             manager.wonCallback = { score: Int ->
-                Snackbar.make(b.tvScore, getString(R.string.game_won), Snackbar.LENGTH_LONG).show()
-                setEndScore()
-                gameSocket?.won(score)
-                setHighscore(score)
-                displayPoints(score, gameId)
+                showEndScore(score, gameId)
+                gameSocket?.won(score) ?: run {
+                    b.tvEndHeader.text = getString(R.string.game_won)
+                }
+                showEndScreen()
             }
         }
-
-
     }
 
-    private fun setEndScore() {
+    private fun showEndScore(score: Int, gameId: String?) {
+        displayPoints(score, gameId)
+        b.tvEndMessage.text = getString(R.string.points_num, score)
 
+        if (gameId == "") { // Singleplayer
+            setHighscore(score)
+        }
+        showEndScreen()
     }
 
     private fun displayPoints(score: Int, gameId: String?) {
