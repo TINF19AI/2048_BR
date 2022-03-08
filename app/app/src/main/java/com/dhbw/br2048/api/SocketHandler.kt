@@ -31,7 +31,7 @@ object SocketHandler {
             mSocket = manager.socket("/")
             mSocket.io().timeout(5 * 1000) // 5 seconds
         } catch (e: URISyntaxException) {
-            // @todo
+            Log.d("SocketHandler", e.reason)
         }
 
         try {

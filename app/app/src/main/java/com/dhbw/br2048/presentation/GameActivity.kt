@@ -241,7 +241,6 @@ class GameActivity : BaseActivity() {
     private fun checkConnection(attempt: Int) {
         Log.d("GameActivity", "CheckConnection")
         if (gameSocket?.isConnected() == false && manager.alive) {
-            // todo: kill thread when activity exit
             reconnectHandler = Handler(Looper.getMainLooper())
             reconnectHandler?.postDelayed({
                 if (stopped) {
